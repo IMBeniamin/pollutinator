@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, { memo, useState, useEffect, useCallback,useRef } from "react";
 import {
   ZoomableGroup,
   ComposableMap,
@@ -22,7 +22,7 @@ const colorScale = scaleLinear()
 const MapChart = (props) => {
   const [yearMap, setYearMap] = useState(2020);
   const [infoState, setInfoState] = useState([]);
-
+  const cardRef = useRef()
   const changeInfoState = useCallback((newInfoState) =>
     setInfoState(newInfoState)
   );
@@ -34,6 +34,9 @@ const MapChart = (props) => {
           year: yearMap,
           filter: "iso_code,co2",
         },
+          headers:{
+           "Content-Type": "application/json"
+          }
       })
       .then((res) =>
         setInfoState(
@@ -70,12 +73,28 @@ const MapChart = (props) => {
                       <Geography
                         key={geo.rsmKey}
                         geography={geo}
-                        onMouseEnter={() => {
-                          console.log(current);
-                        }}
+                        onMouseEnter={async () => {
+                            //console.log(current)
+                            try {
+                                const res = await axios.get('http://localhost/api/v1', {
+                                    params: {
+                                        year: yearMap,
+                                        iso_code: current.iso_code,
+                                        filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_growth_prct,co2_per_capita,population"
+                                    }
+                                })
+                                cardRef.current.updateData(res.data)
+
+                            }catch (err){
+                                console.log('No data')
+                            }
+                        }
+                        }
                         onClick={() => {
                           props.stateChange(current.iso_code);
-                        }}
+
+                          }
+                        }
                         onMouseLeave={() => {}}
                         style={{
                           default: {
@@ -110,8 +129,8 @@ const MapChart = (props) => {
       </div>
       <Card
         className="infocard"
-        parentCallback={changeInfoState}
-        stateInfo={infoState}
+        //stateInfo={infoStateCard}
+        ref={cardRef}
       />
     </>
   );
