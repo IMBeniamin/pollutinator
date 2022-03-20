@@ -7,7 +7,7 @@ import {
 } from "react-simple-maps";
 import { scaleLinear } from "d3-scale";
 import { interpolateCubehelixLong } from "d3";
-import TimeSlider from "../navbar/stickyNav";
+import TimeSlider from "../timeslider/timeSlider";
 import axios from "axios";
 import Card from "../infoCard/card";
 import "./map.css";
@@ -74,7 +74,7 @@ const MapChart = (props) => {
                         key={geo.rsmKey}
                         geography={geo}
                         onMouseEnter={async () => {
-                            //console.log(current)
+                            console.log(current)
                             try {
                                 const res = await axios.get('http://localhost/api/v1', {
                                     params: {
@@ -129,7 +129,6 @@ const MapChart = (props) => {
       </div>
       <Card
         className="infocard"
-        //stateInfo={infoStateCard}
         ref={cardRef}
       />
     </>

@@ -1,6 +1,5 @@
 import "./App.css";
-
-import { useCallback, useRef} from "react";
+import {useRef} from "react";
 import Map from "./components/map/Map";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
