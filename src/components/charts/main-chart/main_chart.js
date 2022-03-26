@@ -66,7 +66,7 @@ const MainChart = forwardRef((props, ref) => {
       console.log("updateData with iso_country_code:", iso_country_code);
       axios({
         method: "GET",
-        url: "http://localhost/api/v1/",
+        url: "https://inquinapi.derpi.it/api/",
         params: {
           iso_code: iso_country_code,
           year: `${2000}-${new Date().getFullYear()}`,

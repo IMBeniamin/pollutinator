@@ -22,14 +22,17 @@ const colorScale = scaleLinear()
 const MapChart = (props) => {
   const [yearMap, setYearMap] = useState(2020);
   const [infoState, setInfoState] = useState([]);
-  const cardRef = useRef()
+  const [dataAboutState, setDataAboutState] = useState({
+      year: undefined,
+      country: undefined,
+  })
   const changeInfoState = useCallback((newInfoState) =>
     setInfoState(newInfoState)
   );
 
   useEffect(() => {
     axios
-      .get("http://localhost/api/v1", {
+      .get("https://inquinapi.derpi.it/api/", {
         params: {
           year: yearMap,
           filter: "iso_code,co2",
@@ -45,6 +48,7 @@ const MapChart = (props) => {
           )
         )
       );
+
   }, []);
 
   return (
@@ -73,26 +77,25 @@ const MapChart = (props) => {
                       <Geography
                         key={geo.rsmKey}
                         geography={geo}
-                        onMouseEnter={async () => {
-                            console.log(current)
+                        onMouseEnter={() => {
+
+                        }
+                        }
+                        onClick={async () => {
+                          props.stateChange(current.iso_code);
+                          console.log(current)
                             try {
-                                const res = await axios.get('http://localhost/api/v1', {
+                                const res = await axios.get('https://inquinapi.derpi.it/api/', {
                                     params: {
                                         year: yearMap,
                                         iso_code: current.iso_code,
-                                        filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_growth_prct,co2_per_capita,population"
+                                        filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_per_capita,population",
                                     }
                                 })
-                                cardRef.current.updateData(res.data)
-
+                               setDataAboutState(res.data)
                             }catch (err){
                                 console.log('No data')
                             }
-                        }
-                        }
-                        onClick={() => {
-                          props.stateChange(current.iso_code);
-
                           }
                         }
                         onMouseLeave={() => {}}
@@ -127,10 +130,9 @@ const MapChart = (props) => {
           )}
         </ComposableMap>
       </div>
-      <Card
-        className="infocard"
-        ref={cardRef}
-      />
+
+
+
     </>
   );
 };

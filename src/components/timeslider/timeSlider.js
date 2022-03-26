@@ -11,7 +11,7 @@ export default function TimeSlider(props) {
     if (typeof value === 'number') {
       props.changeYear(value);
     
-      axios.get(`http://localhost/api/v1`,{
+      axios.get(`https://inquinapi.derpi.it/api/`,{
         params:{
           year: value,
           filter: "iso_code,co2"
