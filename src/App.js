@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef} from "react";
 import Map from "./components/map/Map";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
@@ -16,7 +16,7 @@ function App() {
                 console.log("runninng stuff")
                 a.classList.toggle("hidden");
             })
-        } // wip
+        } //TODO: wip
     }
     const stateUpdate = (state_iso_code) => {
         console.log("clicked on:",state_iso_code);

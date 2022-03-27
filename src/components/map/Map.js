@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useCallback,useRef } from "react";
+import React, { memo, useState, useEffect} from "react";
 import {
     ZoomableGroup,
     ComposableMap,
@@ -9,7 +9,6 @@ import { scaleLinear } from "d3-scale";
 import { interpolateCubehelixLong } from "d3";
 import TimeSlider from "../timeslider/timeSlider";
 import axios from "axios";
-import Card from "../infoCard/card";
 import "./map.css";
 const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
@@ -26,9 +25,6 @@ const MapChart = (props) => {
         year: undefined,
         country: undefined,
     })
-    const changeInfoState = useCallback((newInfoState) =>
-        setInfoState(newInfoState)
-    );
 
     useEffect(() => {
         axios
@@ -41,24 +37,22 @@ const MapChart = (props) => {
                     "Content-Type": "application/json"
                 }
             })
-            .then((res) =>
-                setInfoState(
-                    res.data.sort((a, b) =>
-                        a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0
+            .then((res) => {
+                    setInfoState(
+                        res.data.sort((a, b) =>
+                            a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
                     )
-                )
+                }
             );
 
-    }, []);
+    }, [yearMap]);
 
     return (
         <div className="map-container" id="map-container">
             <div className="map-controls">
                 <div className="slider-container">
                     <TimeSlider
-                        parentCallback={changeInfoState}
                         changeYear={setYearMap}
-                        year={yearMap}
                     />
                 </div>
                 <button onClick={() => props.hide()}>X</button>
@@ -66,7 +60,7 @@ const MapChart = (props) => {
             <ComposableMap
                 className="composable-map"
                 data-tip=""
-                projectionConfig={{ scale: 750 }}
+                projectionConfig={{scale: 750}}
                 width={800}
                 height={600}
                 style={{maxHeight: "85%"}}
@@ -74,7 +68,7 @@ const MapChart = (props) => {
                 {infoState.length > 0 && (
                     <ZoomableGroup center={[13, 45]}>
                         <Geographies geography={geoUrl}>
-                            {({ geographies }) =>
+                            {({geographies}) =>
                                 geographies.map((geo) => {
                                     const current = infoState.find(
                                         (s) => s.iso_code === geo.properties.ISO_A3);
@@ -82,7 +76,8 @@ const MapChart = (props) => {
                                         <Geography
                                             key={geo.rsmKey}
                                             geography={geo}
-                                            onMouseEnter={() => {}}
+                                            onMouseEnter={() => {
+                                            }}
                                             onClick={async () => {
                                                 props.stateChange(current.iso_code);
                                                 console.log(current)
@@ -95,12 +90,13 @@ const MapChart = (props) => {
                                                         }
                                                     })
                                                     setDataAboutState(res.data)
-                                                }catch (err){
+                                                } catch (err) {
                                                     console.log('No data')
                                                 }
                                             }
                                             }
-                                            onMouseLeave={() => {}}
+                                            onMouseLeave={() => {
+                                            }}
                                             style={{
                                                 default: {
                                                     // fill: "#5c6367",

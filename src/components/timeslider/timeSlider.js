@@ -1,7 +1,5 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import axios from 'axios'
 import './timeSlider.css'
 
 export default function TimeSlider(props) {
@@ -37,14 +35,6 @@ export default function TimeSlider(props) {
   const updateValue = (value) => {
     if (typeof value === 'number') {
       props.changeYear(value);
-
-      axios.get(`https://inquinapi.derpi.it/api/`,{
-        params:{
-          year: value,
-          filter: "iso_code,co2"
-        }
-      })
-          .then(res => props.parentCallback(res.data))
     }
   }
 
