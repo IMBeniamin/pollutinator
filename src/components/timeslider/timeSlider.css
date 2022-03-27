@@ -1,8 +1,6 @@
-.slider-container {
-    color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    height: 50%;
-    margin: -10% 0 0 -48%
+.slider {
+
+}
+.MuiSlider-markLabel {
+    color: white !important;
 }
