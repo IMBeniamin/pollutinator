@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect} from "react";
+import React, {memo, useState, useEffect, useRef} from "react";
 import {
     ZoomableGroup,
     ComposableMap,
@@ -19,44 +19,13 @@ const colorScale = scaleLinear()
     .interpolate(interpolateCubehelixLong.gamma(1));
 
 const MapChart = (props) => {
-    const [yearMap, setYearMap] = useState(2020);
-    const [infoState, setInfoState] = useState([]);
     const [dataAboutState, setDataAboutState] = useState({
         year: undefined,
         country: undefined,
     })
 
-    useEffect(() => {
-        axios
-            .get("https://inquinapi.derpi.it/api/", {
-                params: {
-                    year: yearMap,
-                    filter: "iso_code,co2",
-                },
-                headers:{
-                    "Content-Type": "application/json"
-                }
-            })
-            .then((res) => {
-                    setInfoState(
-                        res.data.sort((a, b) =>
-                            a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
-                    )
-                }
-            );
-
-    }, [yearMap]);
-
     return (
         <div className="map-container" id="map-container">
-            <div className="map-controls">
-                <div className="slider-container">
-                    <TimeSlider
-                        changeYear={setYearMap}
-                    />
-                </div>
-                <button onClick={() => props.hide()}>X</button>
-            </div>
             <ComposableMap
                 className="composable-map"
                 data-tip=""
@@ -65,12 +34,12 @@ const MapChart = (props) => {
                 height={600}
                 style={{maxHeight: "85%"}}
             >
-                {infoState.length > 0 && (
+                {props.infoState.length > 0 && (
                     <ZoomableGroup center={[13, 45]}>
                         <Geographies geography={geoUrl}>
                             {({geographies}) =>
                                 geographies.map((geo) => {
-                                    const current = infoState.find(
+                                    const current = props.infoState.find(
                                         (s) => s.iso_code === geo.properties.ISO_A3);
                                     return (
                                         <Geography
@@ -84,7 +53,7 @@ const MapChart = (props) => {
                                                 try {
                                                     const res = await axios.get('https://inquinapi.derpi.it/api/', {
                                                         params: {
-                                                            year: yearMap,
+                                                            year: props.yearMap,
                                                             iso_code: current.iso_code,
                                                             filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_per_capita,population",
                                                         }

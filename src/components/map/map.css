@@ -1,31 +1,15 @@
 .map-container {
+    position: fixed;
+    top: 0;
+    left: 0;
     flex: 7 1 auto;
-    position: relative;
     transition: all 1s;
-
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: stretch;
-    align-items: stretch;
-    align-content: stretch;
     background-color: green;
 }
 .composable-map {
     transition: all 1s;
 }
-.map-controls {
-    position: absolute;
-    bottom: 1vh;
-    margin: 0 2em;
-    width: 35%;
-    padding: .5em 3em;
-    backdrop-filter: blur(15px);
-    border-radius: 2.5em;
-    background-color: rgba(30, 30, 30, 0.75);
-}
-.slider-container {
-    color: whitesmoke !important;
-}
+
 .spinner {
     width: 40px;
     height: 40px;

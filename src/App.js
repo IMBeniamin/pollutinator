@@ -1,13 +1,38 @@
 import "./App.css";
-import React, {useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Map from "./components/map/Map";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
 import Card from "./components/infoCard/card";
+import TimeSlider from "./components/timeslider/timeSlider";
+import axios from "axios";
 
 function App() {
-
+    const [yearMap, setYearMap] = useState(2020);
+    const [infoState, setInfoState] = useState([]);
     const mainChartRef = useRef();
+
+    useEffect(() => {
+        axios
+            .get("https://inquinapi.derpi.it/api/", {
+                params: {
+                    year: yearMap,
+                    filter: "iso_code,co2",
+                },
+                headers:{
+                    "Content-Type": "application/json"
+                }
+            })
+            .then((res) => {
+                    setInfoState(
+                        res.data.sort((a, b) =>
+                            a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
+                    )
+                }
+            );
+
+    }, [yearMap]);
+
     const hideFunc = (value) => {
         const divs = document.getElementsByClassName('reactive');
         for (let a of divs) {
@@ -25,10 +50,17 @@ function App() {
 
     return (
         <div className="App">
+            <Map hide={hideFunc} props={{yearMap, infoState}} stateChange={stateUpdate}/>
             <div className="reactive-data">
-                <Map hide={hideFunc} stateChange={stateUpdate}/>
                 <div className="info-card reactive">
                     {/*<Card/>*/}
+                </div>
+            </div>
+            <div className="map-controls">
+                <div className="slider-container">
+                    <TimeSlider
+                        changeYear={setYearMap}
+                    />
                 </div>
             </div>
             <div className="charts reactive">

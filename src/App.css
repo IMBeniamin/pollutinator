@@ -28,8 +28,23 @@
 
 .info-card {
   flex: 3 1 auto;
+  max-width: 25%;
   transition: 1s all;
   background-color: red;
+}
+
+.map-controls {
+  position: absolute;
+  bottom: 1vh;
+  margin: 0 2em;
+  width: 35%;
+  padding: .5em 3em;
+  backdrop-filter: blur(15px);
+  border-radius: 2.5em;
+  background-color: rgba(30, 30, 30, 0.75);
+}
+.slider-container {
+  color: whitesmoke !important;
 }
 
 .charts {
