@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: stretch;
-  align-items: stretch;
+  align-items: flex-end;
   align-content: stretch;
 
   text-align: center;
@@ -12,52 +12,59 @@
   max-height: 100%;
   max-width: 100%;
   transition: 1s all;
-}
-.reactive-data {
-  flex: 5 5 auto;
-
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: stretch;
-  align-items: stretch;
-  align-content: stretch;
-  max-width: 100vw;
-  max-height: 100vh;
-  transition: 1s all;
+  overflow: hidden;
 }
 
 .info-card {
-  flex: 3 1 auto;
+  flex: 3 3 auto;
   max-width: 25%;
   transition: 1s all;
-  background-color: red;
+  /*background-color: red;*/
+  z-index: 1005;
 }
 
 .map-controls {
   position: absolute;
-  bottom: 1vh;
+  transform: translateY(-120%);
   margin: 0 2em;
-  width: 35%;
-  padding: .5em 3em;
+  width: 30%;
+  padding: .2em 3em;
   backdrop-filter: blur(15px);
   border-radius: 2.5em;
-  background-color: rgba(30, 30, 30, 0.75);
+  background-color: rgba(30, 30, 30, 0.65);
+
+  z-index: 1006;
 }
 .slider-container {
   color: whitesmoke !important;
 }
 
 .charts {
-  flex: 5 5 auto;
+  position: relative;
+  flex: 3 3 auto;
+  min-width: 100vw;
+  max-height: 50vh;
   transition: 1s all;
-  background-color: blue;
+  /*background-color: blue;*/
+  z-index: 1005;
 }
 
-.collapse {
-  flex-grow: 0;
-  /*display: none;*/
+.reactive {
   transition: 1s all;
+  /*overflow: scroll;*/
+  -ms-overflow-style: none;  /* IE and Edge */
 }
-.hidden {
+.reactive::-webkit-scrollbar {
   display: none;
 }
+
+
+#info-card.collapse {
+  transform: translateX(100%);
+}
+#charts.collapse {
+  transform: translateY(100%);
+}
+/*.collapse {*/
+/*   flex-grow: 0 !important;*/
+/* }*/

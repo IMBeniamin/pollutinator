@@ -1,17 +1,14 @@
-import React, {forwardRef, memo, useEffect, useImperativeHandle, useState} from 'react';
+import React, {forwardRef, memo, useImperativeHandle, useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import "./card.css"
-import InfoChart from './infoChart/infoChart'
 import {CardHeader} from "@mui/material";
-import axios from "axios";
 
-const InfoCard =(props => {
+const InfoCard = forwardRef((props,ref) => {
     const [contentHeader,setContentHeader] = useState({})
-    const [contentCO2,setContentCO2] = useState({})
-    const [contentCO2capita,setContentCO2capita] = useState({})
-    const [globalCO2,setGlobalCO2] = useState({})
+    const [contentMain,setContentMain] = useState({})
+
 
     const formatData = (info) =>{
         setContentHeader({
@@ -19,63 +16,41 @@ const InfoCard =(props => {
             country: info.country,
             warning: "Data expressed in milions tonnes"
         })
-        setContentCO2({
-            coal_co2: info.coal_co2,
-            gas_co2: info.gas_co2,
-            oil_co2: info.oil_co2,
-            cement_co2: info.cement_co2,
-            flaring_co2: info.flaring_co2,
-            other_industry_co2: info.other_industry_co2,
+        setContentMain({
+            co2: `CO2 produced: ${info.co2}`,
+            coal_co2: `CO2 produced by coal: ${info.coal_co2}`,
+            gas_co2: `CO2 produced by gas: ${info.gas_co2}`,
+            oil_co2: `CO2 produced by oil: ${info.oil_co2}`,
+            cement_co2: `CO2 produced by cement: ${info.cement_co2}`,
+            flaring_co2: `CO2 produced by flaring: ${info.flaring_co2}`,
+            other_industry_co2: `CO2 produced by other resources: ${info.other_industry_co2}`,
+            co2_growth_prct: `Percentage of growth in CO2 production: ${info.co2_growth_prct}%`,
+            co2_per_capita: `CO2 calculated on population: ${info.co2_per_capita}`,
+            population: `Population: ${info.population}`
         })
-        setContentCO2capita({
-            co2: info.co2,
-            population: info.population,
-            co2_per_capita: info.co2_per_capita
-        })
+
     }
-
-    useEffect( () => {
-        //TODO: Delete continents
-            axios
-                .get("https://inquinapi.derpi.it/api/", {
-                    params: {
-                        year: props.year,
-                        filter: "iso_code,share_global_co2",
-                    },
-                    headers:{
-                        "Content-Type": "application/json"
-                    }
-                })
-                .then((res) => {
-                        setGlobalCO2(
-                            res.data.sort((a, b) =>
-                                a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
-                        )
-                    }
-                )
-
-    },[props.year])
-
-    useEffect( () => {
-        formatData(props.state)
-    },[])
-
-
+    console.log(contentHeader)
+    useImperativeHandle(ref, () => ({
+        updateData(dataState) {
+            formatData(dataState[0])
+            //console.log(info)
+        }
+    }))
 
     const header = [<Typography > {contentHeader.country} </Typography>,<Typography > {contentHeader.year} </Typography>,<Typography  style={{fontSize: 12}} sx={{mb: 2}}>{contentHeader.warning}</Typography>]
-    /*
-    let informationStateCO2 = []
-    Object.entries(contentCO2).forEach( (item) =>{
-        informationStateCO2.push(<Typography variant="body2">{item[1]}</Typography>)
+
+    let informationState = []
+    Object.entries(contentMain).forEach( (item) =>{
+        informationState.push(<Typography variant="body2">{item[1]}</Typography>)
     })
 
-    console.log(contentCO2)
-    */
+
     return(
-      <Card sx={{ minWidth: 400 }} className={"card-container"} style={{backgroundColor: "#F44336", color:"white"}}>
+      <Card className={"card-container"} style={{backgroundColor: "#F44336", color:"white"}}>
         <CardContent >
             <CardHeader title={header}/>
-            <InfoChart dataState={contentCO2} title={'CO2'}/>
+            {informationState}
         </CardContent>
     </Card>
   );

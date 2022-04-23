@@ -2,9 +2,12 @@
     position: fixed;
     top: 0;
     left: 0;
-    flex: 7 1 auto;
+    /*flex: 7 1 auto;*/
+    width: 100vw;
+    height: 100vh;
     transition: all 1s;
-    background-color: green;
+    /*background-color: green;*/
+    z-index: 1001;
 }
 .composable-map {
     transition: all 1s;

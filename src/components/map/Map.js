@@ -29,17 +29,17 @@ const MapChart = (props) => {
             <ComposableMap
                 className="composable-map"
                 data-tip=""
-                projectionConfig={{scale: 750}}
+                projectionConfig={{scale: 200}}
                 width={800}
                 height={600}
-                style={{maxHeight: "85%"}}
+                // style={{maxHeight: "85%"}}
             >
-                {props.infoState.length > 0 && (
-                    <ZoomableGroup center={[13, 45]}>
+                {props.data.infoState.length > 0 && (
+                    <ZoomableGroup center={[25, -10]}>
                         <Geographies geography={geoUrl}>
                             {({geographies}) =>
                                 geographies.map((geo) => {
-                                    const current = props.infoState.find(
+                                    const current = props.data.infoState.find(
                                         (s) => s.iso_code === geo.properties.ISO_A3);
                                     return (
                                         <Geography
@@ -53,7 +53,7 @@ const MapChart = (props) => {
                                                 try {
                                                     const res = await axios.get('https://inquinapi.derpi.it/api/', {
                                                         params: {
-                                                            year: props.yearMap,
+                                                            year: props.data.yearMap,
                                                             iso_code: current.iso_code,
                                                             filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_per_capita,population",
                                                         }

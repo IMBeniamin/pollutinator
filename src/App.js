@@ -1,9 +1,6 @@
 import "./App.css";
 import React, {useEffect, useRef, useState} from "react";
 import Map from "./components/map/Map";
-import MainChart from "./components/charts/main-chart/main_chart";
-import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
-import Card from "./components/infoCard/card";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 
@@ -30,19 +27,14 @@ function App() {
                     )
                 }
             );
-
     }, [yearMap]);
 
-    const hideFunc = (value) => {
-        const divs = document.getElementsByClassName('reactive');
-        for (let a of divs) {
-            a.classList.toggle("collapse");
-            a.addEventListener("transitionend", () => {
-                console.log("runninng stuff")
-                a.classList.toggle("hidden");
-            })
-        } //TODO: wip
-    }
+    document.change = () => {
+      const divs = document.getElementsByClassName('reactive');
+      for (let a of divs) {
+        a.classList.toggle("collapse");
+      }
+    };
     const stateUpdate = (state_iso_code) => {
         console.log("clicked on:",state_iso_code);
         mainChartRef.current.updateData(state_iso_code);
@@ -50,20 +42,18 @@ function App() {
 
     return (
         <div className="App">
-            <Map hide={hideFunc} props={{yearMap, infoState}} stateChange={stateUpdate}/>
-            <div className="reactive-data">
-                <div className="info-card reactive">
-                    {/*<Card/>*/}
-                </div>
+            <Map data={{yearMap, infoState}} stateChange={stateUpdate}/>
+            <div id="info-card" className="info-card reactive">
+                <Card/>
             </div>
-            <div className="map-controls">
-                <div className="slider-container">
+            <div id="charts" className="charts reactive">
+                <div className="map-controls">
+                  <div className="slider-container">
                     <TimeSlider
-                        changeYear={setYearMap}
+                      changeYear={setYearMap}
                     />
+                  </div>
                 </div>
-            </div>
-            <div className="charts reactive">
                 sadfasdf
                 afasdfasd
                 asdfasdfasd
@@ -73,7 +63,7 @@ function App() {
 
                 <div className="graphics">
                     <div className="main-chart">
-                        {/*<MainChart ref={mainChartRef} />*/}
+                        <MainChart ref={mainChartRef} />
                     </div>
                     <div className="secondary-chart">
                         {/*<SecondaryChart />*/}
