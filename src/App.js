@@ -3,6 +3,8 @@ import React, {useEffect, useRef, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
+import Card from "./components/infoCard/card";
+import MainChart from "./components/charts/main-chart/main_chart";
 
 function App() {
     const [yearMap, setYearMap] = useState(2020);
@@ -73,5 +75,4 @@ function App() {
         </div>
     );
 }
-
 export default App;
