@@ -2,7 +2,7 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: stretch;
-  align-items: flex-end;
+  align-items: stretch;
   align-content: stretch;
 
   text-align: center;
@@ -18,16 +18,22 @@
 .info-card {
   flex: 3 3 auto;
   max-width: 25%;
-  transition: 1s all;
-  /*background-color: red;*/
-  z-index: 1005;
 }
 
+.charts {
+  position: relative;
+  flex: 3 3 auto;
+  max-height: 40vh;
+  /*overflow: visible;*/
+}
 .map-controls {
   position: absolute;
-  transform: translateY(-120%);
-  margin: 0 2em;
-  width: 30%;
+  top: 0;
+  right: 0;
+  transform: translateY(-110%);
+  /*margin: 0 2em;*/
+  /*width: 55%;*/
+  width: 300px;
   padding: .2em 3em;
   backdrop-filter: blur(15px);
   border-radius: 2.5em;
@@ -38,21 +44,17 @@
 .slider-container {
   color: whitesmoke !important;
 }
-
-.charts {
-  position: relative;
-  flex: 3 3 auto;
-  min-width: 100vw;
-  max-height: 50vh;
-  transition: 1s all;
-  /*background-color: blue;*/
-  z-index: 1005;
-}
-
 .reactive {
   transition: 1s all;
-  /*overflow: scroll;*/
-  -ms-overflow-style: none;  /* IE and Edge */
+  margin: 1vh 2vw;
+  padding: 1em 2em;
+  backdrop-filter: blur(30px);
+  --webkit-backdrop-filter: blur(30px);
+  border-radius: 3em;
+  background-color: rgba(30, 30, 30, 0.75);
+  color: whitesmoke;
+  z-index: 1005;
+  /*overflow: hidden;*/
 }
 .reactive::-webkit-scrollbar {
   display: none;
@@ -60,11 +62,17 @@
 
 
 #info-card.collapse {
-  transform: translateX(100%);
+  transform: translateX(-110%);
 }
 #charts.collapse {
-  transform: translateY(100%);
+  transform: translateY(103%);
 }
-/*.collapse {*/
-/*   flex-grow: 0 !important;*/
-/* }*/
+
+.charts {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: stretch;
+  padding: 2em;
+}

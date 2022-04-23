@@ -1,15 +1,9 @@
-import React, {memo, useState, useEffect, useRef} from "react";
-import {
-    ZoomableGroup,
-    ComposableMap,
-    Geographies,
-    Geography,
-} from "react-simple-maps";
-import { scaleLinear } from "d3-scale";
-import { interpolateCubehelixLong } from "d3";
-import TimeSlider from "../timeslider/timeSlider";
-import axios from "axios";
+import React, {memo} from "react";
+import {ComposableMap, Geographies, Geography, ZoomableGroup,} from "react-simple-maps";
+import {scaleLinear} from "d3-scale";
+import {interpolateCubehelixLong} from "d3";
 import "./map.css";
+
 const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
@@ -19,19 +13,14 @@ const colorScale = scaleLinear()
     .interpolate(interpolateCubehelixLong.gamma(1));
 
 const MapChart = (props) => {
-    const [dataAboutState, setDataAboutState] = useState({
-        year: undefined,
-        country: undefined,
-    })
-
     return (
         <div className="map-container" id="map-container">
             <ComposableMap
                 className="composable-map"
                 data-tip=""
-                projectionConfig={{scale: 200}}
-                width={800}
-                height={600}
+                projectionConfig={{scale: 650}}
+                width={2000}
+                height={2000}
                 // style={{maxHeight: "85%"}}
             >
                 {props.data.infoState.length > 0 && (
@@ -47,23 +36,10 @@ const MapChart = (props) => {
                                             geography={geo}
                                             onMouseEnter={() => {
                                             }}
-                                            onClick={async () => {
+                                            onClick={() => {
                                                 props.stateChange(current.iso_code);
                                                 console.log(current)
-                                                try {
-                                                    const res = await axios.get('https://inquinapi.derpi.it/api/', {
-                                                        params: {
-                                                            year: props.data.yearMap,
-                                                            iso_code: current.iso_code,
-                                                            filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_per_capita,population",
-                                                        }
-                                                    })
-                                                    setDataAboutState(res.data)
-                                                } catch (err) {
-                                                    console.log('No data')
-                                                }
-                                            }
-                                            }
+                                            }}
                                             onMouseLeave={() => {
                                             }}
                                             style={{
@@ -74,6 +50,7 @@ const MapChart = (props) => {
                                                     stroke: "#000",
                                                     strokeOpacity: 1,
                                                     strokeWidth: 0.01,
+                                                    transition: "all 1s ease",
                                                 },
                                                 hover: {
                                                     fill: current ? colorScale(current.co2) : "#fff",

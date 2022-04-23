@@ -3,13 +3,13 @@ import React, {useEffect, useRef, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
-import Card from "./components/infoCard/card";
+import Card from "./components/infoCard/infoChart/infoChart";
 import MainChart from "./components/charts/main-chart/main_chart";
-
+import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
 function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
-    const mainChartRef = useRef();
+    const [activeCountry, setActiveCountry] = useState('ITA');
 
     useEffect(() => {
         axios
@@ -37,16 +37,12 @@ function App() {
         a.classList.toggle("collapse");
       }
     };
-    const stateUpdate = (state_iso_code) => {
-        console.log("clicked on:",state_iso_code);
-        mainChartRef.current.updateData(state_iso_code);
-    };
 
     return (
         <div className="App">
-            <Map data={{yearMap, infoState}} stateChange={stateUpdate}/>
+            <Map data={{yearMap, infoState}} stateChange={setActiveCountry}/>
             <div id="info-card" className="info-card reactive">
-                <Card/>
+                <Card dataState={infoState}/>
             </div>
             <div id="charts" className="charts reactive">
                 <div className="map-controls">
@@ -56,21 +52,8 @@ function App() {
                     />
                   </div>
                 </div>
-                sadfasdf
-                afasdfasd
-                asdfasdfasd
-                fasdfasdfasdf
-                asdfasdfasdfas
-                dfasdfasdfasdf
-
-                <div className="graphics">
-                    <div className="main-chart">
-                        <MainChart ref={mainChartRef} />
-                    </div>
-                    <div className="secondary-chart">
-                        {/*<SecondaryChart />*/}
-                    </div>
-                </div>
+                <MainChart iso_code={activeCountry}/>
+                <SecondaryChart />
             </div>
         </div>
     );
