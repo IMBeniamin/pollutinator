@@ -1,9 +1,7 @@
 .card-container{
     text-align: left;
     font-family: 'Roboto', sans-serif;
-    color: white;
-}
-
-.card-header {
-    color: white;
+    max-height: 50vh;
+    border: none;
+    color: ivory;
 }

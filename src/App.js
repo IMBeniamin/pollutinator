@@ -1,11 +1,12 @@
 import "./App.css";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
-import Card from "./components/infoCard/infoChart/infoChart";
+import Card from "./components/infoCard/card";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
+
 function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
@@ -42,7 +43,7 @@ function App() {
         <div className="App">
             <Map data={{yearMap, infoState}} stateChange={setActiveCountry}/>
             <div id="info-card" className="info-card reactive">
-                <Card dataState={infoState}/>
+                <Card iso_code={activeCountry} year={yearMap}/>
             </div>
             <div id="charts" className="charts reactive">
                 <div className="map-controls">

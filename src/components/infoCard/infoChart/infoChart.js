@@ -1,48 +1,53 @@
 import React from "react";
-import {ArcElement, Chart as ChartJS} from "chart.js";
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts"
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
+import "./infoChart.css"
 
-ChartJS.register(
-    ArcElement,
-)
 const InfoChart = (props) => {
 
-
-    // const mapColor = {
-    //     "coal_co2": "#FFBE0B",
-    //     "gas_co2": "#FB5607",
-    //     "oil_co2": "#FF006E",
-    //     "cement_co2": "#8338EC",
-    //     "flaring_co2": "#3A86FF",
-    //     "other_industry_co2": "#8EA604"
-    // }
-
-    //TODO: check if colors re different for each different data
-    let mapColor = props.dataState
-    for (let key of mapColor)
-        //                                       rgb(255, 255, 255)
-        mapColor[key] = `#${Math.floor(Math.random() * 16777215).toString(16)}`
-
-    const colorArray = Object.keys(props.dataState).map(x => props.dataState ? mapColor[x] : undefined)
-    const dataChart = {
-        labels: Object.keys(mapColor).length >= 10 ? Object.keys(mapColor) : undefined, //if there are to many labels, no label displayed
-        datasets: [
-            {
-                label: props.title,
-                data: Object.values(props.dataState),
-                backgroundColor: colorArray
-            }
-        ]
-    }
-
-    return (
-        <div className='infoChart-container'>
-            <div className='chart'>
-            </div>
-            <div className='header-and-bar'>
-
+    let data = props.dataState
+    return(
+        <div className={"graph-container"}>
+            <ResponsiveContainer minHeight={155} minWidth={155}>
+                <PieChart width="50%" height={"50%"}>
+                    <Pie
+                        dataKey="value"
+                        isAnimationActive={true}
+                        data={data}
+                        cx={70}
+                        cy={70}
+                        innerRadius={40}
+                        outerRadius={75}
+                        fill="#82ca9d"
+                    >
+                        {
+                            data.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={props.colors[index % props.colors.length]}/>
+                            ))
+                        }
+                    </Pie>
+                    <Tooltip
+                        contentStyle={{
+                            backgroundColor: "rgba(5, 5, 5, 0.6)",
+                            blur: "15px",
+                            borderRadius: "2.5em",
+                            backdropFilter: "blur(5px)",
+                            border: "1px solid #000",
+                        }}
+                        itemStyle={{color: "#ECF0F1"}}
+                    />
+                </PieChart>
+            </ResponsiveContainer>
+            <div className={"bar-container"}>
+                <span>{props.textBar} {props.dataBar}</span>
+                <Box sx={{width: "100%"}}>
+                    <LinearProgress variant="determinate" value={props.dataBar}/>
+                </Box>
             </div>
         </div>
     )
 }
+
 
 export default InfoChart
