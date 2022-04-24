@@ -37,8 +37,12 @@ const MapChart = (props) => {
                                             onMouseEnter={() => {
                                             }}
                                             onClick={() => {
-                                                props.stateChange(current.iso_code);
-                                                console.log(current)
+                                                try {
+                                                    props.stateChange(current.iso_code);
+                                                    console.log(current)
+                                                }catch(err){
+                                                    console.log("No data")
+                                                }
                                             }}
                                             onMouseLeave={() => {
                                             }}
