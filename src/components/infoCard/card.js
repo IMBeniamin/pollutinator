@@ -61,10 +61,10 @@ const InfoCard = (props) => {
 
 
     return (
-        <Card sx={{minWidth: "25%"}} style={{backgroundColor: "transparent"}} variant="outlined" className={"card-container"}>
-            <CardContent style={{color: "white"}}>
+        <Card sx={{minWidth: "25%"}} style={{backgroundColor: "transparent", color:"white", boxShadow:"none", border:"none"}} variant="outlined" className={"card-container"}>
+            <CardContent>
                 <CardHeader title={header}/>
-                 <Chart dataState={contentCO2} textBar={"CO2 produced:"} dataBar={CO2}  colors={colorCO2}/>
+                 <Chart dataState={contentCO2} textBar={"CO2 produced:"} dataBar={CO2}  colors={colorCO2} />
                  <Chart dataState={contentCO2CAP} textBar={"CO2 per capita:"} dataBar={CO2capita}  colors={colorCO2capita} />
             </CardContent>
         </Card>

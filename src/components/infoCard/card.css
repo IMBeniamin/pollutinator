@@ -1,7 +1,9 @@
 .card-container{
     text-align: left;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', open-sans, serif;
     max-height: 50vh;
     border: none;
     color: ivory;
+    box-shadow: none;
+    background-color: transparent;
 }
