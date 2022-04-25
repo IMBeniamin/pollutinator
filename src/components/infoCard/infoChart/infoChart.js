@@ -1,5 +1,5 @@
 import React from "react";
-import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip} from "recharts"
+import {PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, YAxis, XAxis} from "recharts"
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import "./infoChart.css"
@@ -7,6 +7,10 @@ import "./infoChart.css"
 const InfoChart = (props) => {
 
     let data = props.dataState
+    let CO2 = [{
+        "name": props.textBar,
+        "value": props.dataBar
+    }]
     return(
         <div className={"graph-container"}>
             <ResponsiveContainer
@@ -46,10 +50,22 @@ const InfoChart = (props) => {
                 </PieChart>
             </ResponsiveContainer>
             <div className={"bar-container"}>
-                <span>{props.textBar} {props.dataBar}</span>
-                <Box sx={{width: "100%"}}>
-                    <LinearProgress variant="determinate" value={props.dataBar}/>
-                </Box>
+                {/*<span>{CO2[0].name} {CO2[0].value}</span>*/}
+                {/*<BarChart*/}
+                {/*    data={CO2}*/}
+                {/*    layout="vertical"*/}
+                {/*    width={100}*/}
+                {/*    height={100}*/}
+                {/*>*/}
+                {/*    <Bar barSize={10} width={100} height={100} data={CO2} dataKey="value" fill="#009688" isAnimationActive={true}/>*/}
+                {/*</BarChart>*/}
+                <ResponsiveContainer minHeight={5} width="100%" height="100%">
+                    <BarChart data={CO2} layout="vertical">
+                        <XAxis type="number" hide />
+                        <YAxis dataKey="name" hide reversed type="category" />
+                        <Bar barSize={5} dataKey="value" fill="#ff6f31" />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
         </div>
     )

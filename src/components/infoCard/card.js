@@ -30,25 +30,25 @@ const InfoCard = (props) => {
                     }
                 }
         ).then( res => {
-                let info = res.data[0]
+                console.log(res.data[0])
                 setContentHeader({
-                    country: info.country,
-                    year: info.year,
+                    country: res.data[0].country,
+                    year: res.data[0].year,
                     warning: "Data expressed in tons and popoulation is /100000",
                 })
-                setCO2(info.co2)
-                setCO2capita(info.co2_per_capita)
+                setCO2capita(res.data[0].co2_per_capita)
+                setCO2(res.data[0].co2)
                 setContentCO2([
-                    {name:"CO2 produced by coal", value: info.coal_co2},
-                    {name:"CO2 produced by gas", value: info.gas_co2},
-                    {name:"CO2 produced by oil", value: info.oil_co2},
-                    {name:"CO2 produced by cement", value: info.cement_co2},
-                    {name:"CO2 produced by flaring", value: info.flaring_co2},
-                    {name:"CO2 produced by other industry products", value: info.other_industry_co2}
+                    {name:"CO2 produced by coal", value: res.data[0].coal_co2},
+                    {name:"CO2 produced by gas", value: res.data[0].gas_co2},
+                    {name:"CO2 produced by oil", value: res.data[0].oil_co2},
+                    {name:"CO2 produced by cement", value: res.data[0].cement_co2},
+                    {name:"CO2 produced by flaring", value: res.data[0].flaring_co2},
+                    {name:"CO2 produced by other industry products", value: res.data[0].other_industry_co2}
                 ])
                 setContentCO2CAP([
-                    {name: "CO2", value: info.co2,},
-                    {name:"Population", value: info.population/100000},
+                    {name: "CO2", value: res.data[0].co2,},
+                    {name:"Population", value: res.data[0].population/100000},
                 ])
             }
         ).catch( err => {
