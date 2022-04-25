@@ -18,7 +18,7 @@ const InfoCard = (props) => {
 
     const colorCO2capita = ["#1976D2","#607d8b"]
 
-    useEffect(x =>{
+    useEffect(() =>{
         axios
             .get(
             "https://inquinapi.derpi.it/api/",
@@ -47,7 +47,7 @@ const InfoCard = (props) => {
                     {name:"CO2 produced by other industry products", value: res.data[0].other_industry_co2}
                 ])
                 setContentCO2CAP([
-                    {name: "CO2", value: res.data[0].co2,},
+                    {name: "CO2", value: res.data[0].co2},
                     {name:"Population", value: res.data[0].population/100000},
                 ])
             }
