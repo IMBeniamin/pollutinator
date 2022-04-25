@@ -24,7 +24,7 @@ export default function MainChart(props) {
                     params: {
                         iso_code: props.iso_code,
                         year: `1990-2020`,
-                        filter: "year,iso_code,population,ghg_per_capita,gdp"
+                        filter: "year,iso_code,population,ghg_per_capita,gdp,co2_growth_prct"
                     }
                 })
             .then(res => {
@@ -35,7 +35,6 @@ export default function MainChart(props) {
                     element.ghg_per_capita = Math.abs(parseFloat(element.ghg_per_capita)).toFixed(3);
                 });
                 setChartData(set);
-                document.test = chartData;
                 console.log(res.data);
             })
             .catch(err => {
@@ -45,10 +44,10 @@ export default function MainChart(props) {
     return (
         <div className="primary-chart">
             <ResponsiveContainer
-                minHeight="100%"
-                width="100%"
-                height="100%"
-                // aspect={16/9}
+                // minHeight="100%"
+                // width="99%"
+                // height="300px"
+                aspect={16/9}
             >
                 <ComposedChart
                     data={chartData}
@@ -97,6 +96,14 @@ export default function MainChart(props) {
                         stroke="#ffdf00"
                         strokeWidth={2}
                         unit=" k"
+                    />
+                    <Line
+                        type="monotone"
+                        dataKey="co2_growth_prct"
+                        name="CO2 Percent Change"
+                        stroke="#009688"
+                        strokeWidth={2}
+                        unit=" %."
                     />
                 </ComposedChart>
             </ResponsiveContainer>

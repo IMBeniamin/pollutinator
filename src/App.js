@@ -97,11 +97,13 @@ function App() {
                 stateHover={setHoveredCountry}
                 showCard={showCard}
                 hideCard={hideCard}
+                showCharts={showCharts}
+                hideCharts={hideCharts}
             />
-            <div id="info-card" className="reactive info-card">
-                <Card iso_code={hoveredCountry} year={yearMap}/>
+            <div id="info-card" className="reactive info-card collapse">
+                <Card iso_code={activeCountry} year={yearMap}/>
             </div>
-            <div id="charts" className="reactive charts">
+            <div id="charts" className="reactive charts collapse">
                 <div className="map-controls">
                   <div className="slider-container">
                     <TimeSlider
@@ -110,7 +112,7 @@ function App() {
                   </div>
                 </div>
                 <MainChart iso_code={activeCountry}/>
-                <SecondaryChart />
+                <SecondaryChart iso_code={activeCountry} year={yearMap}/>
             </div>
         </div>
     );

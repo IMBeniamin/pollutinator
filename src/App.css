@@ -43,7 +43,7 @@
   background-color: rgba(30, 30, 30, 0.75);
   color: whitesmoke;
   z-index: 1005;
-  /*overflow: hidden;*/
+  overflow: scroll;
 }
 .reactive::-webkit-scrollbar {
   display: none;
@@ -73,7 +73,7 @@
   position: relative;
   flex: 3 3 auto;
   max-height: 40vh;
-  /*overflow: visible;*/
+  overflow: visible;
   display: flex;
   flex-flow: row nowrap;
   justify-content: stretch;

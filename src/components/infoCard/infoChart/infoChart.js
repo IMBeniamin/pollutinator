@@ -29,9 +29,10 @@ const InfoChart = (props) => {
             <ResponsiveContainer
                 // minHeight={155}
                 // minWidth={155}
-                minHeight={5}
-                width="100%"
-                height="100%"
+                // minHeight={15}
+                // width="100%"
+                // height="100%"
+                aspect={1}
             >
                 <PieChart>
                     <Pie

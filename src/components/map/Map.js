@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React, {memo, useEffect} from "react";
 import {ComposableMap, Geographies, Geography, ZoomableGroup,} from "react-simple-maps";
 import {scaleLinear} from "d3-scale";
 import {interpolateCubehelixLong} from "d3";
@@ -35,26 +35,27 @@ const MapChart = (props) => {
                                             key={geo.rsmKey}
                                             geography={geo}
                                             onMouseEnter={() => {
-                                                try {
-                                                    props.showCard();
-                                                    props.stateHover(current.iso_code);
-                                                    console.log(current)
-                                                } catch(err){
-                                                    console.log("No data")
-                                                }
-
+                                                // try {
+                                                //     props.showCard();
+                                                //     props.stateHover(current.iso_code);
+                                                //     console.log(current)
+                                                // } catch(err){
+                                                //     console.log("No data")
+                                                // }
                                             }}
                                             onClick={() => {
                                                 try {
                                                     props.stateChange(current.iso_code);
+                                                    props.showCard();
+                                                    props.showCharts();
                                                     console.log(current)
                                                 } catch(err){
                                                     console.log("No data")
                                                 }
                                             }}
                                             onMouseLeave={() => {
-                                                props.hideCard();
-                                                props.stateHover(null);
+                                                // props.hideCard();
+                                                // props.stateHover(null);
                                             }}
                                             style={{
                                                 default: {
