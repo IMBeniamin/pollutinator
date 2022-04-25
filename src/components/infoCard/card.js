@@ -1,27 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios"
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {CardHeader} from "@mui/material";
 import './card.css'
 import Chart from './infoChart/infoChart'
 
 const InfoCard = (props) => {
-    const [contentHeader,setContentHeader] = useState([])
-    const [contentCO2,setContentCO2] = useState([])
-    const [contentCO2CAP,setContentCO2CAP] = useState([])
-    const [CO2,setCO2] = useState()
+    const [contentHeader, setContentHeader] = useState([])
+    const [contentCO2, setContentCO2] = useState([])
+    const [contentCO2CAP, setContentCO2CAP] = useState([])
+    const [CO2, setCO2] = useState()
     const [CO2capita, setCO2capita] = useState()
 
     const colorCO2 = ["#7E57C2", "#651FFF", "#3498DB", "#F1C40F", "#E74C3C", "#2ECC71"]
 
-    const colorCO2capita = ["#1976D2","#607d8b"]
+    const colorCO2capita = ["#1976D2", "#607d8b"]
 
-    useEffect(() =>{
+    useEffect(() => {
         axios
             .get(
-            "https://inquinapi.derpi.it/api/",
+                "https://inquinapi.derpi.it/api/",
                 {
                     params: {
                         iso_code: props.iso_code,
@@ -29,7 +26,7 @@ const InfoCard = (props) => {
                         filter: "country,year,co2,coal_co2,gas_co2,oil_co2,cement_co2,flaring_co2,other_industry_co2,co2_per_capita,population"
                     }
                 }
-        ).then( res => {
+            ).then(res => {
                 console.log(res.data[0])
                 setContentHeader({
                     country: res.data[0].country,
@@ -39,23 +36,23 @@ const InfoCard = (props) => {
                 setCO2capita(res.data[0].co2_per_capita)
                 setCO2(res.data[0].co2)
                 setContentCO2([
-                    {name:"CO2 produced by coal", value: res.data[0].coal_co2},
-                    {name:"CO2 produced by gas", value: res.data[0].gas_co2},
-                    {name:"CO2 produced by oil", value: res.data[0].oil_co2},
-                    {name:"CO2 produced by cement", value: res.data[0].cement_co2},
-                    {name:"CO2 produced by flaring", value: res.data[0].flaring_co2},
-                    {name:"CO2 produced by other industry products", value: res.data[0].other_industry_co2}
+                    {name: "CO2 produced by coal", value: res.data[0].coal_co2},
+                    {name: "CO2 produced by gas", value: res.data[0].gas_co2},
+                    {name: "CO2 produced by oil", value: res.data[0].oil_co2},
+                    {name: "CO2 produced by cement", value: res.data[0].cement_co2},
+                    {name: "CO2 produced by flaring", value: res.data[0].flaring_co2},
+                    {name: "CO2 produced by other industry products", value: res.data[0].other_industry_co2}
                 ])
                 setContentCO2CAP([
                     {name: "CO2", value: res.data[0].co2},
-                    {name:"Population", value: res.data[0].population/100000},
+                    {name: "Population", value: res.data[0].population / 100000},
                 ])
             }
-        ).catch( err => {
+        ).catch(err => {
                 console.log(err)
             }
         )
-    },[props.year,props.iso_code])
+    }, [props.year, props.iso_code])
 
 
     return (
@@ -88,8 +85,8 @@ const InfoCard = (props) => {
             />
         </div>
 
-  );
-    
+    );
+
 }
 
 export default InfoCard
