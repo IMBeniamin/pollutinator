@@ -9,16 +9,22 @@ const InfoChart = (props) => {
     let data = props.dataState
     return(
         <div className={"graph-container"}>
-            <ResponsiveContainer minHeight={155} minWidth={155}>
-                <PieChart width="50%" height={"50%"}>
+            <ResponsiveContainer
+                // minHeight={155}
+                // minWidth={155}
+                minHeight={5}
+                width="100%"
+                height="100%"
+            >
+                <PieChart>
                     <Pie
                         dataKey="value"
                         isAnimationActive={true}
                         data={data}
-                        cx={70}
-                        cy={70}
-                        innerRadius={40}
-                        outerRadius={75}
+                        // cx={0}
+                        // cy={0}
+                        innerRadius="40%"
+                        outerRadius="85%"
                         fill="#82ca9d"
                     >
                         {

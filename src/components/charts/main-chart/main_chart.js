@@ -45,7 +45,7 @@ export default function MainChart(props) {
     return (
         <div className="primary-chart">
             <ResponsiveContainer
-                minHeight={100}
+                minHeight="100%"
                 width="100%"
                 height="100%"
                 // aspect={16/9}
@@ -63,7 +63,7 @@ export default function MainChart(props) {
                     </defs>
                     <CartesianGrid stroke="rgba(100, 100, 100, 0.45)" strokeDasharray="3 3"/>
                     <XAxis dataKey="year" scale="band"/>
-                    <YAxis/>
+                    <YAxis />
                     <Tooltip
                         contentStyle={{
                             backgroundColor: "rgba(5, 5, 5, 0.6)",

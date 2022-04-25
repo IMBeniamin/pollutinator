@@ -1,9 +1,27 @@
-.card-container{
+.card-header {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+.card-container {
+    flex: 3 3 auto;
+
     text-align: left;
     font-family: 'Roboto', open-sans, serif;
-    max-height: 50vh;
+    /*max-height: 50vh;*/
     border: none;
-    color: ivory;
+    color: whitesmoke;
     box-shadow: none;
     background-color: transparent;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: stretch;
+    align-content: stretch;
 }

@@ -15,17 +15,6 @@
   overflow: hidden;
 }
 
-.info-card {
-  flex: 3 3 auto;
-  max-width: 25%;
-}
-
-.charts {
-  position: relative;
-  flex: 3 3 auto;
-  max-height: 40vh;
-  /*overflow: visible;*/
-}
 .map-controls {
   position: absolute;
   top: 0;
@@ -68,7 +57,23 @@
   transform: translateY(103%);
 }
 
+.info-card {
+  flex: 3 3 auto;
+  max-width: 25%;
+  padding: .5em 1em;
+
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: stretch;
+}
+
 .charts {
+  position: relative;
+  flex: 3 3 auto;
+  max-height: 40vh;
+  /*overflow: visible;*/
   display: flex;
   flex-flow: row nowrap;
   justify-content: stretch;

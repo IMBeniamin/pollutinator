@@ -11,6 +11,7 @@ function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
     const [activeCountry, setActiveCountry] = useState('ITA');
+    const [hoveredCountry, setHoveredCountry] = useState('');
 
     useEffect(() => {
         axios
@@ -32,20 +33,65 @@ function App() {
             );
     }, [yearMap]);
 
-    document.change = () => {
+    const toggleAll = () => {
       const divs = document.getElementsByClassName('reactive');
       for (let a of divs) {
         a.classList.toggle("collapse");
       }
     };
+    const showAll = () => {
+        const divs = document.getElementsByClassName('reactive');
+        for (let a of divs) {
+            a.classList.remove("collapse");
+        }
+    };
+    const hideAll = () => {
+        const divs = document.getElementsByClassName('reactive');
+        for (let a of divs) {
+            a.classList.add("collapse");
+        }
+    };
+
+    const toggleCard = () => {
+      const card = document.getElementById('info-card');
+      card.classList.toggle("collapse");
+    };
+    const showCard = () => {
+      const card = document.getElementById('info-card');
+      card.classList.remove("collapse");
+    };
+    const hideCard = () => {
+        const card = document.getElementById('info-card');
+        card.classList.add("collapse");
+    };
+
+    const toggleCharts = () => {
+        const card = document.getElementById('charts');
+        card.classList.toggle("collapse");
+    };
+    const showCharts = () => {
+        const card = document.getElementById('charts');
+        card.classList.remove("collapse");
+    };
+    const hideCharts = () => {
+        const card = document.getElementById('charts');
+        card.classList.add("collapse");
+    };
+
 
     return (
         <div className="App">
-            <Map data={{yearMap, infoState}} stateChange={setActiveCountry}/>
-            <div id="info-card" className="info-card reactive">
-                <Card iso_code={activeCountry} year={yearMap}/>
+            <Map
+                data={{yearMap, infoState}}
+                stateChange={setActiveCountry}
+                stateHover={setHoveredCountry}
+                showCard={showCard}
+                hideCard={hideCard}
+            />
+            <div id="info-card" className="reactive info-card">
+                <Card iso_code={hoveredCountry} year={yearMap}/>
             </div>
-            <div id="charts" className="charts reactive">
+            <div id="charts" className="reactive charts">
                 <div className="map-controls">
                   <div className="slider-container">
                     <TimeSlider

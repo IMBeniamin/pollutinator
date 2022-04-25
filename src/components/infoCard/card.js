@@ -57,17 +57,36 @@ const InfoCard = (props) => {
         )
     },[props.year,props.iso_code])
 
-    const header = [<Typography > {contentHeader.country} </Typography>,<Typography > {contentHeader.year} </Typography>,<Typography  style={{fontSize: 12}} sx={{mb: 2}}>{contentHeader.warning}</Typography>]
-
 
     return (
-        <Card sx={{minWidth: "25%"}} style={{backgroundColor: "transparent", color:"white", boxShadow:"none", border:"none"}} variant="outlined" className={"card-container"}>
-            <CardContent>
-                <CardHeader title={header}/>
-                 <Chart dataState={contentCO2} textBar={"CO2 produced:"} dataBar={CO2}  colors={colorCO2} />
-                 <Chart dataState={contentCO2CAP} textBar={"CO2 per capita:"} dataBar={CO2capita}  colors={colorCO2capita} />
-            </CardContent>
-        </Card>
+        <div className="card-container">
+            <div className="card-header">
+                <Typography>
+                    {contentHeader.country}
+                </Typography>
+                <Typography>
+                    {contentHeader.year}
+                </Typography>
+                <Typography
+                    style={{fontSize: 12}}
+                    sx={{mb: 2}}
+                >
+                    {contentHeader.warning}
+                </Typography>
+            </div>
+            <Chart
+                dataState={contentCO2}
+                textBar={"CO2 produced:"}
+                dataBar={CO2}
+                colors={colorCO2}
+            />
+            <Chart
+                dataState={contentCO2CAP}
+                textBar={"CO2 per capita:"}
+                dataBar={CO2capita}
+                colors={colorCO2capita}
+            />
+        </div>
 
   );
     
