@@ -77,7 +77,17 @@ function App() {
         const card = document.getElementById('charts');
         card.classList.add("collapse");
     };
-
+    document.controls = {
+        toggleAll,
+        showAll,
+        hideAll,
+        toggleCard,
+        showCard,
+        hideCard,
+        toggleCharts,
+        showCharts,
+        hideCharts
+    };
 
     return (
         <div className="App">
