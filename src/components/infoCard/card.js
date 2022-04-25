@@ -16,7 +16,7 @@ const InfoCard = (props) => {
 
     const colorCO2 = ["#7E57C2", "#651FFF", "#3498DB", "#F1C40F", "#E74C3C", "#2ECC71"]
 
-    const colorCO2capita = ["#1976D2","#009688"]
+    const colorCO2capita = ["#1976D2","#607d8b"]
 
     useEffect(x =>{
         axios
