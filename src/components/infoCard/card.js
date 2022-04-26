@@ -8,8 +8,8 @@ const InfoCard = (props) => {
     const [contentHeader, setContentHeader] = useState([])
     const [contentCO2, setContentCO2] = useState([])
     const [contentCO2CAP, setContentCO2CAP] = useState([])
-    const [CO2, setCO2] = useState()
-    const [CO2capita, setCO2capita] = useState()
+    const [CO2, setCO2] = useState(0)
+    const [CO2capita, setCO2capita] = useState(0)
 
     const colorCO2 = ["#7E57C2", "#651FFF", "#3498DB", "#F1C40F", "#E74C3C", "#2ECC71"]
 
