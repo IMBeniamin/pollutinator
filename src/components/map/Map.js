@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from "react";
+import React, {memo} from "react";
 import {ComposableMap, Geographies, Geography, ZoomableGroup,} from "react-simple-maps";
 import {scaleLinear} from "d3-scale";
 import {interpolateCubehelixLong} from "d3";

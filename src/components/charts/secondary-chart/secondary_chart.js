@@ -1,11 +1,9 @@
-import React, {useEffect, useState, memo} from "react";
+import React, {useEffect, useState} from "react";
 import {
-    Area,
     Bar,
     CartesianGrid,
     ComposedChart,
     Legend,
-    Line,
     ResponsiveContainer,
     Tooltip,
     XAxis,
@@ -15,7 +13,7 @@ import "./secondary_chart.css";
 import axios from "axios";
 export default function SecondaryChart(props) {
     const [chartData, setChartData] = useState();
-    useEffect(x => {
+    useEffect(() => {
     axios
         .get(
             "https://inquinapi.derpi.it/api/",

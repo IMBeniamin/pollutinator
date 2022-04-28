@@ -11,7 +11,7 @@ function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
     const [activeCountry, setActiveCountry] = useState('ITA');
-    const [hoveredCountry, setHoveredCountry] = useState('');
+    const [, setHoveredCountry] = useState('');
 
     useEffect(() => {
         axios

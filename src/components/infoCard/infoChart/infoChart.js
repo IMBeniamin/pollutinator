@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, YAxis, XAxis, Legend,Tooltip} from "recharts"
 import "./infoChart.css"
 
