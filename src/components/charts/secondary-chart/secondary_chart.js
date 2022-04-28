@@ -59,12 +59,19 @@ export default function SecondaryChart(props) {
                 theme: "dark",
                 x:{
                     show:true,
-                }
+                },
             },
             chart:{
                 id:"sharing-global-co2",
-                toolbar:{
-                    show: false
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    dynamicAnimation: {
+                        speed: 700
+                    },
+                },
+                toolbar: {
+                    show: false,
                 }
             },
             xaxis:{
@@ -77,11 +84,24 @@ export default function SecondaryChart(props) {
                     show: false,
                 }
             },
+            yaxis:{
+                labels:{
+                    style:{
+                        colors: ['#FFFFFF']
+                    }
+                }
+            },
             plotOptions: {
                 bar: {
                     distributed: true
                 },
             },
+            legend:{
+                show: true,
+                labels: {
+                    colors: ['#FFFFFF']
+                }
+            }
         },
         series: [
             {
@@ -164,6 +184,7 @@ export default function SecondaryChart(props) {
                 options={chartSetting.options}
                 series={chartSetting.series}
                 type="bar"
+                height="100%"
             />
         </div>
     );
