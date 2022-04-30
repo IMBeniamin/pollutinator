@@ -13,6 +13,7 @@
   max-width: 100%;
   transition: 1s all;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .map-controls {
@@ -30,6 +31,50 @@
 
   z-index: 1006;
 }
+.layout-controls {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+
+  background-color: rgba(30, 30, 30, 0.65);
+
+  min-height: 0;
+  transition: 1s max-height;
+
+  border-top-left-radius: 3em;
+  border-top-right-radius: 3em;
+
+  padding: 0 2em;
+
+  max-height: 0;
+  overflow: hidden;
+
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content:  center;
+
+  z-index: 1001;
+}
+.layout-button {
+  font-size: 1.5em;
+  padding: .4em .5em;
+  z-index: inherit;
+}
+
+.reactive:hover .layout-controls {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -100%);
+
+  max-height: 1000px; /* bigger than it will ever get */
+  z-index: 1006;
+  transition: 1s max-height;
+}
+
 .slider-container {
   color: whitesmoke !important;
 }
@@ -41,9 +86,10 @@
   --webkit-backdrop-filter: blur(30px);
   border-radius: 3em;
   background-color: rgba(30, 30, 30, 0.75);
+  /*background-color: red;*/
   color: whitesmoke;
   z-index: 1005;
-  overflow: scroll;
+  overflow: visible;
 }
 .reactive::-webkit-scrollbar {
   display: none;
@@ -52,9 +98,12 @@
 
 #info-card.collapse {
   transform: translateX(-110%);
+  z-index: 1001;
 }
-#charts.collapse {
+#bottom-reactive.collapse {
   transform: translateY(103%);
+  z-index: 1001
+;
 }
 
 .info-card {
@@ -69,7 +118,7 @@
   align-content: stretch;
 }
 
-.charts {
+#bottom-reactive {
   position: relative;
   flex: 3 3 auto;
   max-height: 40vh;
@@ -80,4 +129,14 @@
   align-items: stretch;
   align-content: stretch;
   padding: 2em;
+  z-index: 1005;
+}
+.charts {
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: stretch;
+  z-index: inherit;
 }

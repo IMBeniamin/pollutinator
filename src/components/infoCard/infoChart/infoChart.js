@@ -56,7 +56,7 @@ const InfoChart = (props) => {
         //     }
         // ]
     };
-    if (!props.dataState) {
+    if (props.dataState === undefined || !props.dataState) {
         return <div/>
     }
     else {

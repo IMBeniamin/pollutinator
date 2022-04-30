@@ -6,6 +6,8 @@ import axios from "axios";
 import Card from "./components/infoCard/card";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faDownLeftAndUpRightToCenter, faArrowsUpDown,faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
     const [yearMap, setYearMap] = useState(2020);
@@ -66,15 +68,15 @@ function App() {
     };
 
     const toggleCharts = () => {
-        const card = document.getElementById('charts');
+        const card = document.getElementById('bottom-reactive');
         card.classList.toggle("collapse");
     };
     const showCharts = () => {
-        const card = document.getElementById('charts');
+        const card = document.getElementById('bottom-reactive');
         card.classList.remove("collapse");
     };
     const hideCharts = () => {
-        const card = document.getElementById('charts');
+        const card = document.getElementById('bottom-reactive');
         card.classList.add("collapse");
     };
     document.controls = {
@@ -103,7 +105,7 @@ function App() {
             <div id="info-card" className="reactive info-card collapse">
                 <Card iso_code={activeCountry} year={yearMap}/>
             </div>
-            <div id="charts" className="reactive charts collapse">
+            <div id="bottom-reactive" className="reactive bottom-reactive collapse">
                 <div className="map-controls">
                   <div className="slider-container">
                     <TimeSlider
@@ -111,8 +113,15 @@ function App() {
                     />
                   </div>
                 </div>
-                <MainChart iso_code={activeCountry}/>
-                <SecondaryChart iso_code={activeCountry} year={yearMap}/>
+                <div className="layout-controls">
+                    <FontAwesomeIcon className="layout-button" icon={faArrowsLeftRight} />
+                    <FontAwesomeIcon className="layout-button" icon={faDownLeftAndUpRightToCenter} />
+                    <FontAwesomeIcon className="layout-button" icon={faArrowsUpDown} />
+                </div>
+                <div className="charts">
+                    <MainChart iso_code={activeCountry}/>
+                    <SecondaryChart iso_code={activeCountry} year={yearMap}/>
+                </div>
             </div>
         </div>
     );
