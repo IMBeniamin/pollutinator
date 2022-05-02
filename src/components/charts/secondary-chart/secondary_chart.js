@@ -26,7 +26,7 @@ export default function SecondaryChart(props) {
     useEffect(x => {
     axios
         .get(
-            "https://inquinapi.derpi.it/api/",
+            "http://inquinapi.derpi.it/api/",
             {
                 params: {
                     iso_code: props.iso_code,

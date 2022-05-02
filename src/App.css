@@ -63,6 +63,14 @@
   font-size: 1.5em;
   padding: .4em .5em;
   z-index: inherit;
+  cursor: pointer;
+  transition: .3s all cubic-bezier(.23,1.64,.84,.96);
+  color: #c19898
+}
+
+.layout-button:hover{
+  transform: scale(1.5);
+  color: whitesmoke;
 }
 
 .reactive:hover .layout-controls {

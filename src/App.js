@@ -17,7 +17,7 @@ function App() {
 
     useEffect(() => {
         axios
-            .get("https://inquinapi.derpi.it/api/", {
+            .get("http://inquinapi.derpi.it/api/", {
                 params: {
                     year: yearMap,
                     filter: "iso_code,co2",
@@ -114,9 +114,9 @@ function App() {
                   </div>
                 </div>
                 <div className="layout-controls">
-                    <FontAwesomeIcon className="layout-button" icon={faArrowsLeftRight} />
-                    <FontAwesomeIcon className="layout-button" icon={faDownLeftAndUpRightToCenter} />
-                    <FontAwesomeIcon className="layout-button" icon={faArrowsUpDown} />
+                    <FontAwesomeIcon onClick={toggleCard} className="layout-button" icon={faArrowsLeftRight} />
+                    <FontAwesomeIcon onClick={toggleAll} className="layout-button" icon={faDownLeftAndUpRightToCenter} />
+                    <FontAwesomeIcon onClick={toggleCharts} className="layout-button" icon={faArrowsUpDown} />
                 </div>
                 <div className="charts">
                     <MainChart iso_code={activeCountry}/>
