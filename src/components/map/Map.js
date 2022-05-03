@@ -49,6 +49,7 @@ const MapChart = (props) => {
                                                     props.showCard();
                                                     props.showCharts();
                                                     console.log(current)
+                                                    props.changeExpandIcon(false)
                                                 } catch(err){
                                                     console.log("No data")
                                                 }

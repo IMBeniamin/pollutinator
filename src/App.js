@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
@@ -7,13 +7,14 @@ import Card from "./components/infoCard/card";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faDownLeftAndUpRightToCenter, faArrowsUpDown,faArrowsLeftRight } from '@fortawesome/free-solid-svg-icons'
+import {faArrowsUpDown,faArrowsLeftRight,faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
 
 function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
     const [activeCountry, setActiveCountry] = useState('ITA');
     const [hoveredCountry, setHoveredCountry] = useState('');
+    const [isExpand, setIsExpand] = useState(true)
 
     useEffect(() => {
         axios
@@ -35,11 +36,13 @@ function App() {
             );
     }, [yearMap]);
 
+
     const toggleAll = () => {
       const divs = document.getElementsByClassName('reactive');
       for (let a of divs) {
         a.classList.toggle("collapse");
       }
+      setIsExpand(!isExpand)
     };
     const showAll = () => {
         const divs = document.getElementsByClassName('reactive');
@@ -101,6 +104,7 @@ function App() {
                 hideCard={hideCard}
                 showCharts={showCharts}
                 hideCharts={hideCharts}
+                changeExpandIcon={setIsExpand}
             />
             <div id="info-card" className="reactive info-card collapse">
                 <Card iso_code={activeCountry} year={yearMap}/>
@@ -115,7 +119,12 @@ function App() {
                 </div>
                 <div className="layout-controls">
                     <FontAwesomeIcon onClick={toggleCard} className="layout-button" icon={faArrowsLeftRight} />
-                    <FontAwesomeIcon onClick={toggleAll} className="layout-button" icon={faDownLeftAndUpRightToCenter} />
+                    {
+                        isExpand ?
+                        <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faExpand} />
+                            :
+                        <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faCompress} />
+                    }
                     <FontAwesomeIcon onClick={toggleCharts} className="layout-button" icon={faArrowsUpDown} />
                 </div>
                 <div className="charts">
