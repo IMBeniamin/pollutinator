@@ -59,18 +59,9 @@
 
   z-index: 1001;
 }
-.layout-button {
-  font-size: 1.5em;
-  padding: .4em .5em;
-  z-index: inherit;
-  cursor: pointer;
-  transition: .3s all cubic-bezier(.23,1.64,.84,.96);
-  color: #c19898
-}
 
-.layout-button:hover{
-  transform: scale(1.5);
-  color: whitesmoke;
+.noHover{
+  pointer-events: none;
 }
 
 .reactive:hover .layout-controls {
@@ -108,10 +99,14 @@
   transform: translateX(-110%);
   z-index: 1001;
 }
+
 #bottom-reactive.collapse {
   transform: translateY(103%);
-  z-index: 1001
-;
+  z-index: 1001;
+}
+
+#dynamicController.collapse{
+  visibility: collapse;
 }
 
 .info-card {
