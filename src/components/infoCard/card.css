@@ -1,15 +1,5 @@
-.card-header {
-    flex: 1 1 auto;
-
-    display: flex;
-    flex-flow: column wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 1rem;
-}
-
 .card-container {
-    flex: 3 3 auto;
+    flex: 1 1 auto;
 
     text-align: left;
     font-family: 'Roboto', open-sans, serif;
@@ -24,4 +14,14 @@
     justify-content: space-around;
     align-items: stretch;
     align-content: stretch;
+}
+
+.card-header {
+    flex: 1 1 auto;
+
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
 }

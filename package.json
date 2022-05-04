@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@amcharts/amcharts5": "^5.1.14",
+    "@amcharts/amcharts4": "^4.10.25",
+    "@amcharts/amcharts5": "^5.2.2",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

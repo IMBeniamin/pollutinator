@@ -14,6 +14,7 @@ import {
 import "./secondary_chart.css";
 import Chart from "react-apexcharts"
 import axios from "axios";
+import '../../../config'
 export default function SecondaryChart(props) {
     const [chartData, setChartData] = useState({
         share_global_cumulative_cement_co2: 0,
@@ -26,7 +27,7 @@ export default function SecondaryChart(props) {
     useEffect(x => {
     axios
         .get(
-            "http://inquinapi.derpi.it/api/",
+            global.config.api_url,
             {
                 params: {
                     iso_code: props.iso_code,

@@ -1,13 +1,14 @@
 import "./App.css";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 import Card from "./components/infoCard/card";
-import MainChart from "./components/charts/main-chart/main_chart";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowsLeftRight, faArrowsUpDown, faCompress, faExpand} from '@fortawesome/free-solid-svg-icons'
+import './config';
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faArrowsUpDown,faArrowsLeftRight,faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
+import MainChart from "./components/charts/main-chart/main_chart";
 
 function App() {
     const [yearMap, setYearMap] = useState(2020);
@@ -16,14 +17,15 @@ function App() {
     const [hoveredCountry, setHoveredCountry] = useState('');
     const [isExpand, setIsExpand] = useState(true)
 
+
     useEffect(() => {
         axios
-            .get("http://inquinapi.derpi.it/api/", {
+            .get(global.config.api_url, {
                 params: {
                     year: yearMap,
                     filter: "iso_code,co2",
                 },
-                headers:{
+                headers: {
                     "Content-Type": "application/json"
                 }
             })
@@ -38,11 +40,11 @@ function App() {
 
 
     const toggleAll = () => {
-      const divs = document.getElementsByClassName('reactive');
-      for (let a of divs) {
-        a.classList.toggle("collapse");
-      }
-      setIsExpand(!isExpand)
+        const divs = document.getElementsByClassName('reactive');
+        for (let a of divs) {
+            a.classList.toggle("collapse");
+        }
+        setIsExpand(!isExpand)
     };
     const showAll = () => {
         const divs = document.getElementsByClassName('reactive');
@@ -58,12 +60,12 @@ function App() {
     };
 
     const toggleCard = () => {
-      const card = document.getElementById('info-card');
-      card.classList.toggle("collapse");
+        const card = document.getElementById('info-card');
+        card.classList.toggle("collapse");
     };
     const showCard = () => {
-      const card = document.getElementById('info-card');
-      card.classList.remove("collapse");
+        const card = document.getElementById('info-card');
+        card.classList.remove("collapse");
     };
     const hideCard = () => {
         const card = document.getElementById('info-card');
@@ -111,21 +113,21 @@ function App() {
             </div>
             <div id="bottom-reactive" className="reactive bottom-reactive collapse">
                 <div className="map-controls">
-                  <div className="slider-container">
-                    <TimeSlider
-                      changeYear={setYearMap}
-                    />
-                  </div>
+                    <div className="slider-container">
+                        <TimeSlider
+                            changeYear={setYearMap}
+                        />
+                    </div>
                 </div>
                 <div className="layout-controls">
-                    <FontAwesomeIcon onClick={toggleCard} className="layout-button" icon={faArrowsLeftRight} />
+                    <FontAwesomeIcon onClick={toggleCard} className="layout-button" icon={faArrowsLeftRight}/>
                     {
                         isExpand ?
-                        <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faExpand} />
+                            <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faExpand}/>
                             :
-                        <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faCompress} />
+                            <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faCompress}/>
                     }
-                    <FontAwesomeIcon onClick={toggleCharts} className="layout-button" icon={faArrowsUpDown} />
+                    <FontAwesomeIcon onClick={toggleCharts} className="layout-button" icon={faArrowsUpDown}/>
                 </div>
                 <div className="charts">
                     <MainChart iso_code={activeCountry}/>
@@ -135,4 +137,5 @@ function App() {
         </div>
     );
 }
+
 export default App;
