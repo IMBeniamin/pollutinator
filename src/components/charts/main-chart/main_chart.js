@@ -1,18 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import Chart from 'react-apexcharts'
-import {
-    Area,
-    Bar,
-    CartesianGrid,
-    ComposedChart,
-    Legend,
-    Line,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis
-} from 'recharts';
 import "./main_chart.css";
 
 export default function MainChart(props) {
@@ -21,10 +9,10 @@ export default function MainChart(props) {
     const [ghgPerCapita, setGhgPerCapita] = useState([]);
     const [year, setYear] = useState([]);
     const [co2GrowthPrct, setCo2GrowthPrct] = useState([]);
-    useEffect(x => {
+    useEffect(() => {
         axios
             .get(
-                "http://inquinapi.derpi.it/api/",
+                "https://inquinapi.derpi.it/api/",
                 {
                     params: {
                         iso_code: props.iso_code,

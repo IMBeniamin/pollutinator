@@ -1,16 +1,4 @@
-import React, {useEffect, useState, memo} from "react";
-import {
-    Area,
-    Bar,
-    CartesianGrid,
-    ComposedChart,
-    Legend,
-    Line,
-    ResponsiveContainer,
-    Tooltip,
-    XAxis,
-    YAxis
-} from 'recharts';
+import React, {useEffect, useState} from "react";
 import "./secondary_chart.css";
 import Chart from "react-apexcharts"
 import axios from "axios";
@@ -23,10 +11,10 @@ export default function SecondaryChart(props) {
         share_global_cumulative_other_co2: 0,
     });
 
-    useEffect(x => {
+    useEffect(() => {
     axios
         .get(
-            "http://inquinapi.derpi.it/api/",
+            "https://inquinapi.derpi.it/api/",
             {
                 params: {
                     iso_code: props.iso_code,

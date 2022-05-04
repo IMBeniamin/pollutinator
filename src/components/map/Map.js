@@ -1,4 +1,4 @@
-import React, {memo, useEffect} from "react";
+import React, {memo} from "react";
 import {ComposableMap, Geographies, Geography, ZoomableGroup,} from "react-simple-maps";
 import {scaleLinear} from "d3-scale";
 import {interpolateCubehelixLong} from "d3";
@@ -46,8 +46,7 @@ const MapChart = (props) => {
                                             onClick={() => {
                                                 try {
                                                     props.stateChange(current.iso_code);
-                                                    props.showCard();
-                                                    props.showCharts();
+                                                    props.showAll();
                                                     console.log(current)
                                                     props.changeExpandIcon(false)
                                                 } catch(err){

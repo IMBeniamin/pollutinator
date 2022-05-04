@@ -1,24 +1,64 @@
 import "./App.css";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 import Card from "./components/infoCard/card";
 import MainChart from "./components/charts/main-chart/main_chart";
 import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faArrowsUpDown,faArrowsLeftRight,faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
+// import {faArrowsUpDown,faArrowsLeftRight,faExpand, faCompress } from '@fortawesome/free-solid-svg-icons'
+import DynamicController from "./components/controls/dynamicLayoutController/DynamicController"
+import LayoutController from "./components/controls/layoutControllers/LayoutController"
+
 
 function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
     const [activeCountry, setActiveCountry] = useState('ITA');
     const [hoveredCountry, setHoveredCountry] = useState('');
-    const [isExpand, setIsExpand] = useState(true)
+    const [isExpandCompress, setIsExpandCompress] = useState(true)
+    const [isVisibleCard, setIsVisibleCard] = useState(false)
+    const [isVisibleBottom, setIsVisibleBottom] = useState(false)
+
+    const delHoverControllers = (isVisibleBottom) =>{
+        if(isVisibleBottom === false){
+            //TODO When the bottom layer is invisible, Controllers are shown
+        }
+    }
+
+    const setVisibilityAllPanels = () => {
+        setIsExpandCompress(!isExpandCompress)
+        setIsVisibleCard(!isVisibleCard)
+        setIsVisibleBottom(!isVisibleBottom)
+    }
+
+    const changeExpandCompressDynamic = (isVisibleCard, isVisibleBottom) => {
+        if(isVisibleCard === true && isVisibleBottom === true) setIsExpandCompress(false)
+        else if(isVisibleCard === false && isVisibleBottom === false) setIsExpandCompress(true)
+    }
+
+    const changeVisibilityCard = () => {
+        setIsVisibleCard(!isVisibleCard)
+    }
+
+    const changeVisibilityBottom = () => {
+        setIsVisibleBottom(!isVisibleBottom)
+
+    }
+
+    const changeVisibilityDynamic = (isVisibleCard, isVisibleBottom) => {
+
+        let dynamicHide = (isVisibleCard === true && isVisibleBottom === false) || (isVisibleCard === false && isVisibleBottom === true)
+        const dynamicController = document.getElementById("dynamicController")
+        dynamicHide ? dynamicController.classList.add("collapse") : dynamicController.classList.remove("collapse")
+
+    }
+
+
 
     useEffect(() => {
         axios
-            .get("http://inquinapi.derpi.it/api/", {
+            .get("https://inquinapi.derpi.it/api/", {
                 params: {
                     year: yearMap,
                     filter: "iso_code,co2",
@@ -37,61 +77,17 @@ function App() {
     }, [yearMap]);
 
 
-    const toggleAll = () => {
-      const divs = document.getElementsByClassName('reactive');
-      for (let a of divs) {
-        a.classList.toggle("collapse");
-      }
-      setIsExpand(!isExpand)
-    };
     const showAll = () => {
         const divs = document.getElementsByClassName('reactive');
         for (let a of divs) {
             a.classList.remove("collapse");
         }
-    };
-    const hideAll = () => {
-        const divs = document.getElementsByClassName('reactive');
-        for (let a of divs) {
-            a.classList.add("collapse");
-        }
+        setIsVisibleCard(true)
+        setIsVisibleBottom(true)
     };
 
-    const toggleCard = () => {
-      const card = document.getElementById('info-card');
-      card.classList.toggle("collapse");
-    };
-    const showCard = () => {
-      const card = document.getElementById('info-card');
-      card.classList.remove("collapse");
-    };
-    const hideCard = () => {
-        const card = document.getElementById('info-card');
-        card.classList.add("collapse");
-    };
-
-    const toggleCharts = () => {
-        const card = document.getElementById('bottom-reactive');
-        card.classList.toggle("collapse");
-    };
-    const showCharts = () => {
-        const card = document.getElementById('bottom-reactive');
-        card.classList.remove("collapse");
-    };
-    const hideCharts = () => {
-        const card = document.getElementById('bottom-reactive');
-        card.classList.add("collapse");
-    };
     document.controls = {
-        toggleAll,
-        showAll,
-        hideAll,
-        toggleCard,
-        showCard,
-        hideCard,
-        toggleCharts,
-        showCharts,
-        hideCharts
+        showAll
     };
 
     return (
@@ -100,11 +96,8 @@ function App() {
                 data={{yearMap, infoState}}
                 stateChange={setActiveCountry}
                 stateHover={setHoveredCountry}
-                showCard={showCard}
-                hideCard={hideCard}
-                showCharts={showCharts}
-                hideCharts={hideCharts}
-                changeExpandIcon={setIsExpand}
+                showAll={showAll}
+                changeExpandIcon={setIsExpandCompress}
             />
             <div id="info-card" className="reactive info-card collapse">
                 <Card iso_code={activeCountry} year={yearMap}/>
@@ -118,14 +111,39 @@ function App() {
                   </div>
                 </div>
                 <div className="layout-controls">
-                    <FontAwesomeIcon onClick={toggleCard} className="layout-button" icon={faArrowsLeftRight} />
-                    {
-                        isExpand ?
-                        <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faExpand} />
+                    <LayoutController componentLinked="info-card"
+                                       type="arrowsLeftRight"
+                                       visibilityCard={changeVisibilityCard}
+                    />
+
+                    <div id="dynamicController" >
+                        {
+                        isExpandCompress ?
+                        <DynamicController componentLinked="reactive"
+                                           type="expand"
+                                           visibleCard={isVisibleCard}
+                                           visibleBottom={isVisibleBottom}
+                                           setVisibilityAll={setVisibilityAllPanels}
+                                           changeExpandCompress={changeExpandCompressDynamic}
+                                           changeVisibility={changeVisibilityDynamic}
+                                           delHover={delHoverControllers}
+                        />
                             :
-                        <FontAwesomeIcon className="layout-button" onClick={toggleAll} icon={faCompress} />
+                        <DynamicController componentLinked="reactive"
+                                           type="compress"
+                                           visibleCard={isVisibleCard}
+                                           visibleBottom={isVisibleBottom}
+                                           setVisibilityAll={setVisibilityAllPanels}
+                                           changeExpandCompress={changeExpandCompressDynamic}
+                                           changeVisibility={changeVisibilityDynamic}
+                                           delHover={delHoverControllers}
+                        />
                     }
-                    <FontAwesomeIcon onClick={toggleCharts} className="layout-button" icon={faArrowsUpDown} />
+                    </div>
+                    <LayoutController componentLinked="bottom-reactive"
+                                       type="arrowsUpDown"
+                                       visibilityBottom={changeVisibilityBottom}
+                    />
                 </div>
                 <div className="charts">
                     <MainChart iso_code={activeCountry}/>

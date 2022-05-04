@@ -16,7 +16,7 @@ const InfoCard = (props) => {
     useEffect(() => {
         axios
             .get(
-                "http://inquinapi.derpi.it/api/",
+                "https://inquinapi.derpi.it/api/",
                 {
                     params: {
                         iso_code: props.iso_code,
