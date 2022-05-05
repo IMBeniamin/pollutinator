@@ -9,6 +9,7 @@ import SecondaryChart from "./components/charts/secondary-chart/secondary_chart"
 import DynamicController from "./components/controls/dynamicLayoutController/DynamicController"
 import LayoutController from "./components/controls/layoutControllers/LayoutController"
 import './config';
+
 function App() {
     const [yearMap, setYearMap] = useState(2020);
     const [infoState, setInfoState] = useState([]);
@@ -51,8 +52,6 @@ function App() {
         dynamicHide ? dynamicController.classList.add("collapse") : dynamicController.classList.remove("collapse")
 
     }
-
-
 
 
     useEffect(() => {

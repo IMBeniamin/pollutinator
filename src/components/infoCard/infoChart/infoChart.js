@@ -3,6 +3,7 @@ import Chart from "react-apexcharts";
 import "./infoChart.css"
 import "../../../config"
 import axios from "axios";
+import {CircularProgress} from "@mui/material";
 
 
 const InfoChart = (props) => {
@@ -63,7 +64,7 @@ const InfoChart = (props) => {
     useEffect(() => {
         getNodes();
     }, [props.id, props.iso_code, props.year]);
-    return isLoading ? <div className='loading'>Loading...</div> : (
+    return isLoading ? <CircularProgress/> : (
         <Chart
             options={chart.options}
             series={chart.series}
