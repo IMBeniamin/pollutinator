@@ -5,6 +5,10 @@ import "./main_chart.css";
 import '../../../config';
 import {CircularProgress} from "@mui/material";
 
+/**
+ * MainChart component used for the left chart in the bottom reactive container
+ * @returns {JSX.Element} Returns the graphic component.
+ */
 const MainChart = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [chartSettings, setChartSettings] = useState(undefined)

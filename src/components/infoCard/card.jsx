@@ -7,14 +7,14 @@ import {Typography} from "@mui/material";
 const InfoCard = (props) => {
     return (
         <div className="card-container">
-            <div className="card-header">
-                <Typography>
-                    {props.iso_code}
-                </Typography>
-                <Typography>
-                    {props.year}
-                </Typography>
-            </div>
+            {/*<div className="card-header">*/}
+            {/*    <Typography>*/}
+            {/*        {props.iso_code}*/}
+            {/*    </Typography>*/}
+            {/*    <Typography>*/}
+            {/*        {props.year}*/}
+            {/*    </Typography>*/}
+            {/*</div>*/}
             <InfoChart
                 year={props.year}
                 iso_code={props.iso_code}
