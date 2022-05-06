@@ -11,7 +11,10 @@ const InfoChart = (props) => {
     const [chart, setChart] = useState(undefined);
     const [isLoading, setLoading] = useState(true);
     const label_formatter = props.label_formatter;
+
     const getNodes = () => {
+        setLoading(true)
+
         axios
             .get(global.config.api_url, {params: props.params})
             .then(res => {
@@ -61,9 +64,11 @@ const InfoChart = (props) => {
                 console.log(err);
             })
     }
+
     useEffect(() => {
         getNodes();
     }, [props.id, props.iso_code, props.year]);
+
     return isLoading ? <CircularProgress/> : (
         <Chart
             options={chart.options}

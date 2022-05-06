@@ -19,8 +19,8 @@ function App() {
     const [isVisibleCard, setIsVisibleCard] = useState(false)
     const [isVisibleBottom, setIsVisibleBottom] = useState(false)
 
-    const delHoverControllers = (isVisibleBottom) =>{
-        if(isVisibleBottom === false){
+    const delHoverControllers = (isVisibleBottom) => {
+        if (isVisibleBottom === false) {
             //TODO When the bottom layer is invisible, Controllers are shown
         }
     }
@@ -32,8 +32,8 @@ function App() {
     }
 
     const changeExpandCompressDynamic = (isVisibleCard, isVisibleBottom) => {
-        if(isVisibleCard === true && isVisibleBottom === true) setIsExpandCompress(false)
-        else if(isVisibleCard === false && isVisibleBottom === false) setIsExpandCompress(true)
+        if (isVisibleCard === true && isVisibleBottom === true) setIsExpandCompress(false)
+        else if (isVisibleCard === false && isVisibleBottom === false) setIsExpandCompress(true)
     }
 
     const changeVisibilityCard = () => {
@@ -110,42 +110,54 @@ function App() {
                 </div>
                 <div className="layout-controls">
                     <LayoutController componentLinked="info-card"
-                                       type="arrowsLeftRight"
-                                       visibilityCard={changeVisibilityCard}
+                                      type="arrowsLeftRight"
+                                      visibilityCard={changeVisibilityCard}
                     />
 
-                    <div id="dynamicController" >
+                    <div id="dynamicController">
                         {
-                        isExpandCompress ?
-                        <DynamicController componentLinked="reactive"
-                                           type="expand"
-                                           visibleCard={isVisibleCard}
-                                           visibleBottom={isVisibleBottom}
-                                           setVisibilityAll={setVisibilityAllPanels}
-                                           changeExpandCompress={changeExpandCompressDynamic}
-                                           changeVisibility={changeVisibilityDynamic}
-                                           delHover={delHoverControllers}
-                        />
-                            :
-                        <DynamicController componentLinked="reactive"
-                                           type="compress"
-                                           visibleCard={isVisibleCard}
-                                           visibleBottom={isVisibleBottom}
-                                           setVisibilityAll={setVisibilityAllPanels}
-                                           changeExpandCompress={changeExpandCompressDynamic}
-                                           changeVisibility={changeVisibilityDynamic}
-                                           delHover={delHoverControllers}
-                        />
-                    }
+                            isExpandCompress ?
+                                <DynamicController componentLinked="reactive"
+                                                   type="expand"
+                                                   visibleCard={isVisibleCard}
+                                                   visibleBottom={isVisibleBottom}
+                                                   setVisibilityAll={setVisibilityAllPanels}
+                                                   changeExpandCompress={changeExpandCompressDynamic}
+                                                   changeVisibility={changeVisibilityDynamic}
+                                                   delHover={delHoverControllers}
+                                />
+                                :
+                                <DynamicController componentLinked="reactive"
+                                                   type="compress"
+                                                   visibleCard={isVisibleCard}
+                                                   visibleBottom={isVisibleBottom}
+                                                   setVisibilityAll={setVisibilityAllPanels}
+                                                   changeExpandCompress={changeExpandCompressDynamic}
+                                                   changeVisibility={changeVisibilityDynamic}
+                                                   delHover={delHoverControllers}
+                                />
+                        }
                     </div>
                     <LayoutController componentLinked="bottom-reactive"
-                                       type="arrowsUpDown"
-                                       visibilityBottom={changeVisibilityBottom}
+                                      type="arrowsUpDown"
+                                      visibilityBottom={changeVisibilityBottom}
                     />
                 </div>
                 <div className="charts">
-                    <MainChart iso_code={activeCountry}/>
-                    <SecondaryChart iso_code={activeCountry} year={yearMap}/>
+                    <MainChart
+                        iso_code={activeCountry}
+                    />
+                    <SecondaryChart
+                        iso_code={activeCountry}
+                        year={yearMap}
+                        label_formatter={{
+                            share_global_cement_co2: "Share global cement CO2",
+                            share_global_coal_co2: "Share global coal CO2",
+                            share_global_gas_co2: "Share global gas CO2",
+                            share_global_oil_co2: "Share global oil CO2",
+                            share_global_other_co2: "Share global other industry products CO2"
+                        }}
+                    />
                 </div>
             </div>
         </div>

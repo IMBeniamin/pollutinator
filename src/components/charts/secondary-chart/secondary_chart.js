@@ -10,6 +10,7 @@ export default function SecondaryChart(props) {
     const [isLoading, setIsLoading] = useState(true)
 
     const getData = () => {
+        setIsLoading(true)
         axios
             .get(
                 global.config.api_url,
@@ -17,12 +18,12 @@ export default function SecondaryChart(props) {
                     params: {
                         iso_code: props.iso_code,
                         year: props.year,
-                        filter: "share_global_cumulative_cement_co2,share_global_cumulative_coal_co2,share_global_cumulative_gas_co2,share_global_cumulative_oil_co2,share_global_cumulative_other_co2"
+                        filter: "share_global_cement_co2,share_global_coal_co2,share_global_gas_co2,share_global_oil_co2,share_global_other_co2"
                     }
                 })
             .then(res => {
-                let resSorted = res.data.sort((a, b) => a.year - b.year);
-                let data = resSorted[0]
+                let data = res.data[0]
+                console.log(props.label_formatter)
                 setChartSetting({
                     options: {
                         tooltip: {
@@ -46,7 +47,7 @@ export default function SecondaryChart(props) {
                                 },
                                 dynamicAnimation: {
                                     enabled: true,
-                                    speed: 100
+                                    speed: 1000
                                 },
                             },
                             background: 'transparent',
@@ -104,8 +105,6 @@ export default function SecondaryChart(props) {
             .catch((err) => {
                 console.log(err)
             })
-
-
     }
 
     useEffect(() => {
@@ -122,13 +121,6 @@ export default function SecondaryChart(props) {
                 <Chart
                     options={chartSetting.options}
                     series={chartSetting.series}
-                    label_formatter={{
-                        share_global_cumulative_cement_co2: "Share global cumulative cement CO2",
-                        share_global_cumulative_coal_co2: "Share global cumulative coal CO2",
-                        share_global_cumulative_gas_co2: "Share global cumulative gas CO2",
-                        share_global_cumulative_oil_co2: "Share global cumulative oil CO2",
-                        share_global_cumulative_other_co2: "Share global cumulative other CO2"
-                    }}
                     type="bar"
                     height="100%"
                 />
