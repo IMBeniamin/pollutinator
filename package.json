@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.25",
-    "@amcharts/amcharts5": "^5.2.2",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
@@ -17,7 +16,6 @@
     "@testing-library/user-event": "^12.8.3",
     "apexcharts": "^3.35.0",
     "axios": "^0.26.1",
-    "chart.js": "^3.7.1",
     "d3": "^7.2.1",
     "d3-fetch": "^3.0.1",
     "d3-scale": "^4.0.2",
@@ -27,8 +25,6 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "react-simple-maps": "^2.3.0",
-    "react-tooltip": "^4.2.21",
-    "recharts": "^2.1.9",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
