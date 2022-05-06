@@ -24,7 +24,11 @@ function App() {
             //TODO When the bottom layer is invisible, Controllers are shown
         }
     }
-
+    /**
+     * Method used to toggle all panels visibility
+     *
+     * @returns {undefined} Does not have a return value.
+     */
     const setVisibilityAllPanels = () => {
         setIsExpandCompress(!isExpandCompress)
         setIsVisibleCard(!isVisibleCard)

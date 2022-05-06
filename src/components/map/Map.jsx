@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React from "react";
 import {ComposableMap, Geographies, Geography, ZoomableGroup,} from "react-simple-maps";
 import {scaleLinear} from "d3-scale";
 import {interpolateCubehelixLong} from "d3";
@@ -49,7 +49,7 @@ const MapChart = (props) => {
                                                     props.showAll();
                                                     console.log(current)
                                                     props.changeExpandIcon(false)
-                                                } catch(err){
+                                                } catch (err) {
                                                     console.log("No data")
                                                 }
                                             }}
@@ -92,4 +92,4 @@ const MapChart = (props) => {
     );
 };
 
-export default memo(MapChart);
+export default MapChart;
