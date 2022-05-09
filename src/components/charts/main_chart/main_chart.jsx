@@ -145,12 +145,10 @@ const MainChart = (props) => {
                     }
                 })
                 setIsLoading(false)
-                console.log(chartSettings)
             })
             .catch(err => {
                 console.log(err);
             });
-        console.log({chartSettings})
     }
 
     useEffect(() => {

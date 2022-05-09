@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
 import './card.css'
 import '../../config';
 import Chart from "react-apexcharts";
@@ -13,13 +13,12 @@ const label_formatter = {
 }
 
 const InfoCard = (props) => {
-    const [chartSeries, setChartSeries] = useState([]);
-    const [chartLabels, setChartLabels] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [series, setSeries] = useState([]);
     const chart = {
         options: {
             chart: {
-                id: props.id,
+                id: 'co2-parts-chart',
                 animations: {
                     enabled: true,
                     easing: 'easeinout',
@@ -50,28 +49,30 @@ const InfoCard = (props) => {
                     }
                 }
             },
-            labels: chartLabels,
-        },
-        series: chartSeries,
+            labels: Object.keys(props.data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key])
+        }
     }
     useEffect(() => {
         setIsLoading(true);
-        setChartLabels(Object.values(props.data));
-        setChartSeries(Object.keys(props.data).map(key => label_formatter[key]));
-        setIsLoading(false)
-    }, [props.year, props.iso_code, props.id, props.data]);
+        setSeries(Object.keys(label_formatter).reduce((values, key) => {
+            if (props.data[key] !== undefined)
+                values.push(props.data[key]);
+            return values;
+            }, []));
+        setIsLoading(false);
+    }, [props.data]);
 
     return !isLoading ? (
         <div className="card-container">
             <Chart
                 options={chart.options}
-                series={chart.series}
+                series={series}
                 type="donut"
                 width="100%"
                 className="mini-chart"
             />
         </div>
-    ) : "";
+    ): <div>Loading...</div>;
 }
 
 export default InfoCard

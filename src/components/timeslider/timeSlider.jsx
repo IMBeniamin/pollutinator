@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Slider from '@mui/material/Slider';
 import './timeSlider.css'
+import {useEffect} from "react";
 
 const TimeSlider = (props) => {
     let timeout;
@@ -47,12 +48,10 @@ const TimeSlider = (props) => {
     };
     return (
         <Slider
-            sx={{
-                color: 'white'
-            }}
+            sx={{ color: 'white'}}
             className="slider"
             aria-label="Year"
-            defaultValue={2020}
+            defaultValue={props.year}
             valueLabelDisplay="auto"
             step={1}
             marks={marks}
