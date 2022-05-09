@@ -25,3 +25,7 @@
     justify-content: space-between;
     padding: 0.5rem 1rem;
 }
+
+.mini-chart {
+    flex: 4 4 auto;
+}

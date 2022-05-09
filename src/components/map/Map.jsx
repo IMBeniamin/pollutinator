@@ -34,23 +34,15 @@ const MapChart = (props) => {
                                         <Geography
                                             key={geo.rsmKey}
                                             geography={geo}
-                                            onMouseEnter={() => {
-                                                // try {
-                                                //     props.showCard();
-                                                //     props.stateHover(current.iso_code);
-                                                //     console.log(current)
-                                                // } catch(err){
-                                                //     console.log("No data")
-                                                // }
-                                            }}
+                                            onMouseEnter={() => {}}
                                             onClick={() => {
                                                 try {
                                                     props.stateChange(current.iso_code);
                                                     props.showAll();
-                                                    console.log(current)
                                                     props.changeExpandIcon(false)
                                                 } catch (err) {
                                                     console.log("No data")
+                                                    console.log(err)
                                                 }
                                             }}
                                             onMouseLeave={() => {

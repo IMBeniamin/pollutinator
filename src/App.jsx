@@ -1,20 +1,22 @@
 import "./App.css";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useLayoutEffect, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 import Card from "./components/infoCard/card";
-import MainChart from "./components/charts/main-chart/main_chart";
-import SecondaryChart from "./components/charts/secondary-chart/secondary_chart";
+import MainChart from "./components/charts/main_chart/main_chart";
+import SecondaryChart from "./components/charts/secondary_chart/secondary_chart";
 import DynamicController from "./components/controls/dynamicLayoutController/DynamicController"
 import LayoutController from "./components/controls/layoutControllers/LayoutController"
 import './config';
 
 function App() {
-    const [yearMap, setYearMap] = useState(2020);
-    const [infoState, setInfoState] = useState([]);
-    const [activeCountry, setActiveCountry] = useState('ITA');
-    const [hoveredCountry, setHoveredCountry] = useState('');
+    // TODO !!!!importante!!!! Fare leggenda per la mappa
+
+    const [activeYear, setActiveYear] = useState(2010);
+    const [yearData, setYearData] = useState([]);
+    const [activeCountry, setActiveCountry] = useState('');
+
     const [isExpandCompress, setIsExpandCompress] = useState(true)
     const [isVisibleCard, setIsVisibleCard] = useState(false)
     const [isVisibleBottom, setIsVisibleBottom] = useState(false)
@@ -34,21 +36,16 @@ function App() {
         setIsVisibleCard(!isVisibleCard)
         setIsVisibleBottom(!isVisibleBottom)
     }
-
     const changeExpandCompressDynamic = (isVisibleCard, isVisibleBottom) => {
         if (isVisibleCard === true && isVisibleBottom === true) setIsExpandCompress(false)
         else if (isVisibleCard === false && isVisibleBottom === false) setIsExpandCompress(true)
     }
-
     const changeVisibilityCard = () => {
         setIsVisibleCard(!isVisibleCard)
     }
-
     const changeVisibilityBottom = () => {
         setIsVisibleBottom(!isVisibleBottom)
-
     }
-
     const changeVisibilityDynamic = (isVisibleCard, isVisibleBottom) => {
 
         let dynamicHide = (isVisibleCard === true && isVisibleBottom === false) || (isVisibleCard === false && isVisibleBottom === true)
@@ -56,29 +53,6 @@ function App() {
         dynamicHide ? dynamicController.classList.add("collapse") : dynamicController.classList.remove("collapse")
 
     }
-
-
-    useEffect(() => {
-        axios
-            .get(global.config.api_url, {
-                params: {
-                    year: yearMap,
-                    filter: "iso_code,co2",
-                },
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then((res) => {
-                    setInfoState(
-                        res.data.sort((a, b) =>
-                            a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
-                    )
-                }
-            );
-    }, [yearMap]);
-
-
     const showAll = () => {
         const divs = document.getElementsByClassName('reactive');
         for (let a of divs) {
@@ -88,27 +62,41 @@ function App() {
         setIsVisibleBottom(true)
     };
 
-    document.controls = {
-        showAll
-    };
+    useLayoutEffect(() => {
+        axios
+            .get(global.config.api_url, {
+                params: {
+                    year: activeYear
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then((res) => {
+                    setYearData(
+                        res.data.sort((a, b) =>
+                            a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
+                    )
+                }
+            );
+    }, [activeYear]);
 
     return (
         <div className="App">
             <Map
-                data={{yearMap, infoState}}
+                data={{yearMap: activeYear, infoState: yearData}}
                 stateChange={setActiveCountry}
-                stateHover={setHoveredCountry}
                 showAll={showAll}
                 changeExpandIcon={setIsExpandCompress}
             />
             <div id="info-card" className="reactive info-card collapse">
-                <Card iso_code={activeCountry} year={yearMap}/>
+                <Card yearData={yearData} iso_code={activeCountry} year={activeYear}/>
             </div>
             <div id="bottom-reactive" className="reactive bottom-reactive collapse">
                 <div className="map-controls">
                     <div className="slider-container">
                         <TimeSlider
-                            changeYear={setYearMap}
+                            changeYear={setActiveYear}
                         />
                     </div>
                 </div>
@@ -153,7 +141,7 @@ function App() {
                     />
                     <SecondaryChart
                         iso_code={activeCountry}
-                        year={yearMap}
+                        year={activeYear}
                         label_formatter={{
                             share_global_cement_co2: "Share global cement CO2",
                             share_global_coal_co2: "Share global coal CO2",
