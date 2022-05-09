@@ -146,17 +146,7 @@ function App() {
                 </div>
                 <div className="charts">
                     {activeCountry ? <MainChart iso_code={activeCountry}/> : null}
-                    {/*<SecondaryChart*/}
-                    {/*    iso_code={activeCountry}*/}
-                    {/*    year={activeYear}*/}
-                    {/*    label_formatter={{*/}
-                    {/*        share_global_cement_co2: "Share global cement CO2",*/}
-                    {/*        share_global_coal_co2: "Share global coal CO2",*/}
-                    {/*        share_global_gas_co2: "Share global gas CO2",*/}
-                    {/*        share_global_oil_co2: "Share global oil CO2",*/}
-                    {/*        share_global_other_co2: "Share global other industry products CO2"*/}
-                    {/*    }}*/}
-                    {/*/>*/}
+                    {activeCountry ? <SecondaryChart data={yearData.filter(obj => obj.year === activeYear && obj.iso_code === activeCountry)[0]} /> : null}
                 </div>
             </div>
         </div>
