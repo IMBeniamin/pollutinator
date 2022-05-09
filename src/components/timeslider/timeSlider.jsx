@@ -42,7 +42,7 @@ const TimeSlider = (props) => {
     const handleChange = (event, value) => {
         timeout && clearTimeout(timeout);
         timeout = setTimeout(() => {
-            console.log('change old year');
+            console.log('new year is ', value);
             updateValue(value);
         }, 1000);
     };

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import Chart from 'react-apexcharts'
 import "./main_chart.css";
 import '../../../config';
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, Typography} from "@mui/material";
 
 /**
  * MainChart component used for the left chart in the bottom reactive container
@@ -34,17 +34,17 @@ const MainChart = (props) => {
                 });
                 setChartSettings({
                     series: [{
-                        name: "GHG per capita",
+                        name: "Greenhouse gasses",
                         type: "line",
                         data: res.data.map(element => element.ghg_per_capita)
                     }, {
-                        name: "GDP per capita",
+                        name: "GDP",
                         type: "line",
                         data: res.data.map(element => element.gdp_per_capita)
                     }, {
-                        name: "CO2 products per capita",
+                        name: "CO2",
                         type: "line",
-                        data: res.data.map(element => element.cement_co2_per_capita)
+                        data: res.data.map(element => element.co2_per_capita)
                     }, {
                         name: "Population",
                         type: "area",
@@ -141,7 +141,18 @@ const MainChart = (props) => {
                                 opacityTo: 0,
                                 stops: [0, 100, 100, 100]
                             }
-                        }
+                        },
+                        // title: {
+                        //     text: "Economical influence on pollution per capita",
+                        //     align: 'center',
+                        //     margin: 30,
+                        //     floating: false,
+                        //     style: {
+                        //         fontSize:  '1em',
+                        //         fontWeight:  'bold',
+                        //         color:  'whitesmoke'
+                        //     },
+                        // }
                     }
                 })
                 setIsLoading(false)
@@ -160,6 +171,9 @@ const MainChart = (props) => {
     return isLoading ? <CircularProgress/> :
         (
             <div className="primary-chart">
+                <Typography variant="h6" className="chart-title">
+                    Economical influence on pollution per capita
+                </Typography>
                 <Chart
                     options={chartSettings.options}
                     series={chartSettings.series}

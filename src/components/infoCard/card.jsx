@@ -15,6 +15,7 @@ const label_formatter = {
 const InfoCard = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [series, setSeries] = useState([]);
+    console.log("data is: ", props.data);
     const chart = {
         options: {
             chart: {
