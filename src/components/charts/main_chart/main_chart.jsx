@@ -14,17 +14,14 @@ const MainChart = (props) => {
     const [chartSettings, setChartSettings] = useState(undefined)
 
     const getData = () => {
+        console.log(props.iso_code)
         axios
             .get(global.config.api_url,
                 {
                     params: {
                         iso_code: props.iso_code,
                         year: `1990-2020`,
-                        filter: "year,iso_code,population,gdp,consumption_co2_per_capita," +
-                            "ghg_per_capita,cement_co2_per_capita,coal_co2_per_capita," +
-                            "flaring_co2_per_capita,gas_co2_per_capita,oil_co2_per_capita" +
-                            "other_co2_per_capita,consumption_co2_per_capita,methane_per_capita" +
-                            "nitrous_oxide_per_capita,energy_per_capita"
+                        filter: "year,iso_code,population,gdp,consumption_co2_per_capita,ghg_per_capita"
                     }
                 })
             .then(res => {
