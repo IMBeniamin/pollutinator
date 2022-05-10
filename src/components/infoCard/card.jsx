@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './card.css'
 import '../../config';
 import Chart from "react-apexcharts";
@@ -13,44 +13,48 @@ const label_formatter = {
 }
 
 const InfoCard = (props) => {
+
     const [isLoading, setIsLoading] = useState(true);
     const [series, setSeries] = useState([]);
-    console.log("data is: ", props.data);
-    const chart = {
-        options: {
-            chart: {
-                id: 'co2-parts-chart',
-                animations: {
-                    enabled: true,
-                    easing: 'easeinout',
-                    speed: 400,
-                    animateGradually: {
+    let chart = undefined;
+    if (props.data === undefined) setIsLoading(true);
+    else {
+        chart = {
+            options: {
+                chart: {
+                    id: 'co2-parts-chart',
+                    animations: {
                         enabled: true,
-                        delay: 550
+                        easing: 'easeinout',
+                        speed: 400,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 550
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 1000
+                        }
                     },
-                    dynamicAnimation: {
-                        enabled: true,
-                        speed: 1000
+                    background: 'transparent',
+                },
+                theme: {
+                    mode: 'dark',
+                    palette: 'palette3',
+                },
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            minAngleToShowLabel: 45
+                        },
+                        donut: {
+                            size: '35%',
+                            background: 'transparent',
+                        }
                     }
                 },
-                background: 'transparent',
-            },
-            theme: {
-                mode: 'dark',
-                palette: 'palette3',
-            },
-            plotOptions: {
-                pie: {
-                    dataLabels: {
-                        minAngleToShowLabel: 45
-                    },
-                    donut: {
-                        size: '35%',
-                        background: 'transparent',
-                    }
-                }
-            },
-            labels: Object.keys(props.data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key])
+                labels: Object.keys(props.data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key])
+            }
         }
     }
     useEffect(() => {
@@ -59,7 +63,7 @@ const InfoCard = (props) => {
             if (props.data[key] !== undefined)
                 values.push(props.data[key]);
             return values;
-            }, []));
+        }, []));
         setIsLoading(false);
     }, [props.data]);
 
@@ -73,7 +77,7 @@ const InfoCard = (props) => {
                 className="mini-chart"
             />
         </div>
-    ): <div>Loading...</div>;
+    ) : <div>Loading...</div>;
 }
 
 export default InfoCard

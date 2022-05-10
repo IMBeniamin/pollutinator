@@ -1,11 +1,10 @@
 import React from "react";
-import "./staticController.css"
+import "./StaticController.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const StaticController = ({componentID, type, callback}) => {
-    console.log("fontawesome type is: ", type)
+const StaticController = ({componentId, type, callback}) => {
     const showOrHide = () => {
-        const component = document.getElementById(componentID)
+        const component = document.getElementById(componentId)
         component.classList.toggle("collapse")
     }
     return (
@@ -13,7 +12,8 @@ const StaticController = ({componentID, type, callback}) => {
             className="layoutControllers"
             icon={["fa", type]} // correct way to assign icons
             onClick={() => {
-                callback(); showOrHide();
+                showOrHide();
+                if (callback !== undefined) callback()
             }}
         />
     )

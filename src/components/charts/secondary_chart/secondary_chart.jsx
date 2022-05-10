@@ -16,20 +16,6 @@ const label_formatter = {
 export default function SecondaryChart(props) {
     const [chartSetting, setChartSetting] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
-
-    // title: {
-    //     text: "Global share of CO2 emissions by industry",
-    //     align: 'center',
-    //     margin: 30,
-    //     floating: false,
-    //     style: {
-    //         fontSize:  '1em',
-    //         fontWeight:  'bold',
-    //         color:  'whitesmoke'
-    //     },
-    // }
-
-
     useEffect(() => {
         setIsLoading(true)
 
@@ -122,7 +108,6 @@ export default function SecondaryChart(props) {
                     //     },
                     // }
                 }
-
             })
         setIsLoading(false)
     }, [props.data]);

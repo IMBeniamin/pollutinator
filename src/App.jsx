@@ -4,21 +4,20 @@ import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 import Card from "./components/infoCard/card";
-import MainChart from "./components/charts/main_chart/main_chart";
 import SecondaryChart from "./components/charts/secondary_chart/secondary_chart";
-import DynamicController from "./components/controls/dynamicLayoutController/DynamicController"
-import StaticController from "./components/controls/staticController/staticController"
-import layoutController from "./components/controls/layoutController/layoutController"
+import LayoutController from "./components/controls/layoutController/LayoutController"
 import './config';
 
 // code for icon handling and registering to allow global use
 import {library} from '@fortawesome/fontawesome-svg-core';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
+
 const iconList = Object.keys(Icons)
     .filter((key) => key !== 'fa' && key !== 'prefix')
     .map((icon) => Icons[icon]);
 
 library.add(...iconList);
+
 // end of icon handling
 
 function App() {
@@ -33,9 +32,12 @@ function App() {
     const countryChanged = (country) => {
         setActiveCountry(country);
     }
+    const yearChanged = (year) => {
+        setIsLoading(true);
+        setActiveYear(year);
+    }
 
     useEffect(() => {
-        setIsLoading(true);
         axios
             .get(global.config.api_url, {
                 params: {
@@ -54,31 +56,37 @@ function App() {
                 }
             );
     }, [activeYear]);
-
     return !isLoading ? (
         <div className="App">
             <Map data={{yearMap: activeYear, infoState: yearData}}
                  countryClicked={countryChanged}
             />
-            <div id="info-card" className="reactive info-card collapse">
-            {
-                activeCountry ? <Card data={yearData.filter(obj => obj.year === activeYear && obj.iso_code === activeCountry)[0]}/> : null
+            {activeCountry !== undefined ?
+                <div id="info-card" className="reactive info-card">
+                    <Card data={activeCountry}/>
+                </div>
+                :
+                null
             }
-            </div>
-            <div id="bottom-card" className="reactive collapse">
+            <div id="bottom-card" className="reactive">
                 <div className="map-controls">
                     <div className="slider-container">
                         <TimeSlider
                             year={activeYear}
-                            changeYear={setActiveYear}
+                            changeYear={yearChanged}
                         />
                     </div>
                 </div>
-                <layoutController/>
-                <div className="charts">
-                    {/*{activeCountry ? <MainChart iso_code={activeCountry}/> : null}*/}
-                    {activeCountry ? <SecondaryChart data={yearData.filter(obj => obj.year === activeYear && obj.iso_code === activeCountry)[0]}/> : null}
-                </div>
+                <LayoutController/>
+                {activeCountry !== undefined ?
+                    <div className="charts">
+                        {/*{activeCountry ? <MainChart iso_code={activeCountry}/> : null}*/}
+                        <SecondaryChart data={activeCountry}/>
+                    </div>
+                    :
+                    null
+                }
+
             </div>
         </div>
     ) : <div className="App">Loading...</div>;
