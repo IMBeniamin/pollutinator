@@ -21,7 +21,6 @@ const MapChart = (props) => {
                 projectionConfig={{scale: 650}}
                 width={2000}
                 height={2000}
-                // style={{maxHeight: "85%"}}
             >
                 {props.data.infoState.length > 0 && (
                     <ZoomableGroup center={[25, -10]}>
@@ -36,14 +35,7 @@ const MapChart = (props) => {
                                             geography={geo}
                                             onMouseEnter={() => {}}
                                             onClick={() => {
-                                                try {
-                                                    props.stateChange(current.iso_code);
-                                                    props.showAll();
-                                                    props.changeExpandIcon(false)
-                                                } catch (err) {
-                                                    console.log("No data")
-                                                    console.log(err)
-                                                }
+                                                props.countryClicked(current);
                                             }}
                                             onMouseLeave={() => {
                                                 // props.hideCard();

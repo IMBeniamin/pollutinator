@@ -103,7 +103,7 @@
     z-index: 1001;
 }
 
-#bottom-reactive.collapse {
+#bottom-card.collapse {
     transform: translateY(103%);
     z-index: 1001;
 }
@@ -124,7 +124,7 @@
     align-content: stretch;
 }
 
-#bottom-reactive {
+#bottom-card {
     position: relative;
     flex: 3 3 auto;
     max-height: 40vh;

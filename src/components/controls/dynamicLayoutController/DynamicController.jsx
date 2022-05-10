@@ -3,8 +3,7 @@ import "./dynamicController.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCompress, faExpand} from '@fortawesome/free-solid-svg-icons'
 
-const DynamicController = (LinkedComponent) => {
-    const {changeVisibility, changeExpandCompress, visibleCard, visibleBottom, componentLinked, type, setVisibilityAll, delHover} = props
+const DynamicController = ({changeVisibility, changeExpandCompress, visibleCard, visibleBottom, componentLinked, type, setVisibilityAll, delHover}) => {
 
     useEffect(() => {
         changeVisibility(visibleCard,visibleBottom) //change visibility icon
