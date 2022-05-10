@@ -3,8 +3,7 @@ import "./dynamicController.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCompress, faExpand} from '@fortawesome/free-solid-svg-icons'
 
-const DynamicController = (props) => {
-
+const DynamicController = (LinkedComponent) => {
     const {changeVisibility, changeExpandCompress, visibleCard, visibleBottom, componentLinked, type, setVisibilityAll, delHover} = props
 
     useEffect(() => {
@@ -25,7 +24,6 @@ const DynamicController = (props) => {
     }
 
     return controlTypes[type]
-
 }
 
 export default DynamicController

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useEffect, useLayoutEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
@@ -9,6 +9,15 @@ import SecondaryChart from "./components/charts/secondary_chart/secondary_chart"
 import DynamicController from "./components/controls/dynamicLayoutController/DynamicController"
 import LayoutController from "./components/controls/layoutControllers/LayoutController"
 import './config';
+
+import {library} from '@fortawesome/fontawesome-svg-core';
+import * as Icons from '@fortawesome/free-solid-svg-icons';
+
+const iconList = Object.keys(Icons)
+    .filter((key) => key !== 'fas' && key !== 'prefix')
+    .map((icon) => Icons[icon]);
+
+library.add(...iconList);
 
 function App() {
     // TODO !!!!importante!!!! Fare leggenda per la mappa
@@ -29,11 +38,6 @@ function App() {
             //TODO When the bottom layer is invisible, Controllers are shown
         }
     }
-    /**
-     * Method used to toggle all panels visibility
-     *
-     * @returns {undefined} Does not have a return value.
-     */
     const setVisibilityAllPanels = () => {
         setIsExpandCompress(!isExpandCompress)
         setIsVisibleCard(!isVisibleCard)
@@ -88,8 +92,7 @@ function App() {
 
     return !isLoading ? (
         <div className="App">
-            <Map
-                data={{yearMap: activeYear, infoState: yearData}}
+            <Map data={{yearMap: activeYear, infoState: yearData}}
                 stateChange={setActiveCountry}
                 showAll={showAll}
                 changeExpandIcon={setIsExpandCompress}
@@ -109,11 +112,12 @@ function App() {
                     </div>
                 </div>
                 <div className="layout-controls">
-                    <LayoutController componentLinked="info-card"
-                                      type="arrowsLeftRight"
-                                      visibilityCard={changeVisibilityCard}
+                    <LayoutController
+                        componentID='info-card'
+                        type="arrowsLeftRight"
+                        callback={changeVisibilityCard}
                     />
-
+                    {/*
                     <div id="dynamicController">
                         {
                             isExpandCompress ?
@@ -138,13 +142,15 @@ function App() {
                                 />
                         }
                     </div>
-                    <LayoutController componentLinked="bottom-reactive"
-                                      type="arrowsUpDown"
-                                      visibilityBottom={changeVisibilityBottom}
+                    */}
+                    <LayoutController
+                        componentLinked="bottom-reactive"
+                        type="arrowsUpDown"
+                        callback={changeVisibilityBottom}
                     />
                 </div>
                 <div className="charts">
-                    {activeCountry ? <MainChart iso_code={activeCountry}/> : null}
+                    {/*{activeCountry ? <MainChart iso_code={activeCountry}/> : null}*/}
                     {activeCountry ? <SecondaryChart data={yearData.filter(obj => obj.year === activeYear && obj.iso_code === activeCountry)[0]}/> : null}
                 </div>
             </div>
