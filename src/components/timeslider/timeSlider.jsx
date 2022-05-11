@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Slider from '@mui/material/Slider';
 import './timeSlider.css'
-import {useEffect} from "react";
 
 const TimeSlider = (props) => {
     let timeout;

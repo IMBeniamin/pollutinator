@@ -13,6 +13,8 @@ const label_formatter = {
     share_global_other_co2: "Other industry products"
 }
 
+const text_color = '#f5f5f5'
+
 export default function SecondaryChart(props) {
     const [chartSetting, setChartSetting] = useState(undefined)
     const [isLoading, setIsLoading] = useState(true)
@@ -74,9 +76,10 @@ export default function SecondaryChart(props) {
                         }
                     },
                     yaxis: {
+                        showForNullSeries: false,
                         labels: {
                             style: {
-                                colors: ['#FFFFFF']
+                                colors: [text_color]
                             }
                         }
                     },
@@ -93,9 +96,16 @@ export default function SecondaryChart(props) {
                     legend: {
                         show: true,
                         labels: {
-                            colors: ['#FFFFFF']
+                            colors: [text_color]
                         }
                     },
+                    noData:{
+                        text: 'Data unavaliable',
+                        style:{
+                            colors: text_color,
+                            fontfamily: 'Roboto'
+                        }
+                    }
                     // title: {
                     //     text: "Global share of CO2 emissions by industry",
                     //     align: 'center',
@@ -110,7 +120,7 @@ export default function SecondaryChart(props) {
                 }
             })
         setIsLoading(false)
-    }, [props.data]);
+    }, [props.data,props.yearData]);
 
     return isLoading ? <CircularProgress/> :
         (
