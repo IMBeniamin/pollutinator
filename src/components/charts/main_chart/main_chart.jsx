@@ -62,9 +62,9 @@ const MainChart = (props) => {
 
     //setting data. Getting 4 random nation and, if activeCountry doesn't have a property, using an empty array
     let dataFormatted = {
-        country: [...getRandom(country, statesCompare), activeCountry.country],
-        trade_co2: [...getRandom(trade_co2, statesCompare), activeCountry.trade_co2],
-        consumption_co2: [...getRandom(consumption_co2, statesCompare), activeCountry.consumption_co2]
+        country: [...getRandom(country, statesCompare), activeCountry.country || []],
+        trade_co2: [...getRandom(trade_co2, statesCompare), activeCountry.trade_co2 || [] ],
+        consumption_co2: [...getRandom(consumption_co2, statesCompare), activeCountry.consumption_co2 || []]
     }
 
     //setting legend: select only trade and consumption co2 properties from dataFormatter and formatting it with label formatter
