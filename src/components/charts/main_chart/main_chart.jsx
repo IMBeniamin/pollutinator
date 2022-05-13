@@ -45,6 +45,7 @@ const MainChart = (props) => {
     const {activeCountry, data} = props
 
     const [series, setSeries] = useState([])
+    const [options, setOptions] = useState({})
 
     //filter data to only nation that have iso_code, trade_co2 and consumption_co2
     let cleanData = data.filter(obj => (obj.iso_code && obj.trade_co2) && obj.consumption_co2)
@@ -73,96 +74,98 @@ const MainChart = (props) => {
         consumption_co2
     }))(dataFormatted)).map(key => label_formatter[key])
 
-
-    const options = {
-        chart: {
-            animations: {
-                enabled: true,
-                easing: "easeinout",
-                speed: 400,
-                animateGradually: {
-                    enabled: true,
-                    delay: 550
-                },
-                dynamicAnimation: {
-                    enabled: true,
-                    speed: 1000
-                },
-            },
-            background: 'transparent',
-            toolbar: {
-                show: false,
-            },
-        },
-        theme: {
-            mode: 'dark',
-            palette: 'palette3'
-        },
-        plotOptions: {
-            bar: {
-                horizontal: true,
-                dataLabels: {
-                    minAngleToShowLabel: 45,
-                    size: '35%',
-                    background: 'transparent',
-                },
-            }
-        },
-        dataLabels: {
-            enabled: true,
-            offsetX: -6,
-            style: {
-                fontSize: '12px',
-                colors: [text_color]
-            }
-        },
-        stroke: {
-            show: true,
-            width: 1,
-            colors: [text_color]
-        },
-        tooltip: {
-            show: true,
-            followCursor: true,
-            fillSeriesColor: true,
-            theme: "dark",
-            x: {
-                show: true,
-            },
-        },
-        xaxis: {
-            categories: dataFormatted.country,
-            labels: {
-                style: {
-                    colors: [text_color]
-                }
-            }
-        },
-        yaxis: {
-            showForNullSeries: false,
-            labels: {
-                style: {
-                    colors: [text_color]
-                }
-            }
-        },
-        legend: {
-            show: true,
-            customLegendItems: legend,
-            labels: {
-                colors: [text_color]
-            }
-        },
-        noData: {
-            text: 'Data unavaliable',
-            style: {
-                colors: [text_color],
-                fontfamily: 'Roboto'
-            }
-        }
-    }
+    
 
     useEffect(() => {
+
+        setOptions({
+            chart: {
+                animations: {
+                    enabled: true,
+                    easing: "easeinout",
+                    speed: 400,
+                    animateGradually: {
+                        enabled: true,
+                        delay: 550
+                    },
+                    dynamicAnimation: {
+                        enabled: true,
+                        speed: 1000
+                    },
+                },
+                background: 'transparent',
+                toolbar: {
+                    show: false,
+                },
+            },
+            theme: {
+                mode: 'dark',
+                palette: 'palette3'
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                    dataLabels: {
+                        minAngleToShowLabel: 45,
+                        size: '35%',
+                        background: 'transparent',
+                    },
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                offsetX: -6,
+                style: {
+                    fontSize: '12px',
+                    colors: [text_color]
+                }
+            },
+            stroke: {
+                show: true,
+                width: 1,
+                colors: [text_color]
+            },
+            tooltip: {
+                show: true,
+                followCursor: true,
+                fillSeriesColor: true,
+                theme: "dark",
+                x: {
+                    show: true,
+                },
+            },
+            xaxis: {
+                categories: dataFormatted.country,
+                labels: {
+                    style: {
+                        colors: [text_color]
+                    }
+                }
+            },
+            yaxis: {
+                showForNullSeries: false,
+                labels: {
+                    style: {
+                        colors: [text_color]
+                    }
+                }
+            },
+            legend: {
+                show: true,
+                customLegendItems: legend,
+                labels: {
+                    colors: [text_color]
+                }
+            },
+            noData: {
+                text: 'Data unavaliable',
+                style: {
+                    colors: [text_color],
+                    fontfamily: 'Roboto'
+                }
+            }
+        })
+
         setSeries([{
             name: "CO2 products by trade",
             data: dataFormatted.trade_co2

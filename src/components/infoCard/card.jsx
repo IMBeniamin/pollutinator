@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './card.css'
 import '../../config';
 import Chart from "react-apexcharts";
+import InfoHeader from "./infoHeader/InfoHeader";
 
 const label_formatter = {
     cement_co2: "Cement",
@@ -13,7 +14,10 @@ const label_formatter = {
 }
 
 const InfoCard = ({data}) => {
+
     const [series, setSeries] = useState([]);
+
+
     const options = {
         chart: {
             id: 'co2-parts-chart',
@@ -59,6 +63,9 @@ const InfoCard = ({data}) => {
 
     return (
         <div className="card-container">
+            <InfoHeader
+                activeCountry={data}
+            />
             <div className="co2-parts-chart-container">
                 <Chart
                     id="co2-parts-chart"
@@ -67,6 +74,7 @@ const InfoCard = ({data}) => {
                     type="donut"
                     width="100%"
                 />
+
             </div>
         </div>
     );

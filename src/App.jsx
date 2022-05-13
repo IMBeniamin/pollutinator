@@ -21,7 +21,7 @@ library.add(...iconList);
 
 // end of icon handling
 
-function App() {
+export default function App() {
     // TODO !!!!importante!!!! Fare leggenda per la mappa
 
     const [isLoading, setIsLoading] = useState(true);
@@ -108,4 +108,3 @@ function App() {
     ) : <div className="app-loading">Loading...</div>;
 }
 
-export default App;

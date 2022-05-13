@@ -1,0 +1,15 @@
+.header{
+    display: grid;
+    /*grid-template-rows: repeat(2,1fr);*/
+    /*grid-template-columns: repeat(2,1fr);*/
+
+    grid-template: repeat(3,1fr) / repeat(2,1fr);
+    justify-items: center;
+    justify-content: space-around;
+    gap: 10fr;
+    font-family: 'Roboto', open-sans, serif;
+}
+
+.country{
+    grid-column: 1/-1
+}
