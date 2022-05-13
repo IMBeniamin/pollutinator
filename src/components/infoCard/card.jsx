@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './card.css'
 import '../../config';
-import Chart from "react-apexcharts";
+import Chart from "react-apexcharts"
 import InfoHeader from "./infoHeader/InfoHeader";
 
 const label_formatter = {
@@ -16,7 +16,6 @@ const label_formatter = {
 const InfoCard = ({data}) => {
 
     const [series, setSeries] = useState([]);
-
 
     const options = {
         chart: {
@@ -72,9 +71,8 @@ const InfoCard = ({data}) => {
                     options={options}
                     series={series}
                     type="donut"
-                    width="100%"
+                    height="100%"
                 />
-
             </div>
         </div>
     );

@@ -32,7 +32,7 @@ export default function App() {
     const [infoCardLayout, setInfoCardLayout] = useState('collapse');
     const [bottomCardLayout, setBottomCardLayout] = useState('collapse');
     const countryChanged = (country) => {
-        setActiveCountry(country);
+        setActiveCountry(country)
         if (infoCardLayout && bottomCardLayout) {
             setInfoCardLayout(null);
             setBottomCardLayout(null);
