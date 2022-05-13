@@ -50,7 +50,8 @@ function App() {
         axios
             .get(global.config.api_url, {
                 params: {
-                    year: activeYear
+                    year: activeYear,
+                    strict: "iso_code"
                 },
                 headers: {
                     "Content-Type": "application/json"
@@ -61,19 +62,19 @@ function App() {
                         res.data.sort((a, b) =>
                             a.iso_code > b.iso_code ? 1 : b.iso_code > a.iso_code ? -1 : 0)
                     );
+                    if (activeCountry) setActiveCountry(res.data.filter((obj) => activeCountry.iso_code === obj.iso_code)[0])
                     setIsLoading(false);
                 }
             );
     }, [activeYear]);
-    useEffect(() => {
-    }, [infoCardLayout, bottomCardLayout]);
     return !isLoading ? (
         <div className="App">
             <Map data={{yearMap: activeYear, infoState: yearData}}
                  countryClicked={countryChanged}
             />
             <div id="info-card" className={"reactive " + infoCardLayout}>
-                {activeCountry ? <Card data={activeCountry}/> : null}
+                {activeCountry ?
+                    <Card data={activeCountry}/> : null}
             </div>
 
             <div id="bottom-card" className={"reactive " + bottomCardLayout}>

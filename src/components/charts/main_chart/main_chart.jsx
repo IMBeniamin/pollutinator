@@ -47,7 +47,6 @@ function getRandom(arr, n) {
         result[n] = arr[x in taken ? taken[x] : x];
         taken[x] = --len in taken ? taken[len] : len;
     }
-    console.log({result})
     return result;
 }
 
@@ -63,7 +62,7 @@ const label_formatter = {
 const MainChart = (props) => {
 
     const {dataActiveCountry, data} = props
-    
+
     const maxVarianceTrade = Math.round(two_pass_variance(data, "trade_co2") / 5)
     const maxVarianceConsumption = Math.round(two_pass_variance(data, "consumption_co2"))
 
@@ -74,8 +73,6 @@ const MainChart = (props) => {
 
     useEffect(() => {
         setIsLoading(true)
-
-        console.log({maxVarianceTrade, maxVarianceConsumption})
 
         //filter data to only nation that have iso_code, trade_co2 and consumption_co2
         let cleanData = data.filter(obj => obj.iso_code && obj.trade_co2 && obj.consumption_co2)
@@ -90,23 +87,22 @@ const MainChart = (props) => {
                 dataTradeConsumptionFiltered.splice(index, 1)
         })
 
-        console.log({dataTradeConsumptionFiltered})
-
         let country = Object.values(dataTradeConsumptionFiltered.map(obj => obj.country))
         let trade_co2 = Object.values(dataTradeConsumptionFiltered.map(obj => obj.trade_co2))
         let consumption_co2 = Object.values(dataTradeConsumptionFiltered.map(obj => obj.consumption_co2))
 
         //setting data. Getting 4 random nation and, if activeCountry doesn't have a property, using an empty array
         let dataFormatted = {
-            country: [...getRandom(country, statesCompare), dataActiveCountry.country || [] ],
+            country: [...getRandom(country, statesCompare), dataActiveCountry.country || []],
             trade_co2: [...getRandom(trade_co2, statesCompare), dataActiveCountry.trade_co2 || []],
             consumption_co2: [...getRandom(consumption_co2, statesCompare), dataActiveCountry.consumption_co2 || []]
         }
 
-        console.log({dataFormatted})
-
         //setting legend: select only trade and consumption co2 properties from dataFormatter and formatting it with label formatter
-        let legend = Object.keys((({ trade_co2, consumption_co2 }) => ({ trade_co2, consumption_co2 }))(dataFormatted)).map(key => label_formatter[key])
+        let legend = Object.keys((({trade_co2, consumption_co2}) => ({
+            trade_co2,
+            consumption_co2
+        }))(dataFormatted)).map(key => label_formatter[key])
 
         setChartSetting({
 
@@ -196,9 +192,9 @@ const MainChart = (props) => {
                         colors: [text_color]
                     }
                 },
-                noData:{
+                noData: {
                     text: 'Data unavaliable',
-                    style:{
+                    style: {
                         colors: text_color,
                         fontfamily: 'Roboto'
                     }
