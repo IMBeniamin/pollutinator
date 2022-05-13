@@ -134,6 +134,7 @@
     justify-content: stretch;
     align-items: stretch;
     align-content: stretch;
+    transform: translateY(100%);
     padding: 2em;
     z-index: 1005;
 }

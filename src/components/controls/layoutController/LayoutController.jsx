@@ -1,54 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './LayoutController.css';
 import StaticController from "../staticController/StaticController";
 import DynamicController from "../dynamicLayoutController/DynamicController";
 
-// const [isExpandCompress, setIsExpandCompress] = useState(true)
-// const [isVisibleCard, setIsVisibleCard] = useState(false)
-// const [isVisibleBottom, setIsVisibleBottom] = useState(false)
 
-// const delHoverControllers = (isVisibleBottom) => {
-//     if (isVisibleBottom === false) {
-//         //TODO When the bottom layer is invisible, Controllers are shown
-//     }
-// }
-// const setVisibilityAllPanels = () => {
-//     setIsExpandCompress(!isExpandCompress)
-//     setIsVisibleCard(!isVisibleCard)
-//     setIsVisibleBottom(!isVisibleBottom)
-// }
-// const changeExpandCompressDynamic = (isVisibleCard, isVisibleBottom) => {
-//     if (isVisibleCard === true && isVisibleBottom === true) setIsExpandCompress(false)
-//     else if (isVisibleCard === false && isVisibleBottom === false) setIsExpandCompress(true)
-// }
-// const changeVisibilityCard = () => {
-//     setIsVisibleCard(!isVisibleCard)
-// }
-// const changeVisibilityBottom = () => {
-//     setIsVisibleBottom(!isVisibleBottom)
-// }
-// const changeVisibilityDynamic = (isVisibleCard, isVisibleBottom) => {
-//
-//     let dynamicHide = (isVisibleCard === true && isVisibleBottom === false) || (isVisibleCard === false && isVisibleBottom === true)
-//     const dynamicController = document.getElementById("dynamicController")
-//     dynamicHide ? dynamicController.classList.add("collapse") : dynamicController.classList.remove("collapse")
-//
-// }
-// const showAll = () => {
-//     const divs = document.getElementsByClassName('reactive');
-//     for (let a of divs) {
-//         a.classList.remove("collapse");
-//     }
-//     setIsVisibleCard(true)
-//     setIsVisibleBottom(true)
-// };
 
-const LayoutController = (props) => {
+const LayoutController = ({layout, setLayout}) => {
+    const editLayout = (id, newState) => {
+        const newLayout = layout;
+        newLayout[id] = newState;
+        setLayout(newLayout);
+    }
+    const toggleLayout = (id) => {
+        const newLayout = layout;
+        newLayout[id] = layout[id] === "collapse" ? "" : "collapse";
+        setLayout(newLayout);
+        console.log("adding class to id: ", id, " new layout is : ", newLayout)
+    }
     return (
         <div className="layoutController">
             <StaticController
-                componentId='info-card'
+                refID="info-card"
                 type="arrows-left-right"
+                toggleLayout={toggleLayout}
             />
             {/*<div id="dynamicController">*/}
             {/*    {*/}
@@ -75,8 +49,9 @@ const LayoutController = (props) => {
             {/*    }*/}
             {/*</div>*/}
             <StaticController
-                componentLinked="bottom-card"
+                refID="bottom-card"
                 type="arrows-up-down"
+                toggleLayout={toggleLayout}
             />
         </div>
     )

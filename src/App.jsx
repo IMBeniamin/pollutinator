@@ -28,7 +28,10 @@ function App() {
     const [activeYear, setActiveYear] = useState(2010);
     const [yearData, setYearData] = useState(undefined);
     const [activeCountry, setActiveCountry] = useState(undefined);
-
+    const [layout, setLayout] = useState({
+        'info-card': '',
+        'bottom-card': ''
+    })
     const countryChanged = (country) => {
         setActiveCountry(country);
     }
@@ -62,13 +65,13 @@ function App() {
                  countryClicked={countryChanged}
             />
             {activeCountry !== undefined ?
-                <div id="info-card" className="reactive info-card">
-                    <Card data={activeCountry}/>
+                <div id="info-card" className={"reactive info-card " + layout['info-card']}>
+                    <Card data={activeCountry} />
                 </div>
                 :
                 null
             }
-            <div id="bottom-card" className="reactive">
+            <div id="bottom-card" className={"reactive " + layout['bottom-card']}>
                 <div className="map-controls">
                     <div className="slider-container">
                         <TimeSlider
@@ -77,7 +80,10 @@ function App() {
                         />
                     </div>
                 </div>
-                <LayoutController/>
+                <LayoutController
+                    layout={layout}
+                    setLayout={setLayout}
+                />
                 {activeCountry !== undefined ?
                     <div className="charts">
                         {/*{activeCountry ? <MainChart iso_code={activeCountry}/> : null}*/}
@@ -86,7 +92,6 @@ function App() {
                     :
                     null
                 }
-
             </div>
         </div>
     ) : <div className="App">Loading...</div>;
