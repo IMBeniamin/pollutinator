@@ -4,6 +4,7 @@ import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 import Card from "./components/infoCard/card";
+import MainChart from "./components/charts/main_chart/main_chart"
 import SecondaryChart from "./components/charts/secondary_chart/secondary_chart";
 import LayoutController from "./components/controls/layoutController/LayoutController"
 import './config';
@@ -86,8 +87,9 @@ function App() {
                 />
                 {activeCountry !== undefined ?
                     <div className="charts">
-                        {/*{activeCountry ? <MainChart iso_code={activeCountry}/> : null}*/}
-                        <SecondaryChart data={activeCountry}/>
+                        {activeCountry ?
+                            <MainChart dataActiveCountry={activeCountry} data={yearData} year={activeYear}/> : null}
+                            <SecondaryChart data={activeCountry} yearData={yearData}/>
                     </div>
                     :
                     null

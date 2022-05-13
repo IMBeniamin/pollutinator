@@ -15,6 +15,7 @@ const label_formatter = {
 const InfoCard = (props) => {
 
     const [isLoading, setIsLoading] = useState(true);
+    const [options, setOptions] = useState({})
     const [series, setSeries] = useState([]);
     let chart = undefined;
     if (props.data === undefined) setIsLoading(true);
@@ -59,6 +60,7 @@ const InfoCard = (props) => {
     }
     useEffect(() => {
         setIsLoading(true);
+        setOptions()
         setSeries(Object.keys(label_formatter).reduce((values, key) => {
             if (props.data[key] !== undefined)
                 values.push(props.data[key]);

@@ -1,8 +1,60 @@
 import React, {useEffect, useState} from "react";
 import "./main_chart.css";
 import '../../../config';
+import {CircularProgress, Typography} from "@mui/material";
+import Chart from "react-apexcharts"
 
-const maxVariance = 0.1
+const statesCompare = 4
+const text_color = '#f5f5f5'
+/**
+ * two_pass_variance is algorithm that calculate a variance dynamically
+ * @param arrObj: array of objects
+ * @param property: the values on which the algorithm relies to calculate the variance
+ * @returns {number}: the variance
+ */
+const two_pass_variance = (arrObj, property) => {
+    if (arrObj.length < 2)
+        return 0
+
+    let cleanData = arrObj.filter(obj => obj.iso_code && obj.trade_co2 && obj.consumption_co2)
+
+    let k, n, ex, ex2
+    k = cleanData[0][property]
+    n = ex = ex2 = 0
+
+    cleanData.forEach(function (obj) {
+        n++
+        ex += obj[property] - k
+        ex2 += (obj[property] - k) * (obj[property] - k)
+    })
+
+    return (ex2 - (ex * ex) / n) / (n - 1)
+}
+
+/**
+ *
+ * @param arr
+ * @param n
+ * @returns {any[]|*}
+ */
+function getRandom(arr, n) {
+    let result = new Array(n), len = arr.length, taken = new Array(len)
+
+    if (n > len)
+        return arr
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    console.log({result})
+    return result;
+}
+
+const label_formatter = {
+    trade_co2: "CO2 by trade",
+    consumption_co2: "CO2 products by consumption"
+}
 
 /**
  * MainChart component used for the left chart in the bottom reactive container
@@ -10,164 +62,168 @@ const maxVariance = 0.1
  */
 const MainChart = (props) => {
 
-    const {data, activeCountry} = props
+    const {dataActiveCountry, data} = props
+    
+    const maxVarianceTrade = Math.round(two_pass_variance(data, "trade_co2") / 5)
+    const maxVarianceConsumption = Math.round(two_pass_variance(data, "consumption_co2"))
+
 
     const [isLoading, setIsLoading] = useState(true);
     const [chartSetting, setChartSetting] = useState(undefined)
-    const [series, setSeries] = useState(undefined)
 
-    // const options = {
-    //     chart: {
-    //         stacked: false,
-    //         animations: {
-    //             enabled: true,
-    //             easing: "easeinout",
-    //             speed: 400,
-    //             animateGradually: {
-    //                 enabled: true,
-    //                 delay: 550
-    //             },
-    //             dynamicAnimation: {
-    //                 enabled: true,
-    //                 speed: 1000
-    //             },
-    //         },
-    //         background: 'transparent',
-    //         toolbar: {
-    //             show: true,
-    //             tools: {
-    //                 download: false,
-    //                 selection: true,
-    //                 zoom: true,
-    //                 zoomin: true,
-    //                 zoomout: true,
-    //                 pan: true,
-    //                 reset: true,
-    //             },
-    //         }
-    //     },
-    //     stroke: {
-    //         width: [2, 2, 2, 2],
-    //         curve: ['smooth', 'smooth', 'smooth', 'straight'],
-    //     },
-    //     plotOptions: {
-    //         bar: {
-    //             dataLabels: {
-    //                 minAngleToShowLabel: 45
-    //             },
-    //             background: 'transparent'
-    //         }
-    //     },
-    //     tooltip: {
-    //         show: true,
-    //         followCursor: true,
-    //         fillSeriesColor: true,
-    //         theme: "dark",
-    //         x: {
-    //             show: true,
-    //         }
-    //
-    //     },
-    //     xaxis: {
-    //         categories: res.data.map(element => element.year),
-    //         position: "bottom",
-    //         labels: {
-    //             show: false,
-    //             style: {
-    //                 colors: ['#FFFFFF']
-    //             }
-    //         },
-    //     },
-    //     yaxis: {
-    //         type: 'numeric',
-    //         labels: {
-    //             style: {
-    //                 colors: ['#FFFFFF']
-    //             }
-    //         }
-    //     },
-    //     legend: {
-    //         show: true,
-    //         labels: {
-    //             colors: ['#FFFFFF']
-    //         }
-    //     },
-    //     theme: {
-    //         mode: 'dark',
-    //         palette: 'palette3'
-    //     },
-    //     fill: {
-    //         opacity: [1, 1, 1, 1],
-    //         type: ["solid", "solid", "solid", "gradient"],
-    //         gradient: {
-    //             inverseColors: false,
-    //             shade: 'light',
-    //             type: "vertical",
-    //             opacityFrom: 0.40,
-    //             opacityTo: 0,
-    //             stops: [0, 100, 100, 100]
-    //         }
-    //     },
-    // }
-
-
-    const getData = () => {
-
-
-        // setChartSettings({
-        //     series: [{
-        //         name: "GDP",
-        //         type: "line",
-        //         data: res.data.map(element => element.gdp_per_capita)
-        //     }, {
-        //         name: "CO2",
-        //         type: "line",
-        //         data: res.data.map(element => element.co2_per_capita)
-        //     }, {
-        //         name: "CO2 per GDP",
-        //         type: "line",
-        //         data: res.data.map(element => element.co2_per_gdp)
-        //     }, {
-        //         name: "Population",
-        //         type: "area",
-        //         data: res.data.map(element => element.population)
-        //     }],
-        //     labels: res.data.map(element => element.year),
-        // })
-
-    }
 
     useEffect(() => {
         setIsLoading(true)
-        console.log(props.iso_code)
 
-        let dataActiveCountry = data.filter(obj => obj.iso_code === activeCountry)[0]
+        console.log({maxVarianceTrade, maxVarianceConsumption})
 
-        console.log(dataActiveCountry)
+        //filter data to only nation that have iso_code, trade_co2 and consumption_co2
+        let cleanData = data.filter(obj => obj.iso_code && obj.trade_co2 && obj.consumption_co2)
 
+        //applying variance to take nation which have similar consumption and trade co2
+        let dataTradeFiltered = cleanData.filter(obj => Math.abs(obj.trade_co2 - dataActiveCountry.trade_co2) <= maxVarianceTrade / 100)
+        let dataTradeConsumptionFiltered = dataTradeFiltered.filter(obj => Math.abs(obj.consumption_co2 - dataActiveCountry.consumption_co2) <= maxVarianceConsumption / 1000 && obj.iso_code)
+
+        //delete activeCountry from data filtered to avoid getting it in random
+        dataTradeConsumptionFiltered.forEach((obj, index) => {
+            if (obj.iso_code === dataActiveCountry.iso_code)
+                dataTradeConsumptionFiltered.splice(index, 1)
+        })
+
+        console.log({dataTradeConsumptionFiltered})
+
+        let country = Object.values(dataTradeConsumptionFiltered.map(obj => obj.country))
+        let trade_co2 = Object.values(dataTradeConsumptionFiltered.map(obj => obj.trade_co2))
+        let consumption_co2 = Object.values(dataTradeConsumptionFiltered.map(obj => obj.consumption_co2))
+
+        //setting data. Getting 4 random nation and, if activeCountry doesn't have a property, using an empty array
         let dataFormatted = {
-            co2_per_gdp: data.filter(obj => Math.abs(obj.co2_per_gdp - dataActiveCountry.co2_per_gdp) <= maxVariance).map(obj => obj.co2_per_gdp),
-            energy_per_gdp: data.filter(obj => Math.abs(obj.energy_per_gdp - dataActiveCountry.energy_per_gdp) <= maxVariance).map(obj => obj.energy_per_gdp)
+            country: [...getRandom(country, statesCompare), dataActiveCountry.country || [] ],
+            trade_co2: [...getRandom(trade_co2, statesCompare), dataActiveCountry.trade_co2 || []],
+            consumption_co2: [...getRandom(consumption_co2, statesCompare), dataActiveCountry.consumption_co2 || []]
         }
-        console.log({dataFormatted})
-        setIsLoading(false)
-    }, [props.iso_code]);
 
-    return null
-}
-//     return isLoading ? <CircularProgress/> :
-//         // (
-//         //     // <div className="primary-chart">
-//         //     //     <Typography variant="h6" className="chart-title">
-//         //     //         Economical influence on pollution per capita
-//         //     //     </Typography>
-//         //     //     <Chart
-//         //     //         options={options}
-//         //     //         series={series}
-//         //     //         height="100%"
-//         //     //     />
-//         //     // </div>
-//         // );
-// };
+        console.log({dataFormatted})
+
+        //setting legend: select only trade and consumption co2 properties from dataFormatter and formatting it with label formatter
+        let legend = Object.keys((({ trade_co2, consumption_co2 }) => ({ trade_co2, consumption_co2 }))(dataFormatted)).map(key => label_formatter[key])
+
+        setChartSetting({
+
+            series: [{
+                name: "CO2 products by trade",
+                data: dataFormatted.trade_co2
+            }, {
+                name: "CO2 products by consumption",
+                data: dataFormatted.consumption_co2
+            }],
+            options: {
+                chart: {
+                    animations: {
+                        enabled: true,
+                        easing: "easeinout",
+                        speed: 400,
+                        animateGradually: {
+                            enabled: true,
+                            delay: 550
+                        },
+                        dynamicAnimation: {
+                            enabled: true,
+                            speed: 1000
+                        },
+                    },
+                    background: 'transparent',
+                    toolbar: {
+                        show: false,
+                    },
+                },
+                theme: {
+                    mode: 'dark',
+                    palette: 'palette3'
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        dataLabels: {
+                            minAngleToShowLabel: 45,
+                            size: '35%',
+                            background: 'transparent',
+                        },
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    offsetX: -6,
+                    style: {
+                        fontSize: '12px',
+                        colors: [text_color]
+                    }
+                },
+                stroke: {
+                    show: true,
+                    width: 1,
+                    colors: [text_color]
+                },
+                tooltip: {
+                    show: true,
+                    followCursor: true,
+                    fillSeriesColor: true,
+                    theme: "dark",
+                    x: {
+                        show: true,
+                    },
+                },
+                xaxis: {
+                    categories: dataFormatted.country,
+                    labels: {
+                        style: {
+                            colors: [text_color]
+                        }
+                    }
+                },
+                yaxis: {
+                    showForNullSeries: false,
+                    labels: {
+                        style: {
+                            colors: [text_color]
+                        }
+                    }
+                },
+                legend: {
+                    show: true,
+                    customLegendItems: legend,
+                    labels: {
+                        colors: [text_color]
+                    }
+                },
+                noData:{
+                    text: 'Data unavaliable',
+                    style:{
+                        colors: text_color,
+                        fontfamily: 'Roboto'
+                    }
+                }
+            },
+        })
+
+        setIsLoading(false)
+    }, [dataActiveCountry]);
+
+
+    return isLoading ? <CircularProgress/> :
+        (
+            <div className="primary-chart">
+                <Typography variant="h6" className="chart-title">
+                    Economical influence on pollution per capita
+                </Typography>
+                <Chart
+                    options={chartSetting.options}
+                    series={chartSetting.series}
+                    height="100%"
+                    type={"bar"}
+                />
+            </div>
+        );
+};
 
 export default MainChart
