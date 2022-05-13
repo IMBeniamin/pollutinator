@@ -11,9 +11,24 @@
     width: 100vw;
     max-height: 100%;
     max-width: 100%;
-    transition: 1s all;
+    transition: .5s all;
     overflow: hidden;
     z-index: 1000;
+}
+
+.app-loading {
+    background: #181a1b;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    /*transition: .2s all;*/
+    overflow: hidden;
+    font-size: 5em;
+    color: #fff;
 }
 
 .map-controls {
@@ -32,55 +47,16 @@
     z-index: 1006;
 }
 
-.layout-controls {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -100%);
-
-    background-color: rgba(30, 30, 30, 0.65);
-
-    min-height: 0;
-    transition: 1s max-height;
-
-    border-top-left-radius: 3em;
-    border-top-right-radius: 3em;
-
-    padding: 0 2em;
-
-    max-height: 0;
-    overflow: hidden;
-
-
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
-
-    z-index: 1001;
-}
-
 .noHover {
     pointer-events: none;
 }
 
-.reactive:hover .layout-controls {
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -100%);
-
-    max-height: 1000px; /* bigger than it will ever get */
-    z-index: 1006;
-    transition: 1s max-height;
-}
-
 .slider-container {
-    color: whitesmoke !important;
+    color: whitesmoke !important; /* overrides library color */
 }
 
 .reactive {
-    transition: 1s all;
+    transition: .5s all;
     margin: 1vh 2vw;
     padding: 1em 2em;
     backdrop-filter: blur(30px);
@@ -90,29 +66,13 @@
     /*background-color: red;*/
     color: whitesmoke;
     z-index: 1005;
-    overflow: visible;
 }
 
 .reactive::-webkit-scrollbar {
     display: none;
 }
 
-
-#info-card.collapse {
-    transform: translateX(-110%);
-    z-index: 1001;
-}
-
-#bottom-card.collapse {
-    transform: translateY(103%);
-    z-index: 1001;
-}
-
-#dynamicController.collapse {
-    visibility: collapse;
-}
-
-.info-card {
+#info-card {
     flex: 3 3 auto;
     max-width: 25%;
     padding: .5em 1em;
@@ -134,9 +94,23 @@
     justify-content: stretch;
     align-items: stretch;
     align-content: stretch;
-    transform: translateY(100%);
+    /*transform: translateY(100%);*/
     padding: 2em;
     z-index: 1005;
+}
+
+#info-card.collapse {
+    transform: translateX(-110%);
+    z-index: 1001;
+}
+
+#bottom-card.collapse {
+    transform: translateY(103%);
+    z-index: 1001;
+}
+
+#dynamicController.collapse {
+    visibility: collapse;
 }
 
 .charts {

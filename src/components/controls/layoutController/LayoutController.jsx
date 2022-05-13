@@ -1,57 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './LayoutController.css';
 import StaticController from "../staticController/StaticController";
-import DynamicController from "../dynamicLayoutController/DynamicController";
 
-
-
-const LayoutController = ({layout, setLayout}) => {
-    const editLayout = (id, newState) => {
-        const newLayout = layout;
-        newLayout[id] = newState;
-        setLayout(newLayout);
-    }
-    const toggleLayout = (id) => {
-        const newLayout = layout;
-        newLayout[id] = layout[id] === "collapse" ? "" : "collapse";
-        setLayout(newLayout);
-        console.log("adding class to id: ", id, " new layout is : ", newLayout)
-    }
+const LayoutController = ({infoCardLayout, bottomCardLayout, setInfoCardLayout, setBottomCardLayout}) => {
     return (
-        <div className="layoutController">
+        <div className={"layout-controls " + (bottomCardLayout ? "shown-layout-controls" : null)}>
             <StaticController
-                refID="info-card"
                 type="arrows-left-right"
-                toggleLayout={toggleLayout}
+                toggleLayout={() => setInfoCardLayout(!infoCardLayout ? 'collapse' : null)}
             />
-            {/*<div id="dynamicController">*/}
-            {/*    {*/}
-            {/*        isExpandCompress ?*/}
-            {/*            <DynamicController componentLinked="reactive"*/}
-            {/*                               type="expand"*/}
-            {/*                               visibleCard={isVisibleCard}*/}
-            {/*                               visibleBottom={isVisibleBottom}*/}
-            {/*                               setVisibilityAll={setVisibilityAllPanels}*/}
-            {/*                               changeExpandCompress={changeExpandCompressDynamic}*/}
-            {/*                               changeVisibility={changeVisibilityDynamic}*/}
-            {/*                               delHover={delHoverControllers}*/}
-            {/*            />*/}
-            {/*            :*/}
-            {/*            <DynamicController componentLinked="reactive"*/}
-            {/*                               type="compress"*/}
-            {/*                               visibleCard={isVisibleCard}*/}
-            {/*                               visibleBottom={isVisibleBottom}*/}
-            {/*                               setVisibilityAll={setVisibilityAllPanels}*/}
-            {/*                               changeExpandCompress={changeExpandCompressDynamic}*/}
-            {/*                               changeVisibility={changeVisibilityDynamic}*/}
-            {/*                               delHover={delHoverControllers}*/}
-            {/*            />*/}
-            {/*    }*/}
-            {/*</div>*/}
+            {infoCardLayout === bottomCardLayout ?
+                <StaticController
+                    type={infoCardLayout ? "fa-expand" : "fa-compress"} // infoCardLayout is equal to bottomCardLayout
+                    toggleLayout={() => {
+                        const opposite = !infoCardLayout ? 'collapse' : null;
+                        setInfoCardLayout(opposite);
+                        setBottomCardLayout(opposite);
+                    }}
+                /> : null}
             <StaticController
-                refID="bottom-card"
                 type="arrows-up-down"
-                toggleLayout={toggleLayout}
+                toggleLayout={() => setBottomCardLayout(!bottomCardLayout ? 'collapse' : null)}
             />
         </div>
     )

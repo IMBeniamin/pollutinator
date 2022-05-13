@@ -6,12 +6,12 @@ import axios from "axios";
 import Card from "./components/infoCard/card";
 import MainChart from "./components/charts/main_chart/main_chart"
 import SecondaryChart from "./components/charts/secondary_chart/secondary_chart";
-import LayoutController from "./components/controls/layoutController/LayoutController"
 import './config';
 
 // code for icon handling and registering to allow global use
 import {library} from '@fortawesome/fontawesome-svg-core';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
+import LayoutController from "./components/controls/layoutController/LayoutController";
 
 const iconList = Object.keys(Icons)
     .filter((key) => key !== 'fa' && key !== 'prefix')
@@ -29,12 +29,17 @@ function App() {
     const [activeYear, setActiveYear] = useState(2010);
     const [yearData, setYearData] = useState(undefined);
     const [activeCountry, setActiveCountry] = useState(undefined);
-    const [layout, setLayout] = useState({
-        'info-card': '',
-        'bottom-card': ''
-    })
+    const [infoCardLayout, setInfoCardLayout] = useState('collapse');
+    const [bottomCardLayout, setBottomCardLayout] = useState('collapse');
     const countryChanged = (country) => {
         setActiveCountry(country);
+        if (infoCardLayout && bottomCardLayout) {
+            setInfoCardLayout(null);
+            setBottomCardLayout(null);
+        } else {
+            if (!infoCardLayout) setInfoCardLayout(null);
+            if (!bottomCardLayout) setBottomCardLayout(null);
+        }
     }
     const yearChanged = (year) => {
         setIsLoading(true);
@@ -60,20 +65,20 @@ function App() {
                 }
             );
     }, [activeYear]);
+    useEffect(() => {
+    }, [infoCardLayout, bottomCardLayout]);
     return !isLoading ? (
         <div className="App">
             <Map data={{yearMap: activeYear, infoState: yearData}}
                  countryClicked={countryChanged}
             />
-            {activeCountry !== undefined ?
-                <div id="info-card" className={"reactive info-card " + layout['info-card']}>
-                    <Card data={activeCountry} />
-                </div>
-                :
-                null
-            }
-            <div id="bottom-card" className={"reactive " + layout['bottom-card']}>
+            <div id="info-card" className={"reactive " + infoCardLayout}>
+                {activeCountry ? <Card data={activeCountry}/> : null}
+            </div>
+
+            <div id="bottom-card" className={"reactive " + bottomCardLayout}>
                 <div className="map-controls">
+                    {/*TODO !!!important!!! Add button with reference to our world in data for source*/}
                     <div className="slider-container">
                         <TimeSlider
                             year={activeYear}
@@ -81,22 +86,24 @@ function App() {
                         />
                     </div>
                 </div>
-                <LayoutController
-                    layout={layout}
-                    setLayout={setLayout}
-                />
-                {activeCountry !== undefined ?
+                {activeCountry ?
+                    <LayoutController
+                        infoCardLayout={infoCardLayout}
+                        bottomCardLayout={bottomCardLayout}
+                        setInfoCardLayout={setInfoCardLayout}
+                        setBottomCardLayout={setBottomCardLayout}
+                    /> : null
+                }
+                {activeCountry ?
                     <div className="charts">
-                        {activeCountry ?
-                            <MainChart dataActiveCountry={activeCountry} data={yearData} year={activeYear}/> : null}
-                            <SecondaryChart data={activeCountry} yearData={yearData}/>
+                        <MainChart dataActiveCountry={activeCountry} data={yearData}/>
+                        <SecondaryChart data={activeCountry} yearData={yearData}/>
                     </div>
-                    :
-                    null
+                    : null
                 }
             </div>
         </div>
-    ) : <div className="App">Loading...</div>;
+    ) : <div className="App app-loading">Loading...</div>;
 }
 
 export default App;

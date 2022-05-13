@@ -2,18 +2,14 @@ import React from "react";
 import "./StaticController.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const StaticController = (props) => {
-    const showOrHide = () => {
-        console.log("printing component id: ", props.refID)
-        props.toggleLayout(props.refID)
-    }
+const StaticController = ({type, toggleLayout, callback}) => {
     return (
         <FontAwesomeIcon
             className="layoutControllers"
-            icon={["fa", props.type]} // correct way to assign icons
+            icon={["fa", type]} // correct way to assign icons
             onClick={() => {
-                showOrHide();
-                if (props.callback !== undefined) props.callback()
+                toggleLayout();
+                if (callback !== undefined) callback()
             }}
         />
     )
