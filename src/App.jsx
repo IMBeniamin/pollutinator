@@ -97,7 +97,7 @@ function App() {
                 }
                 {activeCountry ?
                     <div className="charts">
-                        <MainChart dataActiveCountry={activeCountry} data={yearData}/>
+                        <MainChart activeCountry={activeCountry} data={yearData}/>
                         <SecondaryChart data={activeCountry} yearData={yearData}/>
                     </div>
                     : null
