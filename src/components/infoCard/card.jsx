@@ -59,13 +59,15 @@ const InfoCard = ({data}) => {
 
     return (
         <div className="card-container">
-            <Chart
-                options={options}
-                series={series}
-                type="donut"
-                width="100%"
-                className="mini-chart"
-            />
+            <div className="co2-parts-chart-container">
+                <Chart
+                    id="co2-parts-chart"
+                    options={options}
+                    series={series}
+                    type="donut"
+                    width="100%"
+                />
+            </div>
         </div>
     );
 }

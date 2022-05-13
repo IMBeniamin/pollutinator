@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./main_chart.css";
 import '../../../config';
-import {CircularProgress, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import Chart from "react-apexcharts"
 
 const statesCompare = 4
@@ -105,7 +105,6 @@ const MainChart = (props) => {
         }))(dataFormatted)).map(key => label_formatter[key])
 
         setChartSetting({
-
             series: [{
                 name: "CO2 products by trade",
                 data: dataFormatted.trade_co2
@@ -205,21 +204,23 @@ const MainChart = (props) => {
         setIsLoading(false)
     }, [dataActiveCountry]);
 
-
-    return isLoading ? <CircularProgress/> :
-        (
-            <div className="primary-chart">
-                <Typography variant="h6" className="chart-title">
-                    Economical influence on pollution per capita
-                </Typography>
+    if (isLoading) return <div className="loader"/>;
+    return (
+        <div className="primary-chart">
+            <Typography variant="h6" className="chart-title">
+                Economical influence on pollution per capita
+            </Typography>
+            <div className="primary-chart-container">
                 <Chart
+                    id="primary-chart"
                     options={chartSetting.options}
                     series={chartSetting.series}
+                    type="bar"
                     height="100%"
-                    type={"bar"}
                 />
             </div>
-        );
+        </div>
+    );
 };
 
 export default MainChart

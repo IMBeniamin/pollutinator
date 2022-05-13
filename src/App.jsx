@@ -68,6 +68,7 @@ function App() {
             );
     }, [activeYear]);
     return !isLoading ? (
+        // TODO quando no dati in grafico grafico deve ritornare null e l'altro deve espandersi
         <div className="App">
             <Map data={{yearMap: activeYear, infoState: yearData}}
                  countryClicked={countryChanged}

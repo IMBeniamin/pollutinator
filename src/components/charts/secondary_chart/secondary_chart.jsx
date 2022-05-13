@@ -99,28 +99,17 @@ export default function SecondaryChart(props) {
                             colors: [text_color]
                         }
                     },
-                    noData:{
+                    noData: {
                         text: 'Data unavaliable',
-                        style:{
+                        style: {
                             colors: text_color,
                             fontfamily: 'Roboto'
                         }
                     }
-                    // title: {
-                    //     text: "Global share of CO2 emissions by industry",
-                    //     align: 'center',
-                    //     margin: 30,
-                    //     floating: false,
-                    //     style: {
-                    //         fontSize:  '1em',
-                    //         fontWeight:  'bold',
-                    //         color:  'whitesmoke'
-                    //     },
-                    // }
                 }
             })
         setIsLoading(false)
-    }, [props.data,props.yearData]);
+    }, [props.data, props.yearData]);
 
     return isLoading ? <CircularProgress/> :
         (
@@ -128,12 +117,15 @@ export default function SecondaryChart(props) {
                 <Typography variant="h6" className="chart-title">
                     Global share of CO2 emissions by industry
                 </Typography>
-                <Chart
-                    options={chartSetting.options}
-                    series={chartSetting.series}
-                    type="bar"
-                    height="100%"
-                />
+                <div className="secondary-chart-container">
+                    <Chart
+                        id="secondary-chart"
+                        options={chartSetting.options}
+                        series={chartSetting.series}
+                        type="bar"
+                        height="100%"
+                    />
+                </div>
             </div>
         )
 }

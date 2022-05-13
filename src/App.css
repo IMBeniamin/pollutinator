@@ -33,18 +33,16 @@
 
 .map-controls {
     position: absolute;
-    top: 0;
+    top: -1em;
     right: 0;
-    transform: translateY(-110%);
-    /*margin: 0 2em;*/
-    /*width: 55%;*/
+    transform: translateY(-100%);
     width: 300px;
     padding: .2em 3em;
     backdrop-filter: blur(15px);
     border-radius: 2.5em;
     background-color: rgba(30, 30, 30, 0.65);
-
     z-index: 1006;
+
 }
 
 .noHover {
@@ -57,13 +55,12 @@
 
 .reactive {
     transition: .5s all;
-    margin: 1vh 2vw;
+    margin: .5vh 1.5vw;
     padding: 1em 2em;
     backdrop-filter: blur(30px);
     --webkit-backdrop-filter: blur(30px);
     border-radius: 3em;
     background-color: rgba(30, 30, 30, 0.75);
-    /*background-color: red;*/
     color: whitesmoke;
     z-index: 1005;
 }
@@ -94,7 +91,6 @@
     justify-content: stretch;
     align-items: stretch;
     align-content: stretch;
-    /*transform: translateY(100%);*/
     padding: 2em;
     z-index: 1005;
 }
@@ -121,4 +117,14 @@
     align-items: stretch;
     align-content: stretch;
     z-index: inherit;
+}
+
+@media only screen and (max-width: 850px), (max-height: 550px) {
+    .layout-controller {
+        display: none !important;
+    }
+
+    .reactive {
+        display: none !important;
+    }
 }
