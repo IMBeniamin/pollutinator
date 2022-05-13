@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import "./secondary_chart.css";
 import Chart from "react-apexcharts"
-import {CircularProgress, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import '../../../config'
-// todo add global share co2 in the title
 
 const label_formatter = {
     share_global_cement_co2: "Cement",
@@ -14,119 +13,115 @@ const label_formatter = {
 }
 
 const text_color = '#f5f5f5'
+const seriesName = "CO2 part global share"
 
-export default function SecondaryChart(props) {
-    const [chartSetting, setChartSetting] = useState(undefined)
-    const [isLoading, setIsLoading] = useState(true)
-    useEffect(() => {
-        setIsLoading(true)
-
-        setChartSetting(
-            {
-                series: [{
-                    name: "Sharing global CO2 parts",
-                    data: Object.keys(label_formatter).reduce((values, key) => {
-                        if (props.data[key] !== undefined)
-                            values.push(props.data[key]);
-                        return values;
-                    }, [])
-                }],
-                options: {
-                    tooltip: {
-                        show: true,
-                        followCursor: true,
-                        fillSeriesColor: true,
-                        theme: "dark",
-                        x: {
-                            show: true,
-                        },
-                    },
-                    chart: {
-                        id: "sharing-global-co2",
-                        animations: {
-                            enabled: true,
-                            easing: "easeinout",
-                            speed: 400,
-                            animateGradually: {
-                                enabled: true,
-                                delay: 550
-                            },
-                            dynamicAnimation: {
-                                enabled: true,
-                                speed: 1000
-                            },
-                        },
-                        background: 'transparent',
-                        toolbar: {
-                            show: false,
-                        },
-                    },
-                    theme: {
-                        mode: 'dark',
-                        palette: 'palette3'
-                    },
-                    xaxis: {
-                        categories: Object.keys(props.data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key]),
-                        position: "top",
-                        tooltip: {
-                            enabled: false,
-                        },
-                        labels: {
-                            show: false,
-                        }
-                    },
-                    yaxis: {
-                        showForNullSeries: false,
-                        labels: {
-                            style: {
-                                colors: [text_color]
-                            }
-                        }
-                    },
-                    plotOptions: {
-                        bar: {
-                            dataLabels: {
-                                minAngleToShowLabel: 45,
-                                size: '35%',
-                                background: 'transparent',
-                            },
-                            distributed: true
-                        },
-                    },
-                    legend: {
-                        show: true,
-                        labels: {
-                            colors: [text_color]
-                        }
-                    },
-                    noData: {
-                        text: 'Data unavaliable',
-                        style: {
-                            colors: text_color,
-                            fontfamily: 'Roboto'
-                        }
-                    }
+export default function SecondaryChart({data}) {
+    const [series, setSeries] = useState([{
+        name: seriesName,
+        data: []
+    }])
+    const options = {
+        tooltip: {
+            show: true,
+            followCursor: true,
+            fillSeriesColor: true,
+            theme: "dark",
+            x: {
+                show: true,
+            },
+        },
+        chart: {
+            id: "sharing-global-co2",
+            animations: {
+                enabled: true,
+                easing: "easeinout",
+                speed: 400,
+                animateGradually: {
+                    enabled: true,
+                    delay: 550
+                },
+                dynamicAnimation: {
+                    enabled: true,
+                    speed: 1000
+                },
+            },
+            background: 'transparent',
+            toolbar: {
+                show: false,
+            },
+        },
+        theme: {
+            mode: 'dark',
+            palette: 'palette3'
+        },
+        xaxis: {
+            categories: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key]),
+            position: "top",
+            tooltip: {
+                enabled: false,
+            },
+            labels: {
+                show: false,
+            }
+        },
+        yaxis: {
+            showForNullSeries: false,
+            labels: {
+                style: {
+                    colors: [text_color]
                 }
-            })
-        setIsLoading(false)
-    }, [props.data, props.yearData]);
+            }
+        },
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    minAngleToShowLabel: 45,
+                    size: '35%',
+                    background: 'transparent',
+                },
+                distributed: true
+            },
+        },
+        legend: {
+            show: true,
+            labels: {
+                colors: [text_color]
+            }
+        },
+        noData: {
+            text: 'Data unavaliable',
+            style: {
+                colors: text_color,
+                fontFamily: 'Roboto'
+            }
+        }
+    }
+    useEffect(() => {
+        setSeries([{
+            name: seriesName,
+            data: Object.keys(label_formatter).reduce((values, key) => {
+                if (data[key])
+                    values.push(data[key]);
+                return values;
+            }, [])
+        }])
+    }, [data]);
 
-    return isLoading ? <CircularProgress/> :
-        (
-            <div className="secondary-chart">
-                <Typography variant="h6" className="chart-title">
-                    Global share of CO2 emissions by industry
-                </Typography>
-                <div className="secondary-chart-container">
-                    <Chart
-                        id="secondary-chart"
-                        options={chartSetting.options}
-                        series={chartSetting.series}
-                        type="bar"
-                        height="100%"
-                    />
-                </div>
+    return (
+        <div className="secondary-chart">
+            <Typography variant="h6" className="chart-title">
+                Global share of CO2 emissions by industry
+            </Typography>
+            <div className="secondary-chart-container">
+                <Chart
+                    id="secondary-chart"
+                    options={options}
+                    series={series}
+                    type="bar"
+                    height="100%"
+                />
             </div>
-        )
+        </div>
+    )
 }
 

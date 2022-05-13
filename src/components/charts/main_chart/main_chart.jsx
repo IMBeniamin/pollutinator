@@ -1,70 +1,82 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import "./main_chart.css";
 import '../../../config';
 import {Typography} from "@mui/material";
 import Chart from "react-apexcharts"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const statesCompare = 4
-const maxVarianceTrade = 100
-const maxVarianceConsumption = 1000
 const text_color = '#f5f5f5'
-
-/**
- *
- * @param arr
- * @param n
- * @returns {any[]|*}
- */
-function getRandom(arr, n) {
-    let result = new Array(n), len = arr.length, taken = new Array(len)
-
-    if (n > len)
-        return arr
-    while (n--) {
-        let x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
-    }
-    return result;
-}
-
 const label_formatter = {
     trade_co2: "CO2 by trade",
     consumption_co2: "CO2 products by consumption"
 }
 
+
 /**
  * MainChart component used for the left chart in the bottom reactive container
  * @returns {JSX.Element} Returns the graphic component.
  */
+const MainChart = ({activeCountry, data}) => {
 
-
-
-const MainChart = (props) => {
-
-    const {activeCountry, data} = props
-
-    const [series, setSeries] = useState([])
-
+    const [series, setSeries] = useState([
+        {
+            name: 'trade_co2',
+            data: []
+        },
+        {
+            name: 'consumption_co2',
+            data: []
+        }
+    ])
     //filter data to only nation that have iso_code, trade_co2 and consumption_co2
     let cleanData = data.filter(obj => (obj.iso_code && obj.trade_co2) && obj.consumption_co2)
 
-    //delete activeCountry from data to avoid getting it in random
-    cleanData.splice(cleanData.indexOf(activeCountry), 1)
+    const dynamic_variance_avg_trade_co2 = useMemo(() =>
+            cleanData.map((obj) => obj.trade_co2).reduce((a, b) => Math.abs(a - b), 0) / cleanData.length,
+        [cleanData])
+    const dynamic_variance_trade_co2 = useMemo(() =>
+            Math.abs(activeCountry.trade_co2 - dynamic_variance_avg_trade_co2) / activeCountry.trade_co2 * activeCountry.trade_co2 / 2,
+        [activeCountry, dynamic_variance_avg_trade_co2])
+    console.log("dynamic_variance_trade_co2: ", dynamic_variance_trade_co2)
 
-    //applying variance to take nation which have similar consumption and trade co2
-    let dataTradeFiltered = cleanData.filter(obj => Math.abs(obj.trade_co2 - activeCountry.trade_co2) <= maxVarianceTrade)
-    let dataTradeConsumptionFiltered = dataTradeFiltered.filter(obj => Math.abs(obj.consumption_co2 - activeCountry.consumption_co2) <= maxVarianceConsumption)
+    const variance_tolerant_trade_co2 = cleanData.reduce((pV, cV) => {
+        if (Math.abs(activeCountry.trade_co2 - cV.trade_co2) <= dynamic_variance_trade_co2)
+            pV.push(cV)
+        return pV
+    }, [])
+    console.log("Variance tolerant trade_co2: ", variance_tolerant_trade_co2)
 
-    let country = Object.values(dataTradeConsumptionFiltered.map(obj => obj.country))
-    let trade_co2 = Object.values(dataTradeConsumptionFiltered.map(obj => obj.trade_co2))
-    let consumption_co2 = Object.values(dataTradeConsumptionFiltered.map(obj => obj.consumption_co2))
+
+    const dynamic_variance_avg_consumption_co2_trade_co2 = useMemo(() =>
+            variance_tolerant_trade_co2.map((obj) => obj.consumption_co2).reduce((a, b) => Math.abs(a - b), 0) /
+            variance_tolerant_trade_co2.length,
+        [variance_tolerant_trade_co2])
+    const dynamic_variance_consumption_co2_trade_co2 = useMemo(() =>
+            Math.abs(activeCountry.consumption_co2 - dynamic_variance_avg_consumption_co2_trade_co2) /
+            activeCountry.consumption_co2 * activeCountry.consumption_co2 / 2,
+        [activeCountry.consumption_co2, dynamic_variance_avg_consumption_co2_trade_co2])
+    console.log("dynamic_variance_consumption_co2_trade_co2: ", dynamic_variance_consumption_co2_trade_co2)
+
+    const variance_tolerant_consumption_co2_trade_co2 = variance_tolerant_trade_co2.reduce((pV, cV) => {
+        if (Math.abs(activeCountry.consumption_co2 - cV.consumption_co2) <= dynamic_variance_consumption_co2_trade_co2)
+            pV.push(cV)
+        return pV
+    }, []).slice(0, 6) // limit max number of countries to 10
 
     //setting data. Getting 4 random nation and, if activeCountry doesn't have a property, using an empty array
     let dataFormatted = {
-        country: [...getRandom(country, statesCompare), activeCountry.country || []],
-        trade_co2: [...getRandom(trade_co2, statesCompare), activeCountry.trade_co2 || [] ],
-        consumption_co2: [...getRandom(consumption_co2, statesCompare), activeCountry.consumption_co2 || []]
+        country: variance_tolerant_consumption_co2_trade_co2.reduce((pV, cV) => {
+            pV.push(cV.country)
+            return pV
+        }, []),
+        trade_co2: variance_tolerant_consumption_co2_trade_co2.reduce((pV, cV) => {
+            pV.push(cV.trade_co2)
+            return pV
+        }, []),
+        consumption_co2: variance_tolerant_consumption_co2_trade_co2.reduce((pV, cV) => {
+            pV.push(cV.consumption_co2)
+            return pV
+        }, [])
     }
 
     //setting legend: select only trade and consumption co2 properties from dataFormatter and formatting it with label formatter
@@ -73,6 +85,10 @@ const MainChart = (props) => {
         consumption_co2
     }))(dataFormatted)).map(key => label_formatter[key])
 
+
+    const avg = (dataFormatted.trade_co2.reduce((a, b) => a + b, 0) / dataFormatted.trade_co2.length
+        + dataFormatted.consumption_co2.reduce((a, b) => a + b, 0) / dataFormatted.consumption_co2.length) / 2
+    console.log(avg)
 
     const options = {
         chart: {
@@ -110,11 +126,16 @@ const MainChart = (props) => {
         },
         dataLabels: {
             enabled: true,
-            offsetX: -6,
+            offsetY: 7,
+            textAnchor: 'end',
+            formatter: (val, opts) => {
+                return val > avg ? Math.round(val) + ' (Mt)' : ''
+            },
             style: {
-                fontSize: '12px',
+                padding: '.5em',
+                fontSize: '.7em',
                 colors: [text_color]
-            }
+            },
         },
         stroke: {
             show: true,
@@ -134,7 +155,8 @@ const MainChart = (props) => {
             categories: dataFormatted.country,
             labels: {
                 style: {
-                    colors: [text_color]
+                    colors: [text_color],
+                    fontSize: '1em'
                 }
             }
         },
@@ -142,7 +164,8 @@ const MainChart = (props) => {
             showForNullSeries: false,
             labels: {
                 style: {
-                    colors: [text_color]
+                    colors: [text_color],
+                    fontSize: '1em'
                 }
             }
         },
@@ -157,7 +180,7 @@ const MainChart = (props) => {
             text: 'Data unavaliable',
             style: {
                 colors: [text_color],
-                fontfamily: 'Roboto'
+                fontFamily: 'Roboto'
             }
         }
     }
@@ -177,7 +200,7 @@ const MainChart = (props) => {
     return (
         <div className="primary-chart">
             <Typography variant="h6" className="chart-title">
-                Economical influence on pollution per capita
+                Similar emissions regarding economic activities
             </Typography>
             <div className="primary-chart-container">
                 <Chart
@@ -188,6 +211,29 @@ const MainChart = (props) => {
                     height="100%"
                 />
             </div>
+            {!dynamic_variance_consumption_co2_trade_co2 ? null :
+                <div className="chart-subtitle">
+                    <Typography fontStyle='normal' variant='subtitle1'>
+                        {`Variances allowed:`}
+                    </Typography>
+                    <Typography padding=".5em" display="inline" fontStyle='italic' variant='subtitle2'>
+                        Trade CO2:
+                        <Typography color='yellow' padding='.2em' display="inline" variant='button'>
+                            <FontAwesomeIcon icon="fa-plus-minus"/>
+                            {`${dynamic_variance_trade_co2.toFixed(2)}`}
+                        </Typography>
+                        Mt
+                    </Typography>
+                    <Typography padding=".5em" display="inline" fontStyle='italic' variant='subtitle2'>
+                        Consumption CO2:
+                        <Typography color='yellow' padding='.2em' display="inline" variant='button'>
+                            <FontAwesomeIcon icon="fa-plus-minus"/>
+                            {`${dynamic_variance_consumption_co2_trade_co2.toFixed(2)}`}
+                        </Typography>
+                        Mt
+                    </Typography>
+                </div>
+            }
         </div>
     );
 };

@@ -4,7 +4,6 @@ import Map from "./components/map/Map";
 import TimeSlider from "./components/timeslider/timeSlider";
 import axios from "axios";
 import Card from "./components/infoCard/card";
-import MainChart from "./components/charts/main_chart/main_chart"
 import SecondaryChart from "./components/charts/secondary_chart/secondary_chart";
 import './config';
 
@@ -12,6 +11,7 @@ import './config';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import LayoutController from "./components/controls/layoutController/LayoutController";
+import MainChart from "./components/charts/main_chart/main_chart";
 
 const iconList = Object.keys(Icons)
     .filter((key) => key !== 'fa' && key !== 'prefix')
@@ -99,7 +99,7 @@ function App() {
                 {activeCountry ?
                     <div className="charts">
                         <MainChart activeCountry={activeCountry} data={yearData}/>
-                        <SecondaryChart data={activeCountry} yearData={yearData}/>
+                        <SecondaryChart data={activeCountry}/>
                     </div>
                     : null
                 }
