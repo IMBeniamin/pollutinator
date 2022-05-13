@@ -50,10 +50,10 @@ const MainChart = (props) => {
     let cleanData = data.filter(obj => (obj.iso_code && obj.trade_co2) && obj.consumption_co2)
 
     //delete activeCountry from data to avoid getting it in random
-    cleanData.splice(cleanData.indexOf(activeCountry),1)
+    cleanData.splice(cleanData.indexOf(activeCountry), 1)
 
     //applying variance to take nation which have similar consumption and trade co2
-    let dataTradeFiltered = cleanData.filter(obj => Math.abs(obj.trade_co2 - activeCountry.trade_co2) <= maxVarianceTrade )
+    let dataTradeFiltered = cleanData.filter(obj => Math.abs(obj.trade_co2 - activeCountry.trade_co2) <= maxVarianceTrade)
     let dataTradeConsumptionFiltered = dataTradeFiltered.filter(obj => Math.abs(obj.consumption_co2 - activeCountry.consumption_co2) <= maxVarianceConsumption)
 
     let country = Object.values(dataTradeConsumptionFiltered.map(obj => obj.country))
@@ -162,38 +162,24 @@ const MainChart = (props) => {
         }
     }
 
-    console.log({legend,dataFormatted})
     useEffect(() => {
+        setSeries([{
+            name: "CO2 products by trade",
+            data: dataFormatted.trade_co2
+        }, {
+            name: "CO2 products by consumption",
+            data: dataFormatted.consumption_co2
+        }])
 
-        console.log({data})
+    }, [activeCountry]);
 
-    if (isLoading) return <div className="loader"/>;
+
     return (
         <div className="primary-chart">
             <Typography variant="h6" className="chart-title">
                 Economical influence on pollution per capita
             </Typography>
             <div className="primary-chart-container">
-        console.log(dataFormatted)
-
-
-        setSeries([{
-                name: "CO2 products by trade",
-                data: dataFormatted.trade_co2
-            }, {
-                name: "CO2 products by consumption",
-                data: dataFormatted.consumption_co2
-            }])
-
-    }, [activeCountry]);
-
-
-    return ( (activeCountry.iso_code && activeCountry.consumption_co2) && activeCountry.trade_co2) ?
-        (
-            <div className="primary-chart">
-                <Typography variant="h6" className="chart-title">
-                    Economical influence on pollution per capita
-                </Typography>
                 <Chart
                     id="primary-chart"
                     options={options}

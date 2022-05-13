@@ -105,7 +105,7 @@ function App() {
                 }
             </div>
         </div>
-    ) : <div className="App app-loading">Loading...</div>;
+    ) : <div className="app-loading">Loading...</div>;
 }
 
 export default App;
