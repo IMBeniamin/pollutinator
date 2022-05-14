@@ -83,6 +83,7 @@ const InfoCard = ({data}) => {
                     })}
                     image="icon"
                     label="Nitrous oxide, Nitrous oxide per capita"
+                    id="1"
                 />
                 <InfoBottom
                     data={[data].map((obj) => {
@@ -90,6 +91,7 @@ const InfoCard = ({data}) => {
                     })}
                     image="icon"
                     label="Methane, Methane per capita"
+                    id="2"
                 />
                 <InfoBottom
                     data={[data].map((obj) => {
@@ -97,6 +99,7 @@ const InfoCard = ({data}) => {
                     })}
                     image="icon"
                     label="Energy, Energy per capita"
+                    id="3"
                 />
             </div>
 

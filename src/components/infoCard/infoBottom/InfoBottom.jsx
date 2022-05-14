@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Typography} from "@mui/material";
 import "./InfoBottom.css"
 
-const InfoBottom = ({data, image, label}) => {
+const InfoBottom = ({data, image, label, id}) => {
 
     const labelInfo = label.split(',')
     let {info, info_capita} = data[0]
@@ -12,7 +12,6 @@ const InfoBottom = ({data, image, label}) => {
     const [genericData, setGenericData] = useState(undefined)
     const [genericDataCapita, setGenericDataCapita] = useState(undefined)
     const [linkImage, setLinkImage] = useState(undefined)
-
     const handleDataChange = () => {
 
         info = info ? `${info} ${measure}` : 'No data'
@@ -25,12 +24,12 @@ const InfoBottom = ({data, image, label}) => {
 
     useEffect(() => {
         handleDataChange()
-    }, [info, info_capita])
+    }, [info, info_capita, id])
 
     return (
         <div className="container-info-bottom">
             {linkImage}
-            <div className="visual-data">
+            <div className={`visual-data visual-data-${id}`}>
                 <Typography className='data-item'>
                     <span className='data-text'>{labelInfo[0]} : {genericData}</span>
                 </Typography>

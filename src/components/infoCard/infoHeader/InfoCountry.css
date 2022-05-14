@@ -37,7 +37,7 @@
 }
 
 .data-text {
-    font-size: 1em;
+    font-size: 1.5em;
     background: -webkit-gradient(linear, left top, right top, from(#ff839c), to(#5dffdb));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
