@@ -31,7 +31,6 @@ export default function SecondaryChart({data}) {
             },
         },
         chart: {
-            id: "sharing-global-co2",
             animations: {
                 enabled: true,
                 easing: "easeinout",
@@ -56,19 +55,21 @@ export default function SecondaryChart({data}) {
         },
         xaxis: {
             categories: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key]),
-            position: "top",
-            tooltip: {
-                enabled: false,
-            },
+            // position: "top",
             labels: {
                 show: false,
+                style: {
+                    colors: text_color,
+                    fontSize: '1em',
+                }
             }
         },
         yaxis: {
             showForNullSeries: false,
             labels: {
                 style: {
-                    colors: [text_color]
+                    colors: [text_color],
+                    fontSize: '1em'
                 }
             }
         },
@@ -85,11 +86,12 @@ export default function SecondaryChart({data}) {
         legend: {
             show: true,
             labels: {
-                colors: [text_color]
+                colors: [text_color],
+                fontSize: '1em'
             }
         },
         noData: {
-            text: 'Data unavaliable',
+            text: 'No data available',
             style: {
                 colors: text_color,
                 fontFamily: 'Roboto'

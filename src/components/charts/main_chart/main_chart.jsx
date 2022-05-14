@@ -3,7 +3,6 @@ import "./main_chart.css";
 import '../../../config';
 import {Typography} from "@mui/material";
 import Chart from "react-apexcharts"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const text_color = '#f5f5f5'
 const label_formatter = {
@@ -37,14 +36,14 @@ const MainChart = ({activeCountry, data}) => {
     const dynamic_variance_trade_co2 = useMemo(() =>
             Math.abs(activeCountry.trade_co2 - dynamic_variance_avg_trade_co2) / activeCountry.trade_co2 * activeCountry.trade_co2 / 2,
         [activeCountry, dynamic_variance_avg_trade_co2])
-    console.log("dynamic_variance_trade_co2: ", dynamic_variance_trade_co2)
+    // console.log("dynamic_variance_trade_co2: ", dynamic_variance_trade_co2)
 
     const variance_tolerant_trade_co2 = cleanData.reduce((pV, cV) => {
         if (Math.abs(activeCountry.trade_co2 - cV.trade_co2) <= dynamic_variance_trade_co2)
             pV.push(cV)
         return pV
     }, [])
-    console.log("Variance tolerant trade_co2: ", variance_tolerant_trade_co2)
+    // console.log("Variance tolerant trade_co2: ", variance_tolerant_trade_co2)
 
 
     const dynamic_variance_avg_consumption_co2_trade_co2 = useMemo(() =>
@@ -55,7 +54,7 @@ const MainChart = ({activeCountry, data}) => {
             Math.abs(activeCountry.consumption_co2 - dynamic_variance_avg_consumption_co2_trade_co2) /
             activeCountry.consumption_co2 * activeCountry.consumption_co2 / 2,
         [activeCountry.consumption_co2, dynamic_variance_avg_consumption_co2_trade_co2])
-    console.log("dynamic_variance_consumption_co2_trade_co2: ", dynamic_variance_consumption_co2_trade_co2)
+    // console.log("dynamic_variance_consumption_co2_trade_co2: ", dynamic_variance_consumption_co2_trade_co2)
 
     const variance_tolerant_consumption_co2_trade_co2 = variance_tolerant_trade_co2.reduce((pV, cV) => {
         if (Math.abs(activeCountry.consumption_co2 - cV.consumption_co2) <= dynamic_variance_consumption_co2_trade_co2)
@@ -86,10 +85,9 @@ const MainChart = ({activeCountry, data}) => {
     }))(dataFormatted)).map(key => label_formatter[key])
 
 
-
     const avg = (dataFormatted.trade_co2.reduce((a, b) => a + b, 0) / dataFormatted.trade_co2.length
         + dataFormatted.consumption_co2.reduce((a, b) => a + b, 0) / dataFormatted.consumption_co2.length) / 2
-    console.log(avg)
+    // console.log(avg)
 
     const options = {
         chart: {
@@ -212,29 +210,29 @@ const MainChart = ({activeCountry, data}) => {
                     height="100%"
                 />
             </div>
-            {!dynamic_variance_consumption_co2_trade_co2 ? null :
-                <div className="chart-subtitle">
-                    <Typography fontStyle='normal' variant='subtitle1'>
-                        {`Variances allowed:`}
-                    </Typography>
-                    <Typography padding=".5em" display="inline" fontStyle='italic' variant='subtitle2'>
-                        Trade CO2:
-                        <Typography color='yellow' padding='.2em' display="inline" variant='button'>
-                            <FontAwesomeIcon icon="fa-plus-minus"/>
-                            {`${dynamic_variance_trade_co2.toFixed(2)}`}
-                        </Typography>
-                        Mt
-                    </Typography>
-                    <Typography padding=".5em" display="inline" fontStyle='italic' variant='subtitle2'>
-                        Consumption CO2:
-                        <Typography color='yellow' padding='.2em' display="inline" variant='button'>
-                            <FontAwesomeIcon icon="fa-plus-minus"/>
-                            {`${dynamic_variance_consumption_co2_trade_co2.toFixed(2)}`}
-                        </Typography>
-                        Mt
-                    </Typography>
-                </div>
-            }
+            {/*{!dynamic_variance_consumption_co2_trade_co2 ? null :*/}
+            {/*    <div className="chart-subtitle">*/}
+            {/*        <Typography fontStyle='normal' variant='subtitle1'>*/}
+            {/*            {`Variances allowed:`}*/}
+            {/*        </Typography>*/}
+            {/*        <Typography padding=".5em" display="inline" fontStyle='italic' variant='subtitle2'>*/}
+            {/*            Trade CO2:*/}
+            {/*            <Typography color='yellow' padding='.2em' display="inline" variant='button'>*/}
+            {/*                <FontAwesomeIcon icon="fa-plus-minus"/>*/}
+            {/*                {`${dynamic_variance_trade_co2.toFixed(2)}`}*/}
+            {/*            </Typography>*/}
+            {/*            Mt*/}
+            {/*        </Typography>*/}
+            {/*        <Typography padding=".5em" display="inline" fontStyle='italic' variant='subtitle2'>*/}
+            {/*            Consumption CO2:*/}
+            {/*            <Typography color='yellow' padding='.2em' display="inline" variant='button'>*/}
+            {/*                <FontAwesomeIcon icon="fa-plus-minus"/>*/}
+            {/*                {`${dynamic_variance_consumption_co2_trade_co2.toFixed(2)}`}*/}
+            {/*            </Typography>*/}
+            {/*            Mt*/}
+            {/*        </Typography>*/}
+            {/*    </div>*/}
+            {/*}*/}
         </div>
     );
 };
