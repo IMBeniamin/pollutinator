@@ -2,7 +2,13 @@ import React from 'react';
 import './LayoutController.css';
 import StaticController from "../staticController/StaticController";
 
-const LayoutController = ({infoCardLayout, bottomCardLayout, setInfoCardLayout, setBottomCardLayout}) => {
+const LayoutController = ({
+                              infoCardLayout,
+                              bottomCardLayout,
+                              setInfoCardLayout,
+                              setBottomCardLayout,
+                              setInfoCardHeightController
+                          }) => {
     return (
         <div className={"layout-controls " + (bottomCardLayout ? "shown-layout-controls" : null)}>
             <StaticController
@@ -20,7 +26,10 @@ const LayoutController = ({infoCardLayout, bottomCardLayout, setInfoCardLayout, 
                 /> : null}
             <StaticController
                 type="arrows-up-down"
-                toggleLayout={() => setBottomCardLayout(!bottomCardLayout ? 'collapse' : null)}
+                toggleLayout={() => {
+                    setBottomCardLayout(!bottomCardLayout ? 'collapse' : null)
+                    !bottomCardLayout ? setInfoCardHeightController('force-full-height') : setInfoCardHeightController('');
+                }}
             />
         </div>
     )

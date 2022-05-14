@@ -22,15 +22,17 @@ library.add(...iconList);
 // end of icon handling
 
 export default function App() {
-    // TODO !!!!importante!!!! Fare leggenda per la mappa
+    // TODO Create map legend and add reference to OWID as data source
 
     const [isLoading, setIsLoading] = useState(true);
+    const [dataError, setDataError] = useState(false);
 
     const [activeYear, setActiveYear] = useState(2010);
     const [yearData, setYearData] = useState(undefined);
     const [activeCountry, setActiveCountry] = useState(undefined);
     const [infoCardLayout, setInfoCardLayout] = useState('collapse');
     const [bottomCardLayout, setBottomCardLayout] = useState('collapse');
+    const [infoCardHeightController, setInfoCardHeightController] = useState('');
     const countryChanged = (country) => {
         setActiveCountry(country)
         if (infoCardLayout && bottomCardLayout) {
@@ -43,6 +45,8 @@ export default function App() {
     }
     const yearChanged = (year) => {
         setIsLoading(true);
+        if (!infoCardLayout) setInfoCardLayout('collapse');
+        if (!bottomCardLayout) setBottomCardLayout('collapse');
         setActiveYear(year);
     }
 
@@ -65,44 +69,54 @@ export default function App() {
                     if (activeCountry) setActiveCountry(res.data.filter((obj) => activeCountry.iso_code === obj.iso_code)[0])
                     setIsLoading(false);
                 }
-            );
+            )
+            .catch((err) => {
+                console.log(err);
+                setDataError(true);
+            });
     }, [activeYear]);
+    if (dataError) return (
+        <div className='app-loading'>
+            <div>OOPS, we're sorry! We could not load the data from server.</div>
+        </div>
+    );
     return !isLoading ? (
-        // TODO quando no dati in grafico grafico deve ritornare null e l'altro deve espandersi
         <div className="App">
             <Map data={{yearMap: activeYear, infoState: yearData}}
                  countryClicked={countryChanged}
             />
-            <div id="info-card" className={"reactive " + infoCardLayout}>
-                {activeCountry ?
-                    <Card data={activeCountry}/> : null}
-            </div>
-
-            <div id="bottom-card" className={"reactive " + bottomCardLayout}>
-                <div className="map-controls">
-                    {/*TODO !!!important!!! Add button with reference to our world in data for source*/}
-                    <div className="slider-container">
-                        <TimeSlider
-                            year={activeYear}
-                            changeYear={yearChanged}
-                        />
-                    </div>
+            <div className='layout-sizer'>
+                <div id="info-card" className={`reactive ${infoCardHeightController} ${infoCardLayout}`}>
+                    {activeCountry ?
+                        <Card data={activeCountry}/> : null}
                 </div>
-                {activeCountry ?
-                    <LayoutController
-                        infoCardLayout={infoCardLayout}
-                        bottomCardLayout={bottomCardLayout}
-                        setInfoCardLayout={setInfoCardLayout}
-                        setBottomCardLayout={setBottomCardLayout}
-                    /> : null
-                }
-                {activeCountry ?
-                    <div className="charts">
-                        <MainChart activeCountry={activeCountry} data={yearData}/>
-                        <SecondaryChart data={activeCountry}/>
+
+                <div id="bottom-card" className={"reactive " + bottomCardLayout}>
+                    <div className="map-controls">
+                        <div className="slider-container">
+                            <TimeSlider
+                                year={activeYear}
+                                changeYear={yearChanged}
+                            />
+                        </div>
                     </div>
-                    : null
-                }
+                    {activeCountry ?
+                        <LayoutController
+                            infoCardLayout={infoCardLayout}
+                            bottomCardLayout={bottomCardLayout}
+                            setInfoCardLayout={setInfoCardLayout}
+                            setBottomCardLayout={setBottomCardLayout}
+                            setInfoCardHeightController={setInfoCardHeightController}
+                        /> : null
+                    }
+                    {activeCountry ?
+                        <div className="charts">
+                            <MainChart activeCountry={activeCountry} data={yearData}/>
+                            <SecondaryChart data={activeCountry}/>
+                        </div>
+                        : null
+                    }
+                </div>
             </div>
         </div>
     ) : <div className="app-loading">Loading...</div>;

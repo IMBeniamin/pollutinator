@@ -1,37 +1,69 @@
-.container-info-bottom {
-    /*background: rgb(135, 26, 245);*/
-    /*background: linear-gradient(90deg, rgba(135, 26, 245, 1) 0%, rgba(255, 0, 181, 1) 50%, rgba(255, 89, 0, 1) 100%);*/
-
-    padding: .5em;
-    margin: .5em 1em;
+.visual-data {
+    padding: .5em 0;
+    margin: .5em 0;
     border-radius: 2em;
     color: whitesmoke;
     font-size: 1.2em;
-
+    max-height: 4em;
 
     display: flex;
     flex-flow: row nowrap;
+    justify-content: stretch;
+}
+
+.visual-data-1 {
+    background-image: linear-gradient(135deg,
+    rgba(171, 220, 255, 0.7) 50%,
+    rgba(3, 150, 255, 0.2) 100%);
+}
+
+.visual-data-2 {
+    background-image: linear-gradient(135deg,
+    rgba(42, 250, 223, 0.7) 50%,
+    rgba(76, 131, 255, 0.2) 100%);
+}
+
+.visual-data-3 {
+    background-image: linear-gradient(135deg,
+    rgba(255, 201, 152, 0.7) 50%,
+    rgba(253, 101, 133, 0.2) 100%);
+}
+
+.visual-data-4 {
+    background-image: linear-gradient(135deg,
+    rgba(238, 154, 229, 0.7) 50%,
+    rgba(89, 97, 249, 0.2) 100%);
+}
+
+.visual-icon-wrapper {
+    flex: 0 1 auto;
+    width: 4em;
+    margin: .25em .5em;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
     align-items: center;
 }
 
-.visual-data {
+.visual-icon {
+    font-size: 4em;
+}
+
+.visual-info-wrapper {
+    flex: 1 0 auto;;
+
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: column wrap;
     justify-content: space-evenly;
+    align-items: center;
 }
 
-.visual-data .visual-data-1 {
-    background-image: linear-gradient(135deg, #ABDCFF 10%, #0396FF 100%);
+.sparkline-wrapper {
+    width: 90%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
 }
 
-.visual-data .visual-data-2 {
-    background-image: linear-gradient(135deg, #2AFADF 10%, #4C83FF 100%);
-}
-
-.visual-data .visual-data-3 {
-    background-image: linear-gradient(135deg, #FFD3A5 10%, #FD6585 100%);
-}
-
-.visual-data .visual-data-4 {
-    background-image: linear-gradient(135deg, #EE9AE5 10%, #5961F9 100%);
+.sparkline-chart {
 }

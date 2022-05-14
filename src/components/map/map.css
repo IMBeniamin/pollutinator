@@ -7,8 +7,9 @@
     height: 100vh;
     transition: all 1s;
     /*background-color: green;*/
-    z-index: 1001;
+    z-index: 1;
 }
+
 .composable-map {
     transition: all 1s;
 }
@@ -25,7 +26,9 @@
 }
 
 @-webkit-keyframes sk-scaleout {
-    0% { -webkit-transform: scale(0) }
+    0% {
+        -webkit-transform: scale(0)
+    }
     100% {
         -webkit-transform: scale(1.0);
         opacity: 0;
@@ -36,9 +39,10 @@
     0% {
         -webkit-transform: scale(0);
         transform: scale(0);
-    } 100% {
-          -webkit-transform: scale(1.0);
-          transform: scale(1.0);
-          opacity: 0;
-      }
+    }
+    100% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+        opacity: 0;
+    }
 }

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import Chart from 'react-apexcharts'
 import './card.css'
 import '../../config';
-import Chart from "react-apexcharts"
-import InfoHeader from "./infoHeader/InfoHeader";
 import InfoBottom from "./infoBottom/InfoBottom";
+import InfoHeader from "./infoHeader/InfoHeader";
 
 const label_formatter = {
     cement_co2: "Cement",
@@ -17,7 +17,6 @@ const label_formatter = {
 const InfoCard = ({data}) => {
 
     const [series, setSeries] = useState([]);
-    console.log(data)
 
     const options = {
         chart: {
@@ -39,7 +38,21 @@ const InfoCard = ({data}) => {
         },
         theme: {
             mode: 'dark',
-            palette: 'palette3',
+            palette: 'palette1',
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shade: 'light',
+                type: 'vertical',
+                shadeIntensity: 0,
+                gradientToColors: undefined,
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: .7,
+                stops: [0, 100],
+                colorStops: []
+            }
         },
         plotOptions: {
             pie: {
@@ -51,6 +64,10 @@ const InfoCard = ({data}) => {
                     background: 'transparent',
                 }
             }
+        },
+        stroke: {
+            width: 0,
+            colors: ['#fff']
         },
         labels: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key])
     }
@@ -80,25 +97,25 @@ const InfoCard = ({data}) => {
                 <InfoBottom
                     data={[data].map((obj) => {
                         return {info: obj.nitrous_oxide, info_capita: obj.nitrous_oxide_per_capita}
-                    })}
-                    image="icon"
-                    label="Nitrous oxide, Nitrous oxide per capita"
+                    })[0]}
+                    image="./media/nitrogen.svg"
+                    label="Nitrous oxide"
                     id="1"
                 />
                 <InfoBottom
                     data={[data].map((obj) => {
                         return {info: obj.methane, info_capita: obj.methane_per_capita}
-                    })}
-                    image="icon"
-                    label="Methane, Methane per capita"
+                    })[0]}
+                    image="./media/methane.svg"
+                    label="Methane"
                     id="2"
                 />
                 <InfoBottom
                     data={[data].map((obj) => {
                         return {info: obj.energy, info_capita: obj.energy_per_capita}
-                    })}
-                    image="icon"
-                    label="Energy, Energy per capita"
+                    })[0]}
+                    image="./media/energy.svg"
+                    label="Energy"
                     id="3"
                 />
             </div>

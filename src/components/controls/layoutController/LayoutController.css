@@ -24,7 +24,7 @@
     align-items: center;
     align-content: center;
 
-    z-index: 1001;
+    z-index: 1;
 }
 
 .shown-layout-controls {
@@ -33,7 +33,7 @@
     transform: translate(-50%, -100%);
 
     max-height: 1000px; /* css hack to make it work, size has to be bigger than it will ever get */
-    z-index: 1006;
+    z-index: 6;
     transition: 1s max-height;
 }
 
@@ -43,6 +43,6 @@
     transform: translate(-50%, -100%);
 
     max-height: 1000px; /* css hack to make it work, size has to be bigger than it will ever get */
-    z-index: 1006;
+    z-index: 6;
     transition: 1s max-height;
 }
