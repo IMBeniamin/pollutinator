@@ -34,6 +34,11 @@
     min-width: 300px;
 }
 
+.card-bottom {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
 #co2-parts-chart {
     height: 100%;
     width: 100%;

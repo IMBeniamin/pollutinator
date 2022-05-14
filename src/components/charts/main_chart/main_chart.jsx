@@ -86,7 +86,6 @@ const MainChart = ({activeCountry, data}) => {
     }))(dataFormatted)).map(key => label_formatter[key])
 
 
-
     const avg = (dataFormatted.trade_co2.reduce((a, b) => a + b, 0) / dataFormatted.trade_co2.length
         + dataFormatted.consumption_co2.reduce((a, b) => a + b, 0) / dataFormatted.consumption_co2.length) / 2
     console.log(avg)
@@ -174,11 +173,12 @@ const MainChart = ({activeCountry, data}) => {
             show: true,
             customLegendItems: legend,
             labels: {
-                colors: [text_color]
+                colors: [text_color],
+                fontSieze: '1em'
             }
         },
         noData: {
-            text: 'Data unavaliable',
+            text: 'No data available',
             style: {
                 colors: [text_color],
                 fontFamily: 'Roboto'

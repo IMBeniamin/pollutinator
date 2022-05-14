@@ -1,0 +1,11 @@
+.container-info-bottom {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.visual-data {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+}

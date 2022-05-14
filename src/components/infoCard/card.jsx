@@ -3,6 +3,7 @@ import './card.css'
 import '../../config';
 import Chart from "react-apexcharts"
 import InfoHeader from "./infoHeader/InfoHeader";
+import InfoBottom from "./infoBottom/InfoBottom";
 
 const label_formatter = {
     cement_co2: "Cement",
@@ -16,6 +17,7 @@ const label_formatter = {
 const InfoCard = ({data}) => {
 
     const [series, setSeries] = useState([]);
+    console.log(data)
 
     const options = {
         chart: {
@@ -74,6 +76,30 @@ const InfoCard = ({data}) => {
                     height="100%"
                 />
             </div>
+            <div className="card-bottom">
+                <InfoBottom
+                    data={[data].map((obj) => {
+                        return {info: obj.nitrous_oxide, info_capita: obj.nitrous_oxide_per_capita}
+                    })}
+                    image="icon"
+                    label="Nitrous oxide, Nitrous oxide per capita"
+                />
+                <InfoBottom
+                    data={[data].map((obj) => {
+                        return {info: obj.methane, info_capita: obj.methane_per_capita}
+                    })}
+                    image="icon"
+                    label="Methane, Methane per capita"
+                />
+                <InfoBottom
+                    data={[data].map((obj) => {
+                        return {info: obj.energy, info_capita: obj.energy_per_capita}
+                    })}
+                    image="icon"
+                    label="Energy, Energy per capita"
+                />
+            </div>
+
         </div>
     );
 }
