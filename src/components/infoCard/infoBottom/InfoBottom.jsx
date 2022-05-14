@@ -122,10 +122,8 @@ const InfoBottom = ({data, image, label, id}) => {
                     y: data.info
                 }]
             }])
-    }, [data, id, label])
-
-
-    return (
+    }, [data.info, data.info_capita, id, label])
+    return Object.values(data).every((obj) => obj === undefined) ? null : (
         <div className={`visual-data visual-data-${id}`}>
             <div className='visual-icon-wrapper'>
                 <img className='visual-icon' src={image} alt={label}/>

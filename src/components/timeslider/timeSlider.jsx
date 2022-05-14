@@ -41,13 +41,12 @@ const TimeSlider = (props) => {
     const handleChange = (event, value) => {
         timeout && clearTimeout(timeout);
         timeout = setTimeout(() => {
-            console.log('new year is ', value);
             updateValue(value);
         }, 1000);
     };
     return (
         <Slider
-            sx={{ color: 'white'}}
+            sx={{color: 'white'}}
             className="slider"
             aria-label="Year"
             defaultValue={props.year}
