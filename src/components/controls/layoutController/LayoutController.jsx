@@ -2,6 +2,15 @@ import React from 'react';
 import './LayoutController.css';
 import StaticController from "../staticController/StaticController";
 
+/**
+ * Layout containing InfoCard, bottom charts and toggle controllers
+ * @param infoCardLayout (contain the collapse css class)
+ * @param bottomCardLayout (contain the collapse css class)
+ * @param setInfoCardLayout
+ * @param setBottomCardLayout
+ * @param setInfoCardHeightController (setter for the force-full-height css class)
+ * @returns {JSX.Element}
+ */
 const LayoutController = ({
                               infoCardLayout,
                               bottomCardLayout,

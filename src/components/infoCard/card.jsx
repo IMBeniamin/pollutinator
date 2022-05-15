@@ -13,7 +13,11 @@ const label_formatter = {
     other_industry_co2: "Other",
     flaring_co2: "Flaring",
 }
-
+/**
+ *  InfoCard component placed on the upper left side.
+ * @param data (Data aboutthe nation you clicked in certain year)
+ * @returns {JSX.Element}
+ */
 const InfoCard = ({data}) => {
 
     const [series, setSeries] = useState([]);
@@ -69,9 +73,10 @@ const InfoCard = ({data}) => {
             width: 0,
             colors: ['#fff']
         },
-        labels: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key])
+        labels: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key]) //return an array of CO2 parts available
     }
     useEffect(() => {
+        //return array of CO2 parts values which are available
         setSeries(Object.keys(label_formatter).reduce((values, key) => {
             if (data[key] !== undefined)
                 values.push(data[key]);

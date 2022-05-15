@@ -2,6 +2,11 @@ import * as React from 'react';
 import Slider from '@mui/material/Slider';
 import './timeSlider.css'
 
+/**
+ * TimeSlider component used to change the map year, in order to see data in different years
+ * @param props (Passing the activeYear and the year handle function)
+ * @returns {JSX.Element}
+ */
 const TimeSlider = (props) => {
     let timeout;
 

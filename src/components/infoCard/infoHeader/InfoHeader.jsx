@@ -3,6 +3,11 @@ import './InfoCountry.css'
 import {Typography} from "@mui/material";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
+/**
+ * The header component of InfoCard. It shows some general info, such as the country gdp and population
+ * @param props (must contain country, iso_code, year, population and GDP)
+ * @returns {JSX.Element}
+ */
 const InfoHeader = (props) => {
 
     const {activeCountry} = props

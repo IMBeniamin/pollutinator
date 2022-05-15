@@ -2,6 +2,14 @@ import React, {useEffect, useState} from 'react'
 import "./InfoBottom.css"
 import Chart from "react-apexcharts";
 
+/**
+ * Component placed on the bottom part of InfoCard. Used to display nitrous oxide, methane and energy
+ * @param data
+ * @param image
+ * @param label
+ * @param id
+ * @returns {null|JSX.Element}
+ */
 const InfoBottom = ({data, image, label, id}) => {
     const unit = label === 'Energy' ? "kWh" : "m3";
     const [series, setSeries] = useState([
@@ -71,7 +79,7 @@ const InfoBottom = ({data, image, label, id}) => {
         dataLabels: {
             enabled: true,
             textAnchor: 'middle',
-            formatter: val => val > Object.values(data).reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / 6 ? val.toFixed(2) + ` ${unit}` : '',
+            formatter: val => val > Object.values(data).reduce((a, b) => (a ?? 0) + (b ?? 0), 0) / 6 ? val.toFixed(2) + ` ${unit}` : '', //Format the value diplayed to 2 number after the comma if the value is too long
             style: {
                 colors: ['whitesmoke']
             },
@@ -123,6 +131,7 @@ const InfoBottom = ({data, image, label, id}) => {
                 }]
             }])
     }, [data.info, data.info_capita, id, label])
+
     return Object.values(data).every((obj) => obj === undefined) ? null : (
         <div className={`visual-data visual-data-${id}`}>
             <div className='visual-icon-wrapper'>

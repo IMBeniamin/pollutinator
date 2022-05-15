@@ -4,7 +4,7 @@ import '../../../config';
 import {Typography} from "@mui/material";
 import Chart from "react-apexcharts"
 
-const text_color = '#f5f5f5'
+const text_color = '#f5f5f5' //whitesmoke
 const label_formatter = {
     trade_co2: "CO2 by trade",
     consumption_co2: "CO2 products by consumption"
@@ -30,6 +30,9 @@ const MainChart = ({activeCountry, data}) => {
     //filter data to only nation that have iso_code, trade_co2 and consumption_co2
     let cleanData = data.filter(obj => (obj.iso_code && obj.trade_co2) && obj.consumption_co2)
 
+    //useMemo() => expand calculation. The function is re-called only when cleanData is changed
+
+    //calculate the trade_co2 variance
     const dynamic_variance_avg_trade_co2 = useMemo(() =>
             cleanData.map((obj) => obj.trade_co2).reduce((a, b) => Math.abs(a - b), 0) / cleanData.length,
         [cleanData])
@@ -38,6 +41,7 @@ const MainChart = ({activeCountry, data}) => {
         [activeCountry, dynamic_variance_avg_trade_co2])
     // console.log("dynamic_variance_trade_co2: ", dynamic_variance_trade_co2)
 
+    //array of country nearby the variance, depending on trade_co2
     const variance_tolerant_trade_co2 = cleanData.reduce((pV, cV) => {
         if (Math.abs(activeCountry.trade_co2 - cV.trade_co2) <= dynamic_variance_trade_co2)
             pV.push(cV)
@@ -45,7 +49,7 @@ const MainChart = ({activeCountry, data}) => {
     }, [])
     // console.log("Variance tolerant trade_co2: ", variance_tolerant_trade_co2)
 
-
+    //calculate the consumption_co2 variance. This depends on trade_co2 variance
     const dynamic_variance_avg_consumption_co2_trade_co2 = useMemo(() =>
             variance_tolerant_trade_co2.map((obj) => obj.consumption_co2).reduce((a, b) => Math.abs(a - b), 0) /
             variance_tolerant_trade_co2.length,
@@ -56,6 +60,7 @@ const MainChart = ({activeCountry, data}) => {
         [activeCountry.consumption_co2, dynamic_variance_avg_consumption_co2_trade_co2])
     // console.log("dynamic_variance_consumption_co2_trade_co2: ", dynamic_variance_consumption_co2_trade_co2)
 
+    //array of country nearby the variance, depending on trade_co2 and consumption_co2
     const variance_tolerant_consumption_co2_trade_co2 = variance_tolerant_trade_co2.reduce((pV, cV) => {
         if (Math.abs(activeCountry.consumption_co2 - cV.consumption_co2) <= dynamic_variance_consumption_co2_trade_co2)
             pV.push(cV)

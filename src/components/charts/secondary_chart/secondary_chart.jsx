@@ -12,9 +12,14 @@ const label_formatter = {
     share_global_other_co2: "Other industry products"
 }
 
-const text_color = '#f5f5f5'
+const text_color = '#f5f5f5' //whitesmoke
 const seriesName = "CO2 part global share"
-
+/**
+ * SecondaryChart component used for the right chart in the bottom reactive container
+ * @param data (activeCountry)
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function SecondaryChart({data}) {
     const [series, setSeries] = useState([{
         name: seriesName,
@@ -54,7 +59,7 @@ export default function SecondaryChart({data}) {
             palette: 'palette3'
         },
         xaxis: {
-            categories: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key]),
+            categories: Object.keys(data).filter(key => Object.keys(label_formatter).includes(key)).map(key => label_formatter[key]), //return an array of  CO2 parts global share available
             // position: "top",
             labels: {
                 show: false,
@@ -101,6 +106,7 @@ export default function SecondaryChart({data}) {
     useEffect(() => {
         setSeries([{
             name: seriesName,
+            //return array of CO2 parts global share values which are available
             data: Object.keys(label_formatter).reduce((values, key) => {
                 if (data[key])
                     values.push(data[key]);

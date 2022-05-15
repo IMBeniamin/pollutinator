@@ -27,12 +27,12 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [dataError, setDataError] = useState(false);
 
-    const [activeYear, setActiveYear] = useState(2010);
-    const [yearData, setYearData] = useState(undefined);
-    const [activeCountry, setActiveCountry] = useState(undefined);
-    const [infoCardLayout, setInfoCardLayout] = useState('collapse');
-    const [bottomCardLayout, setBottomCardLayout] = useState('collapse');
-    const [infoCardHeightController, setInfoCardHeightController] = useState('');
+    const [activeYear, setActiveYear] = useState(2010); //the default year
+    const [yearData, setYearData] = useState(undefined); //data of all nations of a given year (2010)
+    const [activeCountry, setActiveCountry] = useState(undefined); //the country clicked
+    const [infoCardLayout, setInfoCardLayout] = useState('collapse'); //state containing css class used to hide InfoCard
+    const [bottomCardLayout, setBottomCardLayout] = useState('collapse'); //state containing css class used to hide bottom charts
+    const [infoCardHeightController, setInfoCardHeightController] = useState(''); //state used to apply the 'force-full-height' css class to bottom charts
     const countryChanged = (country) => {
         setActiveCountry(country)
         if (infoCardLayout && bottomCardLayout) {

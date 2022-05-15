@@ -1,5 +1,5 @@
 import React from "react";
-import {ComposableMap, Geographies, Geography, ZoomableGroup,} from "react-simple-maps";
+import {ComposableMap, Geographies, Geography, ZoomableGroup} from "react-simple-maps";
 import {scaleLinear} from "d3-scale";
 import {interpolateCubehelixLong} from "d3";
 import "./map.css";
@@ -7,11 +7,18 @@ import "./map.css";
 const geoUrl =
     "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
+//Logarithmic function to assign color to nation, depending on CO2 produced
 const colorScale = scaleLinear()
     .domain([0, 100, 1000, 11000])
     .range(["lightgreen", "lightblue", "blue", "red"])
     .interpolate(interpolateCubehelixLong.gamma(1));
 
+/**
+ * Component used to show the world map
+ * @param props (contains the nations' data {data} and the setter of activeCountry (countryClicked) )
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const MapChart = (props) => {
     return (
         <div className="map-container" id="map-container">
@@ -36,10 +43,6 @@ const MapChart = (props) => {
                                             onMouseEnter={() => {}}
                                             onClick={() => {
                                                 props.countryClicked(current);
-                                            }}
-                                            onMouseLeave={() => {
-                                                // props.hideCard();
-                                                // props.stateHover(null);
                                             }}
                                             style={{
                                                 default: {
