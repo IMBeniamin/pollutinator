@@ -24,7 +24,7 @@ and run the following command to install the necessary libraries: ``npm install`
 Now you can run the react application with the command ``npm start`` in the terminal. If you want to learn something new about
 Create React App and React in generals, click this [link](https://reactjs.org/).
 
-##Libreries used
+## Libreries used
 
 | Library           | Link                              | Description         |
 |-------------------|-----------------------------------|---------------------|
@@ -35,11 +35,11 @@ Create React App and React in generals, click this [link](https://reactjs.org/).
 | Font Awesome      | https://fontawesome.com/          | Icons library       |
 | React Simple Maps | https://www.react-simple-maps.io/ | World map for React |
 
-##Credits
+## Credits
 
 IMBeniamin: https://github.com/IMBeniamin
 
 userDerpi:  https://github.com/userDerpi
 
-##License
+## License
 [MIT](https://github.com/IMBeniamin/pollutinator/blob/main/LICENSE)
