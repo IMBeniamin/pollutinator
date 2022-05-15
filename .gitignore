@@ -22,4 +22,3 @@ yarn-debug.log*
 yarn-error.log*
 **/codestream*
 **/git_toolbox_prj*
-/package-lock.json
