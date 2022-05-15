@@ -132,7 +132,7 @@ const MainChart = ({activeCountry, data}) => {
             enabled: true,
             offsetY: 7,
             textAnchor: 'end',
-            formatter: (val, opts) => {
+            formatter: (val) => {
                 return val > avg ? Math.round(val) + ' (Mt)' : ''
             },
             style: {
@@ -199,7 +199,7 @@ const MainChart = ({activeCountry, data}) => {
             data: dataFormatted.consumption_co2
         }])
 
-    }, [activeCountry]);
+    }, [activeCountry, dataFormatted.consumption_co2, dataFormatted.trade_co2]);
 
 
     return (

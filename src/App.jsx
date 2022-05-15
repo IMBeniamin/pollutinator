@@ -74,7 +74,7 @@ export default function App() {
                 console.log(err);
                 setDataError(true);
             });
-    }, [activeYear]);
+    }, [activeYear]); // eslint-disable-line react-hooks/exhaustive-deps
     if (dataError) return (
         <div className='app-loading'>
             <div>OOPS, we're sorry! We could not load the data from server.</div>
