@@ -24,7 +24,7 @@ and run the following command to install the necessary libraries: ``npm install`
 Now you can run the react application with the command ``npm start`` in the terminal. If you want to learn something new about
 Create React App and React in generals, click this [link](https://reactjs.org/).
 
-## Libreries used
+## Libraries used
 
 | Library           | Link                              | Description         |
 |-------------------|-----------------------------------|---------------------|
