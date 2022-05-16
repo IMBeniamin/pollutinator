@@ -101,6 +101,14 @@ export default function SecondaryChart({data}) {
                 colors: text_color,
                 fontFamily: 'Roboto'
             }
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: val => `${val}%`,
+            style: {
+                fontSize: '.7em',
+                colors: [text_color]
+            },
         }
     }
     useEffect(() => {
