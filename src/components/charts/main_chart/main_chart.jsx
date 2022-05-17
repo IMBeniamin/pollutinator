@@ -133,7 +133,7 @@ const MainChart = ({activeCountry, data}) => {
             offsetY: 7,
             textAnchor: 'end',
             formatter: (val) => {
-                return val > avg ? Math.round(val) + ' (Mt)' : ''
+                return val > avg ? Math.round(val) + ' Mt' : ''
             },
             style: {
                 padding: '.5em',
@@ -178,7 +178,7 @@ const MainChart = ({activeCountry, data}) => {
             customLegendItems: legend,
             labels: {
                 colors: [text_color],
-                fontSieze: '1em'
+                fontSize: '1em'
             }
         },
         noData: {
@@ -199,7 +199,7 @@ const MainChart = ({activeCountry, data}) => {
             data: dataFormatted.consumption_co2
         }])
 
-    }, [activeCountry, dataFormatted.consumption_co2, dataFormatted.trade_co2]);
+    }, [activeCountry]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (
