@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/pollutinator/static/css/main.da06a17a.chunk.css",
+    "main.js": "/pollutinator/static/js/main.dafc462c.chunk.js",
+    "main.js.map": "/pollutinator/static/js/main.dafc462c.chunk.js.map",
+    "runtime-main.js": "/pollutinator/static/js/runtime-main.815c634f.js",
+    "runtime-main.js.map": "/pollutinator/static/js/runtime-main.815c634f.js.map",
+    "static/js/2.1bd1a9da.chunk.js": "/pollutinator/static/js/2.1bd1a9da.chunk.js",
+    "static/js/2.1bd1a9da.chunk.js.map": "/pollutinator/static/js/2.1bd1a9da.chunk.js.map",
+    "index.html": "/pollutinator/index.html",
+    "static/css/main.da06a17a.chunk.css.map": "/pollutinator/static/css/main.da06a17a.chunk.css.map",
+    "static/js/2.1bd1a9da.chunk.js.LICENSE.txt": "/pollutinator/static/js/2.1bd1a9da.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.815c634f.js",
+    "static/js/2.1bd1a9da.chunk.js",
+    "static/css/main.da06a17a.chunk.css",
+    "static/js/main.dafc462c.chunk.js"
+  ]
+}
